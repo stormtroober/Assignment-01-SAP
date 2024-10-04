@@ -73,7 +73,7 @@ public class AddEBikeDialog extends JDialog {
                 String id = idField.getText();
                 String xCoord = xCoordField.getText();
                 String yCoord = yCoordField.getText();
-                app.addEBike(id, new P2d(Integer.parseInt(yCoord), Integer.parseInt(yCoord)));
+                app.addEBike(id, new P2d(Integer.parseInt(xCoord), Integer.parseInt(yCoord)));
                 dispose();
             }
         });

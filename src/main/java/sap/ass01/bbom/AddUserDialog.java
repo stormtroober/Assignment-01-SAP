@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
  */
 public class AddUserDialog extends JDialog {
 
-    private JTextField idField;
+    private JTextField idField, errorField;
     private JButton okButton;
     private JButton cancelButton;
     private EBikeApp app;
@@ -29,6 +29,7 @@ public class AddUserDialog extends JDialog {
 
     private void initializeComponents() {
         idField = new JTextField(15);
+        errorField = new JTextField(25);
         okButton = new JButton("OK");
         cancelButton = new JButton("Cancel");
     }
@@ -42,9 +43,13 @@ public class AddUserDialog extends JDialog {
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
 
+        // JPanel errorPanel = new JPanel();
+        // errorPanel.add(errorField);
+
         setLayout(new BorderLayout(10, 10));
         add(inputPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
+        // add(errorPanel, BorderLayout.SOUTH);
     }
 
     private void addEventHandlers() {

@@ -71,4 +71,12 @@ public class RideDialog extends JDialog {
             }
         });
     }
+    
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+        	RideDialog dialog = new RideDialog(null);
+            dialog.setVisible(true);
+        });
+    }
+    
 }
