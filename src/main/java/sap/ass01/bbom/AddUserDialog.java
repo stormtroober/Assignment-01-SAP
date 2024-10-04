@@ -15,11 +15,11 @@ public class AddUserDialog extends JDialog {
     private JTextField idField, errorField;
     private JButton okButton;
     private JButton cancelButton;
-    private EBikeApp app;
+    private EBikeService service;
 
-    public AddUserDialog(EBikeApp owner) {
+    public AddUserDialog(EBikeApp owner, EBikeService service) {
         super(owner, "Adding User", true);
-        app = owner;
+        this.service = service;
         initializeComponents();
         setupLayout();
         addEventHandlers();
@@ -58,7 +58,7 @@ public class AddUserDialog extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 // Implement OK button behavior here
                 String id = idField.getText();
-                app.addUser(id);                
+                service.addUser(id);
                 dispose();
             }
         });
@@ -73,7 +73,7 @@ public class AddUserDialog extends JDialog {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            AddUserDialog dialog = new AddUserDialog(null);
+            AddUserDialog dialog = new AddUserDialog(null, new EBikeService());
             dialog.setVisible(true);
         });
     }

@@ -18,33 +18,29 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.*;
 
 
-public class EBikeApp extends JFrame implements ActionListener {
+public class EBikeApp extends JFrame implements ActionListener, Listener {
     
     private VisualiserPanel centralPanel;
     private JButton addUserButton, addEBikeButton, startRideButton;
-    private ConcurrentHashMap<String, EBike> bikes;
-    private HashMap<String, User> users;
-    private HashMap<String, Ride> rides;
-    
-    private int rideId;
+    private final EBikeService eBikeService;
     
     public EBikeApp(){
-        setupView();
-        setupModel();
+        this.eBikeService = new EBikeService();
+		this.eBikeService.registerListener(this);
+		setupView();
     }
 
-    
-    protected void setupModel() {
-        bikes = new ConcurrentHashMap<String, EBike>();
-        users = new HashMap<String, User>();
-        rides = new HashMap<String, Ride>();
-        
-        rideId = 0;
-        this.addUser("u1");
-        this.addEBike("b1", new P2d(0,0));
-    }
+	@Override
+	public void notifyModelChanged() {
+		refreshView();
+	}
 
-    protected void setupView() {
+	@Override
+	public void notifyRideStart(Ride ride) {
+		ride.start(this);
+	}
+
+	protected void setupView() {
         setTitle("EBike App");        
         setSize(800,600);
         setResizable(false);
@@ -82,70 +78,33 @@ public class EBikeApp extends JFrame implements ActionListener {
     		this.setVisible(true);
     	});
     }
-        
-    public void addEBike(String id, P2d loc) {
-    	EBike bike = new EBike(id);
-    	bike.updateLocation(loc);
-    	bikes.put(id, bike);
-    	log("added new EBike " + bike);
-    	centralPanel.refresh();
-    }
-    
-    public EBike getEBike(String id) {
-    	return bikes.get(id);
-    }
-
-    public void addUser(String id) {
-    	User user = new User(id);
-    	user.rechargeCredit(100);
-    	users.put(id, user);
-    	log("added new User " + user);
-    	centralPanel.refresh();
-    }
-
-    public void startNewRide(String userId, String bikeId) {
-    	rideId++;    	 
-    	String idRide = "ride-" + rideId;
-    	
-    	var b = bikes.get(bikeId);
-    	var u = users.get(userId);
-    	var ride = new Ride(idRide, u, b);
-    	b.updateState(EBike.EBikeState.IN_USE);
-    	rides.put(idRide, ride);
-    	ride.start(this);
-        
-        log("started new Ride " + ride);        
-    }
 
     public void endRide(String rideId) {
-    	var r = rides.get(rideId);
-    	r.end();
-    	rides.remove(rideId);
+    	eBikeService.endRide(rideId);
     }
     
     public Enumeration<EBike> getEBikes(){
-    	return bikes.elements();
+    	return eBikeService.getEBikes();
     }
         
     public Collection<User> getUsers(){
-    	return users.values();
+    	return eBikeService.getUsers();
     }
     
     public void refreshView() {
     	centralPanel.refresh();
     }
-        
 
     @Override
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.addEBikeButton) {
-	        JDialog d = new AddEBikeDialog(this);
+	        JDialog d = new AddEBikeDialog(this, eBikeService);
 	        d.setVisible(true);
         } else if (e.getSource() == this.addUserButton) {
-		    JDialog d = new AddUserDialog(this);
+		    JDialog d = new AddUserDialog(this, eBikeService);
 		    d.setVisible(true);
         } else if (e.getSource() == this.startRideButton) {
-	        JDialog d = new RideDialog(this);
+	        JDialog d = new RideDialog(this, eBikeService);
 	        d.setVisible(true);
         }
 	}
@@ -153,8 +112,8 @@ public class EBikeApp extends JFrame implements ActionListener {
 	private void log(String msg) {
 		System.out.println("[EBikeApp] " + msg);
 	}
-    
-    public static class VisualiserPanel extends JPanel {
+
+	public static class VisualiserPanel extends JPanel {
         private long dx;
         private long dy;
         private EBikeApp app;

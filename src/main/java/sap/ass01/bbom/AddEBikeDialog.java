@@ -5,33 +5,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * 
- * Courteously implemented by ChatGPT 
- * 
- * prompt: 
- * 
- * "Hello ChatGPT. Could you write me a Java class 
- *  implementing a JDialog with title "Adding E-Bike", 
- *  including "OK" and "Cancel" buttons, and some input fields, 
- *  namely: an id input field (with label "E-Bike ID"), 
- *  an x input field (with label "E-Bike location - X coord:") 
- *  and an y input field (with label "E-Bike location - Y coord:"). 
- *  Thanks a lot!"
- * 
- */
 public class AddEBikeDialog extends JDialog {
 
     private JTextField idField;
     private JTextField xCoordField;
     private JTextField yCoordField;
-    private JButton okButton;
-    private JButton cancelButton;
-    private EBikeApp app;
-    
-    public AddEBikeDialog(EBikeApp owner) {
+    private JButton okButton, cancelButton;
+    private EBikeService ebikeService;
+
+    public AddEBikeDialog(JFrame owner, EBikeService service) {
         super(owner, "Adding E-Bike", true);
-        this.app = owner;
+        this.ebikeService = service;
         initializeComponents();
         setupLayout();
         addEventHandlers();
@@ -69,11 +53,10 @@ public class AddEBikeDialog extends JDialog {
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Implement OK button behavior here
                 String id = idField.getText();
-                String xCoord = xCoordField.getText();
-                String yCoord = yCoordField.getText();
-                app.addEBike(id, new P2d(Integer.parseInt(xCoord), Integer.parseInt(yCoord)));
+                double xCoord = Double.parseDouble(xCoordField.getText());
+                double yCoord = Double.parseDouble(yCoordField.getText());
+                ebikeService.addEBike(id, new P2d(xCoord, yCoord));  // Use the service layer to add a bike
                 dispose();
             }
         });
@@ -83,13 +66,6 @@ public class AddEBikeDialog extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }
-        });
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            AddEBikeDialog dialog = new AddEBikeDialog(null);
-            dialog.setVisible(true);
         });
     }
 }

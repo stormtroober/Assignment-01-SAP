@@ -15,18 +15,18 @@ public class RideDialog extends JDialog {
     private JTextField userName;
     private JButton startButton;
     private JButton cancelButton;
-    private EBikeApp app;
+    private EBikeService service;
     private String userRiding;
     private String bikeId;
 
-    public RideDialog(EBikeApp owner) {
+    public RideDialog(EBikeApp owner, EBikeService service) {
         super(owner, "Start Riding an EBike", true);
         initializeComponents();
         setupLayout();
         addEventHandlers();
         pack();
         setLocationRelativeTo(owner);
-        app = owner;
+        this.service = service;
     }
 
     private void initializeComponents() {
@@ -59,7 +59,7 @@ public class RideDialog extends JDialog {
                 bikeId = idEBikeField.getText();
 	            userRiding = userName.getText();
 	            cancelButton.setEnabled(false);
-	            app.startNewRide(userRiding, bikeId);
+	            service.startNewRide(userRiding, bikeId);
 	            dispose();
             }
         });
@@ -74,7 +74,7 @@ public class RideDialog extends JDialog {
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-        	RideDialog dialog = new RideDialog(null);
+        	RideDialog dialog = new RideDialog(null, new EBikeService());
             dialog.setVisible(true);
         });
     }
