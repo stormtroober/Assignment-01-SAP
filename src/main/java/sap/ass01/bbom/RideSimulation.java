@@ -37,9 +37,19 @@ public class RideSimulation extends Thread {
 			l = b.getLocation();
 			if (l.x() > 200 || l.x() < -200) {
 				b.updateDirection(new V2d(-d.x(), d.y()));
+				if (l.x() > 200) {
+					b.updateLocation(new P2d(200, l.y()));
+				} else {
+					b.updateLocation(new P2d(-200, l.y()));
+				}
 			};
 			if (l.y() > 200 || l.y() < -200) {
 				b.updateDirection(new V2d(d.x(), -d.y()));
+				if (l.y() > 200) {
+					b.updateLocation(new P2d(l.x(), 200));
+				} else {
+					b.updateLocation(new P2d(l.x(), -200));
+				}
 			};
 			
 			/* change dir randomly */
