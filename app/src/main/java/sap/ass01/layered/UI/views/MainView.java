@@ -46,12 +46,18 @@ public class MainView extends JFrame implements ActionListener {
         if (e.getSource() == loginButton) {
             LoginDialog loginDialog = new LoginDialog(this);
             loginDialog.setVisible(true);
-            //TODO: Handle login action
-            JOptionPane.showMessageDialog(this, "Login button clicked");
+            loginDialog.getUserName().ifPresent(userName -> {
+                if (userName.equals("admin")) {
+                    new AdminView().display();
+                } else if (userName.equals("user")) {
+                    new UserView().display();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid username");
+                }
+                this.dispose();
+            });
         } else if (e.getSource() == registerButton) {
-            RegisterDialog registerDialog = new RegisterDialog(this);
-            registerDialog.setVisible(true);
-            //TODO: Handle register action
+            // Handle sign up action
             JOptionPane.showMessageDialog(this, "Register button clicked");
         }
     }

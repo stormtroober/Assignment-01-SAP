@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public class LoginDialog extends JDialog implements ActionListener {
 
-    private JTextField userCodeField;
+    private JTextField userNameField;
     private JButton loginButton, cancelButton;
-    private Optional<String> userCode = Optional.empty();
+    private Optional<String> userName = Optional.empty();
 
     public LoginDialog(JFrame parent) {
         super(parent, "Login", true);
@@ -21,9 +21,9 @@ public class LoginDialog extends JDialog implements ActionListener {
         setLayout(new BorderLayout());
 
         JPanel panel = new JPanel(new GridLayout(2, 2));
-        panel.add(new JLabel("User Code:"));
-        userCodeField = new JTextField();
-        panel.add(userCodeField);
+        panel.add(new JLabel("Username:"));
+        userNameField = new JTextField();
+        panel.add(userNameField);
 
         loginButton = new JButton("Login");
         loginButton.addActionListener(this);
@@ -44,20 +44,18 @@ public class LoginDialog extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
-            userCode = Optional.ofNullable(userCodeField.getText());
-            if (userCode.isPresent() && !userCode.get().isEmpty()) {
-                // Handle login logic here
-                JOptionPane.showMessageDialog(this, "Login successful");
+            userName = Optional.ofNullable(userNameField.getText());
+            if (userName.isPresent() && !userName.get().isEmpty()) {
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Please enter a valid user code");
+                JOptionPane.showMessageDialog(this, "Please enter a valid username");
             }
         } else if (e.getSource() == cancelButton) {
             dispose();
         }
     }
 
-    public Optional<String> getUserCode() {
-        return userCode;
+    public Optional<String> getUserName() {
+        return userName;
     }
 }
