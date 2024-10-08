@@ -18,6 +18,7 @@ import java.util.Optional;
 public class InMemoryUserRepository implements UserRepository {
 
     private final Gson gson = new Gson();
+    private final static File SAVE_FILE = new File("persistence/in_memory/users.json");
 
     @Override
     public Optional<UserDTO> findUserById(String userId) {
@@ -47,11 +48,6 @@ public class InMemoryUserRepository implements UserRepository {
                 }
             }
         }
-    }
-
-    @Override
-    public File getSaveFile() {
-        return SAVE_FILE;
     }
 
     @Override
