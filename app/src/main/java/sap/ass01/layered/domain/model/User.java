@@ -1,13 +1,19 @@
-package sap.ass01.layered.domain;
+package sap.ass01.layered.domain.model;
 
 public class User {
 
+
     private String id;
     private int credit;
+    public enum UserType {
+        USER, ADMIN
+    }
+    private UserType permission;
 
-    public User(String id) {
+    public User(String id, UserType permission) {
         this.id = id;
         this.credit = 0;
+        this.permission = permission;
     }
 
     public String getId() {
@@ -16,6 +22,10 @@ public class User {
 
     public int getCredit() {
         return credit;
+    }
+
+    public UserType getPermission() {
+        return permission;
     }
 
     public void rechargeCredit(int deltaCredit) {

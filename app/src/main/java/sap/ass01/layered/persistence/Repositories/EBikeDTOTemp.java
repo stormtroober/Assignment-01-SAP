@@ -1,8 +1,8 @@
-package sap.ass01.layered.persistence;
+package sap.ass01.layered.persistence.Repositories;
 
-import sap.ass01.layered.domain.EBike;
-import sap.ass01.layered.domain.P2d;
-import sap.ass01.layered.domain.V2d;
+//import sap.ass01.layered.domain.EBike;
+//import sap.ass01.layered.domain.P2d;
+//import sap.ass01.layered.domain.V2d;
 
 public class EBikeDTOTemp {
     private String id;

@@ -1,7 +1,4 @@
-package sap.ass01.layered.domain;
-
-import sap.ass01.layered.domain.P2d;
-import sap.ass01.layered.domain.V2d;
+package sap.ass01.layered.domain.model;
 
 public class EBike {
 

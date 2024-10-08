@@ -1,4 +1,4 @@
-package sap.ass01.layered.domain;
+package sap.ass01.layered.domain.model;
 
 public class V2d implements java.io.Serializable {
 

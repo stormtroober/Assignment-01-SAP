@@ -1,7 +1,7 @@
 package sap.ass01.layered.persistence.inMemory;
 
-import sap.ass01.layered.domain.EBike;
-import sap.ass01.layered.persistence.EBikeDTOTemp;
+//import sap.ass01.layered.domain.EBike;
+import sap.ass01.layered.persistence.Repositories.EBikeDTOTemp;
 import sap.ass01.layered.persistence.Repositories.EBikeRepository;
 
 import java.util.List;

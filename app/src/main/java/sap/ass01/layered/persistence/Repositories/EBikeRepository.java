@@ -1,7 +1,5 @@
 package sap.ass01.layered.persistence.Repositories;
 
-import sap.ass01.layered.persistence.EBikeDTOTemp;
-
 import java.util.List;
 
 public interface EBikeRepository {
