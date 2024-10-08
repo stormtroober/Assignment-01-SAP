@@ -1,7 +1,7 @@
 package sap.ass01.layered.persistence.inMemory;
 
 import sap.ass01.layered.persistence.DTO.RideDTO;
-import sap.ass01.layered.persistence.Repositories.RideRepository;
+import sap.ass01.layered.persistence.repository.RideRepository;
 
 import java.util.List;
 

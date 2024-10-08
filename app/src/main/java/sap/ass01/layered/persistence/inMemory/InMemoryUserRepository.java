@@ -3,7 +3,7 @@ package sap.ass01.layered.persistence.inMemory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import sap.ass01.layered.persistence.DTO.UserDTO;
-import sap.ass01.layered.persistence.Repositories.UserRepository;
+import sap.ass01.layered.persistence.repository.UserRepository;
 
 import java.io.File;
 import java.io.FileReader;

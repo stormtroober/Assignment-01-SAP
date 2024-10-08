@@ -1,4 +1,4 @@
-package sap.ass01.layered.persistence.Repositories;
+package sap.ass01.layered.persistence.repository;
 
 import sap.ass01.layered.persistence.DTO.RideDTO;
 
