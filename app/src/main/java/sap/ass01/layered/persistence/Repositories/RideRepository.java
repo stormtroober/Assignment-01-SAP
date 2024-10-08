@@ -1,11 +1,12 @@
 package sap.ass01.layered.persistence.Repositories;
-import sap.ass01.layered.persistence.RideDTOTemp;
+
+import sap.ass01.layered.persistence.DTO.RideDTO;
 
 import java.util.List;
 
 public interface RideRepository {
-    RideDTOTemp findRideById(int rideId);
-    List<RideDTOTemp> findAllRides();
-    void saveRide(RideDTOTemp ride);
-    void updateRide(RideDTOTemp ride);
+    RideDTO findRideById(int rideId);
+    List<RideDTO> findAllRides();
+    void saveRide(RideDTO ride);
+    void updateRide(RideDTO ride);
 }
