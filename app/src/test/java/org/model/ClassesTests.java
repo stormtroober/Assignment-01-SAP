@@ -3,32 +3,32 @@ package org.model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import sap.ass01.layered.domain.*;
+import sap.ass01.layered.domain.model.*;
 
 public class ClassesTests {
 
     @Test
     public void testUserId(){
-        User user = new User("1");
+        User user = new User("1", User.UserType.USER);
         assertEquals("1", user.getId());
     }
 
     @Test
     public void testUserCredit(){
-        User user = new User("1");
+        User user = new User("1", User.UserType.USER);
         assertEquals(0, user.getCredit());
     }
 
     @Test
     public void testToString(){
-        User user = new User("1");
+        User user = new User("1", User.UserType.USER);
         String expected = "{ id: 1, credit: 0 }";
         assertEquals(expected, user.toString(), "toString should return a string representation of the user");
     }
 
     @Test
     public void testUserIdImmutability(){
-        User user = new User("1");
+        User user = new User("1", User.UserType.USER);
         String initialId = user.getId();
         assertEquals(initialId, user.getId(), "User id should be immutable");
     }
@@ -66,7 +66,7 @@ public class ClassesTests {
 
     @Test
     public void testUserCorrespondsToEBikeDuringTheRide() {
-        User user = new User("1");
+        User user = new User("1", User.UserType.USER);
         EBike ebike = new EBike("1");
         Ride ride = new Ride("1", user, ebike);
         assertSame(user, ride.getUser(), "The user should correspond to the user that took the bike");
@@ -75,7 +75,7 @@ public class ClassesTests {
 
     @Test
     public void testRideStartDate() {
-        User user = new User("1");
+        User user = new User("1", User.UserType.USER);
         EBike ebike = new EBike("1");
         Ride ride = new Ride("1", user, ebike);
         assertNotNull(ride.getStartedDate(), "The start date should not be null");
@@ -83,7 +83,7 @@ public class ClassesTests {
 
     @Test
     public void testRideEndDateInitiallyEmpty() {
-        User user = new User("1");
+        User user = new User("1", User.UserType.USER);
         EBike ebike = new EBike("1");
         Ride ride = new Ride("1", user, ebike);
         assertTrue(ride.getEndDate().isEmpty(), "The end date should be empty initially");
