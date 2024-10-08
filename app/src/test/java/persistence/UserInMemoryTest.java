@@ -4,9 +4,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sap.ass01.layered.persistence.DTO.UserDTO;
-import sap.ass01.layered.persistence.Repositories.DatabaseType;
-import sap.ass01.layered.persistence.Repositories.UserRepository;
-import sap.ass01.layered.persistence.Repositories.UserRepositoryFactory;
+import sap.ass01.layered.persistence.repository.DatabaseType;
+import sap.ass01.layered.persistence.repository.UserRepository;
+import sap.ass01.layered.persistence.repository.factory.UserRepositoryFactory;
 
 import java.io.File;
 import java.util.List;
