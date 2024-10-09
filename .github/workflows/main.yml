@@ -28,10 +28,10 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD:
+          MYSQL_ROOT_PASSWORD: ''
           MYSQL_DATABASE: ebikeDB
           MYSQL_USER: root
-          MYSQL_PASSWORD:
+          MYSQL_PASSWORD: ''
         options: >-
           --health-cmd "mysqladmin ping --silent"
           --health-interval 10s
@@ -62,4 +62,4 @@ jobs:
           MONGODB_URI: mongodb://localhost:27017
           MYSQL_URL: jdbc:mysql://localhost:3306/ebikeDB
           MYSQL_USER: root
-          MYSQL_PASSWORD:
+          MYSQL_PASSWORD: ''
