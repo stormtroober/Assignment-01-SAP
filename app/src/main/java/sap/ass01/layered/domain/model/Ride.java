@@ -12,35 +12,35 @@ public class Ride {
     private boolean ongoing;
     private String id;
 
-
     public Ride(String id, User user, EBike ebike) {
         this.id = id;
         this.startedDate = new Date();
         this.endDate = Optional.empty();
         this.user = user;
         this.ebike = ebike;
+        this.ongoing = false;
     }
 
     public String getId() {
         return id;
     }
 
-    /*public void start() {
+    public void start() {
         ongoing = true;
     }
 
     public void end() {
         endDate = Optional.of(new Date());
         ongoing = false;
-    }*/
+    }
+
+    public boolean isOngoing() {
+        return this.ongoing;
+    }
 
     public Date getStartedDate() {
         return startedDate;
     }
-
-    /*public boolean isOngoing() {
-        return this.ongoing;
-    }*/
 
     public Optional<Date> getEndDate() {
         return endDate;
@@ -56,9 +56,5 @@ public class Ride {
 
     public String toString() {
         return "{ id: " + this.id + ", user: " + user.getId() + ", bike: " + ebike.getId() + " }";
-    }
-
-    public boolean isOngoing() {
-        return this.ongoing;
     }
 }
