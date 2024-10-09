@@ -30,8 +30,8 @@ jobs:
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
           MYSQL_DATABASE: ebikeDB
-          MYSQL_USER: root
-          MYSQL_PASSWORD: ''
+          MYSQL_USER: ebikeUser
+          MYSQL_PASSWORD: password
         options: >-
           --health-cmd "mysqladmin ping --silent"
           --health-interval 10s
@@ -61,5 +61,5 @@ jobs:
         env:
           MONGODB_URI: mongodb://localhost:27017
           MYSQL_URL: jdbc:mysql://localhost:3306/ebikeDB
-          MYSQL_USER: root
-          MYSQL_PASSWORD: ''
+          MYSQL_USER: ebikeUser
+          MYSQL_PASSWORD: password
