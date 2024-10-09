@@ -55,7 +55,7 @@ public class MongoUserRepository implements UserRepository {
     @Override
     public void updateUser(UserDTO user) {
         Document doc = userToDocument(user);
-        collection.replaceOne(eq("id", user.getId()), doc);
+        collection.replaceOne(eq("id", user.id()), doc);
     }
 
     @Override
@@ -72,8 +72,8 @@ public class MongoUserRepository implements UserRepository {
     }
 
     private Document userToDocument(UserDTO user) {
-        return new Document("id", user.getId())
-                .append("credit", user.getCredit())
-                .append("permission", user.getPermission());
+        return new Document("id", user.id())
+                .append("credit", user.credit())
+                .append("permission", user.permission());
     }
 }

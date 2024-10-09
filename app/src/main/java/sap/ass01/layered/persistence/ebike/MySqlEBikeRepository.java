@@ -82,14 +82,14 @@ public class MySqlEBikeRepository implements EBikeRepository {
     public void updateEBike(EBikeDTO ebike) {
         String updateSQL = "UPDATE ebikes SET state = ?, x = ?, y = ?, directionX = ?, directionY = ?, speed = ?, batteryLevel = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(updateSQL)) {
-            pstmt.setString(1, ebike.getState());
-            pstmt.setDouble(2, ebike.getX());
-            pstmt.setDouble(3, ebike.getY());
-            pstmt.setDouble(4, ebike.getDirectionX());
-            pstmt.setDouble(5, ebike.getDirectionY());
-            pstmt.setDouble(6, ebike.getSpeed());
-            pstmt.setInt(7, ebike.getBatteryLevel());
-            pstmt.setString(8, ebike.getId());
+            pstmt.setString(1, ebike.state());
+            pstmt.setDouble(2, ebike.x());
+            pstmt.setDouble(3, ebike.y());
+            pstmt.setDouble(4, ebike.directionX());
+            pstmt.setDouble(5, ebike.directionY());
+            pstmt.setDouble(6, ebike.speed());
+            pstmt.setInt(7, ebike.batteryLevel());
+            pstmt.setString(8, ebike.id());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,14 +100,14 @@ public class MySqlEBikeRepository implements EBikeRepository {
     public void saveEBike(EBikeDTO ebike) {
         String insertSQL = "INSERT INTO ebikes (id, state, x, y, directionX, directionY, speed, batteryLevel) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
-            pstmt.setString(1, ebike.getId());
-            pstmt.setString(2, ebike.getState());
-            pstmt.setDouble(3, ebike.getX());
-            pstmt.setDouble(4, ebike.getY());
-            pstmt.setDouble(5, ebike.getDirectionX());
-            pstmt.setDouble(6, ebike.getDirectionY());
-            pstmt.setDouble(7, ebike.getSpeed());
-            pstmt.setInt(8, ebike.getBatteryLevel());
+            pstmt.setString(1, ebike.id());
+            pstmt.setString(2, ebike.state());
+            pstmt.setDouble(3, ebike.x());
+            pstmt.setDouble(4, ebike.y());
+            pstmt.setDouble(5, ebike.directionX());
+            pstmt.setDouble(6, ebike.directionY());
+            pstmt.setDouble(7, ebike.speed());
+            pstmt.setInt(8, ebike.batteryLevel());
             pstmt.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             System.out.println("Trying to put a duplicate ebike in the database");

@@ -68,9 +68,9 @@ public class MySQLUserRepository implements UserRepository {
     public void saveUser(UserDTO user) {
         String insertSQL = "INSERT INTO users (id, credit, permission) VALUES (?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
-            pstmt.setString(1, user.getId());
-            pstmt.setInt(2, user.getCredit());
-            pstmt.setString(3, user.getPermission());
+            pstmt.setString(1, user.id());
+            pstmt.setInt(2, user.credit());
+            pstmt.setString(3, user.permission());
             pstmt.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             System.out.println("Trying to put a duplicate user in the database");
@@ -83,9 +83,9 @@ public class MySQLUserRepository implements UserRepository {
     public void updateUser(UserDTO user) {
         String updateSQL = "UPDATE users SET credit = ?, permission = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(updateSQL)) {
-            pstmt.setInt(1, user.getCredit());
-            pstmt.setString(2, user.getPermission());
-            pstmt.setString(3, user.getId());
+            pstmt.setInt(1, user.credit());
+            pstmt.setString(2, user.permission());
+            pstmt.setString(3, user.id());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

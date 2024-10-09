@@ -35,9 +35,9 @@ public abstract class AbstractUserRepositoryTest {
         Optional<UserDTO> retrievedUserOptional = userRepository.findUserById("1");
         assertTrue(retrievedUserOptional.isPresent(), "User should be found by ID");
         UserDTO retrievedUser = retrievedUserOptional.get();
-        assertEquals("1", retrievedUser.getId(), "User ID should match");
-        assertEquals(100, retrievedUser.getCredit(), "User credit should match");
-        assertEquals("USER", retrievedUser.getPermission(), "User permission should match");
+        assertEquals("1", retrievedUser.id(), "User ID should match");
+        assertEquals(100, retrievedUser.credit(), "User credit should match");
+        assertEquals("USER", retrievedUser.permission(), "User permission should match");
     }
 
     @Test
@@ -49,9 +49,9 @@ public abstract class AbstractUserRepositoryTest {
 
         List<UserDTO> users = userRepository.findAllUsers();
         assertEquals(1, users.size(), "There should be only one user in the repository");
-        assertEquals("1", users.get(0).getId(), "User ID should match");
-        assertEquals(100, users.get(0).getCredit(), "User credit should match the first user");
-        assertEquals("USER", users.get(0).getPermission(), "User permission should match the first user");
+        assertEquals("1", users.get(0).id(), "User ID should match");
+        assertEquals(100, users.get(0).credit(), "User credit should match the first user");
+        assertEquals("USER", users.get(0).permission(), "User permission should match the first user");
     }
 
     @Test
@@ -61,9 +61,9 @@ public abstract class AbstractUserRepositoryTest {
         Optional<UserDTO> retrievedUserOptional = userRepository.findUserById("1");
         assertTrue(retrievedUserOptional.isPresent(), "User should be found by ID");
         UserDTO retrievedUser = retrievedUserOptional.get();
-        assertEquals("1", retrievedUser.getId(), "User ID should match");
-        assertEquals(100, retrievedUser.getCredit(), "User credit should match");
-        assertEquals("USER", retrievedUser.getPermission(), "User permission should match");
+        assertEquals("1", retrievedUser.id(), "User ID should match");
+        assertEquals(100, retrievedUser.credit(), "User credit should match");
+        assertEquals("USER", retrievedUser.permission(), "User permission should match");
     }
 
     @Test
@@ -75,8 +75,8 @@ public abstract class AbstractUserRepositoryTest {
 
         List<UserDTO> users = userRepository.findAllUsers();
         assertEquals(2, users.size(), "There should be two users in the repository");
-        assertTrue(users.stream().anyMatch(user -> user.getId().equals("1")), "User with ID 1 should be present");
-        assertTrue(users.stream().anyMatch(user -> user.getId().equals("2")), "User with ID 2 should be present");
+        assertTrue(users.stream().anyMatch(user -> user.id().equals("1")), "User with ID 1 should be present");
+        assertTrue(users.stream().anyMatch(user -> user.id().equals("2")), "User with ID 2 should be present");
     }
 
     @Test
@@ -90,8 +90,8 @@ public abstract class AbstractUserRepositoryTest {
         Optional<UserDTO> retrievedUserOptional = userRepository.findUserById("1");
         assertTrue(retrievedUserOptional.isPresent(), "User should be found by ID");
         UserDTO retrievedUser = retrievedUserOptional.get();
-        assertEquals("1", retrievedUser.getId(), "User ID should match");
-        assertEquals(200, retrievedUser.getCredit(), "User credit should match updated value");
-        assertEquals("ADMIN", retrievedUser.getPermission(), "User permission should match updated value");
+        assertEquals("1", retrievedUser.id(), "User ID should match");
+        assertEquals(200, retrievedUser.credit(), "User credit should match updated value");
+        assertEquals("ADMIN", retrievedUser.permission(), "User permission should match updated value");
     }
 }
