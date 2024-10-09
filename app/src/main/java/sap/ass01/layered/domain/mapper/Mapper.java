@@ -12,7 +12,7 @@ public class Mapper {
     }
 
     public static User toUser(UserDTO userDTO) {
-        return new User(userDTO.getId(), User.UserType.valueOf(userDTO.getPermission()));
+        return new User(userDTO.id(), User.UserType.valueOf(userDTO.permission()));
     }
 
     public static EBikeDTO toEBikeDTO(EBike ebike) {
@@ -29,11 +29,11 @@ public class Mapper {
     }
 
     public static EBike toEBike(EBikeDTO ebikeDTO) {
-        EBike ebike = new EBike(ebikeDTO.getId());
-        ebike.updateState(EBike.EBikeState.valueOf(ebikeDTO.getState()));
-        ebike.updateLocation(new P2d(ebikeDTO.getX(), ebikeDTO.getY()));
-        ebike.updateDirection(new V2d(ebikeDTO.getDirectionX(), ebikeDTO.getDirectionY()));
-        ebike.updateSpeed(ebikeDTO.getSpeed());
+        EBike ebike = new EBike(ebikeDTO.id(), ebikeDTO.x(), ebikeDTO.y());
+        ebike.updateState(EBike.EBikeState.valueOf(ebikeDTO.state()));
+        ebike.updateLocation(new P2d(ebikeDTO.x(), ebikeDTO.y()));
+        ebike.updateDirection(new V2d(ebikeDTO.directionX(), ebikeDTO.directionY()));
+        ebike.updateSpeed(ebikeDTO.speed());
         return ebike;
     }
 
@@ -48,6 +48,6 @@ public class Mapper {
     }
 
     public static Ride toRide(RideDTO rideDTO, User user, EBike ebike) {
-        return new Ride(rideDTO.getId(), user, ebike);
+        return new Ride(rideDTO.id(), user, ebike);
     }
 }

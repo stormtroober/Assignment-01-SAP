@@ -57,7 +57,7 @@ public class MongoRideRepository implements RideRepository {
     @Override
     public void updateRide(RideDTO ride) {
         Document doc = rideToDocument(ride);
-        collection.replaceOne(eq("id", ride.getId()), doc);
+        collection.replaceOne(eq("id", ride.id()), doc);
     }
 
     @Override
@@ -76,19 +76,19 @@ public class MongoRideRepository implements RideRepository {
     }
 
     private Document rideToDocument(RideDTO ride) {
-        return new Document("id", ride.getId())
-                .append("userId", ride.getUser().getId())
-                .append("userCredit", ride.getUser().getCredit())
-                .append("userPermission", ride.getUser().getPermission())
-                .append("ebikeId", ride.getEbike().getId())
-                .append("ebikeState", ride.getEbike().getState())
-                .append("ebikeX", ride.getEbike().getX())
-                .append("ebikeY", ride.getEbike().getY())
-                .append("ebikeDirectionX", ride.getEbike().getDirectionX())
-                .append("ebikeDirectionY", ride.getEbike().getDirectionY())
-                .append("ebikeSpeed", ride.getEbike().getSpeed())
-                .append("ebikeBatteryLevel", ride.getEbike().getBatteryLevel())
-                .append("startedDate", ride.getStartedDate())
-                .append("endDate", ride.getEndDate().orElse(null));
+        return new Document("id", ride.id())
+                .append("userId", ride.user().id())
+                .append("userCredit", ride.user().credit())
+                .append("userPermission", ride.user().permission())
+                .append("ebikeId", ride.EBike().id())
+                .append("ebikeState", ride.EBike().state())
+                .append("ebikeX", ride.EBike().x())
+                .append("ebikeY", ride.EBike().y())
+                .append("ebikeDirectionX", ride.EBike().directionX())
+                .append("ebikeDirectionY", ride.EBike().directionY())
+                .append("ebikeSpeed", ride.EBike().speed())
+                .append("ebikeBatteryLevel", ride.EBike().batteryLevel())
+                .append("startedDate", ride.startedDate())
+                .append("endDate", ride.endDate().orElse(null));
     }
 }

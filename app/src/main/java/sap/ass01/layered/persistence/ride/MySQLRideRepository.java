@@ -81,20 +81,20 @@ public class MySQLRideRepository implements RideRepository {
     public void saveRide(RideDTO ride) {
         String insertSQL = "INSERT INTO rides (id, userId, userCredit, userPermission, ebikeId, ebikeState, ebikeX, ebikeY, ebikeDirectionX, ebikeDirectionY, ebikeSpeed, ebikeBatteryLevel, startedDate, endDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
-            pstmt.setString(1, ride.getId());
-            pstmt.setString(2, ride.getUser().getId());
-            pstmt.setInt(3, ride.getUser().getCredit());
-            pstmt.setString(4, ride.getUser().getPermission());
-            pstmt.setString(5, ride.getEbike().getId());
-            pstmt.setString(6, ride.getEbike().getState());
-            pstmt.setDouble(7, ride.getEbike().getX());
-            pstmt.setDouble(8, ride.getEbike().getY());
-            pstmt.setDouble(9, ride.getEbike().getDirectionX());
-            pstmt.setDouble(10, ride.getEbike().getDirectionY());
-            pstmt.setDouble(11, ride.getEbike().getSpeed());
-            pstmt.setInt(12, ride.getEbike().getBatteryLevel());
-            pstmt.setTimestamp(13, new Timestamp(ride.getStartedDate().getTime()));
-            pstmt.setTimestamp(14, ride.getEndDate().map(date -> new Timestamp(date.getTime())).orElse(null));
+            pstmt.setString(1, ride.id());
+            pstmt.setString(2, ride.user().id());
+            pstmt.setInt(3, ride.user().credit());
+            pstmt.setString(4, ride.user().permission());
+            pstmt.setString(5, ride.EBike().id());
+            pstmt.setString(6, ride.EBike().state());
+            pstmt.setDouble(7, ride.EBike().x());
+            pstmt.setDouble(8, ride.EBike().y());
+            pstmt.setDouble(9, ride.EBike().directionX());
+            pstmt.setDouble(10, ride.EBike().directionY());
+            pstmt.setDouble(11, ride.EBike().speed());
+            pstmt.setInt(12, ride.EBike().batteryLevel());
+            pstmt.setTimestamp(13, new Timestamp(ride.startedDate().getTime()));
+            pstmt.setTimestamp(14, ride.endDate().map(date -> new Timestamp(date.getTime())).orElse(null));
             pstmt.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             System.out.println("Trying to put a duplicate ride in the database");
@@ -107,20 +107,20 @@ public class MySQLRideRepository implements RideRepository {
     public void updateRide(RideDTO ride) {
         String updateSQL = "UPDATE rides SET userId = ?, userCredit = ?, userPermission = ?, ebikeId = ?, ebikeState = ?, ebikeX = ?, ebikeY = ?, ebikeDirectionX = ?, ebikeDirectionY = ?, ebikeSpeed = ?, ebikeBatteryLevel = ?, startedDate = ?, endDate = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(updateSQL)) {
-            pstmt.setString(1, ride.getUser().getId());
-            pstmt.setInt(2, ride.getUser().getCredit());
-            pstmt.setString(3, ride.getUser().getPermission());
-            pstmt.setString(4, ride.getEbike().getId());
-            pstmt.setString(5, ride.getEbike().getState());
-            pstmt.setDouble(6, ride.getEbike().getX());
-            pstmt.setDouble(7, ride.getEbike().getY());
-            pstmt.setDouble(8, ride.getEbike().getDirectionX());
-            pstmt.setDouble(9, ride.getEbike().getDirectionY());
-            pstmt.setDouble(10, ride.getEbike().getSpeed());
-            pstmt.setInt(11, ride.getEbike().getBatteryLevel());
-            pstmt.setTimestamp(12, new Timestamp(ride.getStartedDate().getTime()));
-            pstmt.setTimestamp(13, ride.getEndDate().map(date -> new Timestamp(date.getTime())).orElse(null));
-            pstmt.setString(14, ride.getId());
+            pstmt.setString(1, ride.user().id());
+            pstmt.setInt(2, ride.user().credit());
+            pstmt.setString(3, ride.user().permission());
+            pstmt.setString(4, ride.EBike().id());
+            pstmt.setString(5, ride.EBike().state());
+            pstmt.setDouble(6, ride.EBike().x());
+            pstmt.setDouble(7, ride.EBike().y());
+            pstmt.setDouble(8, ride.EBike().directionX());
+            pstmt.setDouble(9, ride.EBike().directionY());
+            pstmt.setDouble(10, ride.EBike().speed());
+            pstmt.setInt(11, ride.EBike().batteryLevel());
+            pstmt.setTimestamp(12, new Timestamp(ride.startedDate().getTime()));
+            pstmt.setTimestamp(13, ride.endDate().map(date -> new Timestamp(date.getTime())).orElse(null));
+            pstmt.setString(14, ride.id());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

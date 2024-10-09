@@ -49,7 +49,7 @@ public class MongoEBikeRepository implements EBikeRepository {
     @Override
     public void updateEBike(EBikeDTO ebike) {
         Document doc = ebikeToDocument(ebike);
-        collection.replaceOne(eq("id", ebike.getId()), doc);
+        collection.replaceOne(eq("id", ebike.id()), doc);
     }
 
     @Override
@@ -76,13 +76,13 @@ public class MongoEBikeRepository implements EBikeRepository {
     }
 
     private Document ebikeToDocument(EBikeDTO ebike) {
-        return new Document("id", ebike.getId())
-                .append("state", ebike.getState())
-                .append("x", ebike.getX())
-                .append("y", ebike.getY())
-                .append("directionX", ebike.getDirectionX())
-                .append("directionY", ebike.getDirectionY())
-                .append("speed", ebike.getSpeed())
-                .append("batteryLevel", ebike.getBatteryLevel());
+        return new Document("id", ebike.id())
+                .append("state", ebike.state())
+                .append("x", ebike.x())
+                .append("y", ebike.y())
+                .append("directionX", ebike.directionX())
+                .append("directionY", ebike.directionY())
+                .append("speed", ebike.speed())
+                .append("batteryLevel", ebike.batteryLevel());
     }
 }

@@ -25,7 +25,7 @@ public class DiskEBikeRepository implements EBikeRepository {
         if (SAVE_FILE.exists()) {
             List<EBikeDTO> ebikes = readEBikesFromFile();
             return ebikes.stream()
-                    .filter(ebike -> Objects.equals(ebike.getId(), ebikeId))
+                    .filter(ebike -> Objects.equals(ebike.id(), ebikeId))
                     .findFirst();
         }
         return Optional.empty();
@@ -41,7 +41,7 @@ public class DiskEBikeRepository implements EBikeRepository {
         if (SAVE_FILE.exists()) {
             List<EBikeDTO> ebikes = readEBikesFromFile();
             for (int i = 0; i < ebikes.size(); i++) {
-                if (Objects.equals(ebikes.get(i).getId(), ebike.getId())) {
+                if (Objects.equals(ebikes.get(i).id(), ebike.id())) {
                     ebikes.set(i, ebike);
                     writeEBikesToFile(ebikes);
                     return;
@@ -62,7 +62,7 @@ public class DiskEBikeRepository implements EBikeRepository {
         if (SAVE_FILE.exists()) {
             List<EBikeDTO> ebikes = readEBikesFromFile();
             boolean ebikeExists = ebikes.stream()
-                    .anyMatch(existingEBike -> Objects.equals(existingEBike.getId(), ebike.getId()));
+                    .anyMatch(existingEBike -> Objects.equals(existingEBike.id(), ebike.id()));
 
             if (!ebikeExists) {
                 ebikes.add(ebike);

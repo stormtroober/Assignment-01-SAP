@@ -25,7 +25,7 @@ public class DiskUserRepository implements UserRepository {
         if(SAVE_FILE.exists()){
             List<UserDTO> users = readUsersFromFile();
             return users.stream()
-                    .filter(user -> Objects.equals(user.getId(), userId))
+                    .filter(user -> Objects.equals(user.id(), userId))
                     .findFirst();
         }
         return Optional.empty();
@@ -41,7 +41,7 @@ public class DiskUserRepository implements UserRepository {
         if (SAVE_FILE.exists()) {
             List<UserDTO> users = readUsersFromFile();
             for (int i = 0; i < users.size(); i++) {
-                if (Objects.equals(users.get(i).getId(), user.getId())) {
+                if (Objects.equals(users.get(i).id(), user.id())) {
                     users.set(i, user);
                     writeUsersToFile(users);
                     return;
@@ -62,7 +62,7 @@ public class DiskUserRepository implements UserRepository {
         if(SAVE_FILE.exists()){
             List<UserDTO> users = readUsersFromFile();
             boolean userExists = users.stream()
-                    .anyMatch(existingUser -> Objects.equals(existingUser.getId(), user.getId()));
+                    .anyMatch(existingUser -> Objects.equals(existingUser.id(), user.id()));
 
             if (!userExists) {
                 users.add(user);

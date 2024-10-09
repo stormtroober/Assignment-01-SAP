@@ -10,10 +10,10 @@ public class EBike {
     private double speed;
     private int batteryLevel;  /* 0..100 */
 
-    public EBike(String id) {
+    public EBike(String id, double x, double y) {
         this.id = id;
         this.state = EBikeState.AVAILABLE;
-        this.loc = new P2d(0,0);
+        this.loc = new P2d(x, y);
         direction = new V2d(1,0);
         speed = 0;
     }

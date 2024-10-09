@@ -28,14 +28,14 @@ public abstract class AbstractEBikeRepositoryTest {
         Optional<EBikeDTO> retrievedEBikeOptional = ebikeRepository.findEBikeById("1");
         assertTrue(retrievedEBikeOptional.isPresent(), "EBike should be found by ID");
         EBikeDTO retrievedEBike = retrievedEBikeOptional.get();
-        assertEquals("1", retrievedEBike.getId(), "EBike ID should match");
-        assertEquals("ACTIVE", retrievedEBike.getState(), "EBike state should match");
-        assertEquals(10.0, retrievedEBike.getX(), "EBike X coordinate should match");
-        assertEquals(20.0, retrievedEBike.getY(), "EBike Y coordinate should match");
-        assertEquals(1.0, retrievedEBike.getDirectionX(), "EBike directionX should match");
-        assertEquals(0.0, retrievedEBike.getDirectionY(), "EBike directionY should match");
-        assertEquals(50.0, retrievedEBike.getSpeed(), "EBike speed should match");
-        assertEquals(80, retrievedEBike.getBatteryLevel(), "EBike battery level should match");
+        assertEquals("1", retrievedEBike.id(), "EBike ID should match");
+        assertEquals("ACTIVE", retrievedEBike.state(), "EBike state should match");
+        assertEquals(10.0, retrievedEBike.x(), "EBike X coordinate should match");
+        assertEquals(20.0, retrievedEBike.y(), "EBike Y coordinate should match");
+        assertEquals(1.0, retrievedEBike.directionX(), "EBike directionX should match");
+        assertEquals(0.0, retrievedEBike.directionY(), "EBike directionY should match");
+        assertEquals(50.0, retrievedEBike.speed(), "EBike speed should match");
+        assertEquals(80, retrievedEBike.batteryLevel(), "EBike battery level should match");
     }
 
     @Test
@@ -47,14 +47,14 @@ public abstract class AbstractEBikeRepositoryTest {
 
         List<EBikeDTO> ebikes = ebikeRepository.findAllEBikes();
         assertEquals(1, ebikes.size(), "There should be only one ebike in the repository");
-        assertEquals("1", ebikes.get(0).getId(), "EBike ID should match");
-        assertEquals("ACTIVE", ebikes.get(0).getState(), "EBike state should match the first ebike");
-        assertEquals(10.0, ebikes.get(0).getX(), "EBike X coordinate should match the first ebike");
-        assertEquals(20.0, ebikes.get(0).getY(), "EBike Y coordinate should match the first ebike");
-        assertEquals(1.0, ebikes.get(0).getDirectionX(), "EBike directionX should match the first ebike");
-        assertEquals(0.0, ebikes.get(0).getDirectionY(), "EBike directionY should match the first ebike");
-        assertEquals(50.0, ebikes.get(0).getSpeed(), "EBike speed should match the first ebike");
-        assertEquals(80, ebikes.get(0).getBatteryLevel(), "EBike battery level should match the first ebike");
+        assertEquals("1", ebikes.get(0).id(), "EBike ID should match");
+        assertEquals("ACTIVE", ebikes.get(0).state(), "EBike state should match the first ebike");
+        assertEquals(10.0, ebikes.get(0).x(), "EBike X coordinate should match the first ebike");
+        assertEquals(20.0, ebikes.get(0).y(), "EBike Y coordinate should match the first ebike");
+        assertEquals(1.0, ebikes.get(0).directionX(), "EBike directionX should match the first ebike");
+        assertEquals(0.0, ebikes.get(0).directionY(), "EBike directionY should match the first ebike");
+        assertEquals(50.0, ebikes.get(0).speed(), "EBike speed should match the first ebike");
+        assertEquals(80, ebikes.get(0).batteryLevel(), "EBike battery level should match the first ebike");
     }
 
     @Test
@@ -64,14 +64,14 @@ public abstract class AbstractEBikeRepositoryTest {
         Optional<EBikeDTO> retrievedEBikeOptional = ebikeRepository.findEBikeById("1");
         assertTrue(retrievedEBikeOptional.isPresent(), "EBike should be found by ID");
         EBikeDTO retrievedEBike = retrievedEBikeOptional.get();
-        assertEquals("1", retrievedEBike.getId(), "EBike ID should match");
-        assertEquals("ACTIVE", retrievedEBike.getState(), "EBike state should match");
-        assertEquals(10.0, retrievedEBike.getX(), "EBike X coordinate should match");
-        assertEquals(20.0, retrievedEBike.getY(), "EBike Y coordinate should match");
-        assertEquals(1.0, retrievedEBike.getDirectionX(), "EBike directionX should match");
-        assertEquals(0.0, retrievedEBike.getDirectionY(), "EBike directionY should match");
-        assertEquals(50.0, retrievedEBike.getSpeed(), "EBike speed should match");
-        assertEquals(80, retrievedEBike.getBatteryLevel(), "EBike battery level should match");
+        assertEquals("1", retrievedEBike.id(), "EBike ID should match");
+        assertEquals("ACTIVE", retrievedEBike.state(), "EBike state should match");
+        assertEquals(10.0, retrievedEBike.x(), "EBike X coordinate should match");
+        assertEquals(20.0, retrievedEBike.y(), "EBike Y coordinate should match");
+        assertEquals(1.0, retrievedEBike.directionX(), "EBike directionX should match");
+        assertEquals(0.0, retrievedEBike.directionY(), "EBike directionY should match");
+        assertEquals(50.0, retrievedEBike.speed(), "EBike speed should match");
+        assertEquals(80, retrievedEBike.batteryLevel(), "EBike battery level should match");
     }
 
     @Test
@@ -83,8 +83,8 @@ public abstract class AbstractEBikeRepositoryTest {
 
         List<EBikeDTO> ebikes = ebikeRepository.findAllEBikes();
         assertEquals(2, ebikes.size(), "There should be two ebikes in the repository");
-        assertTrue(ebikes.stream().anyMatch(ebike -> ebike.getId().equals("1")), "EBike with ID 1 should be present");
-        assertTrue(ebikes.stream().anyMatch(ebike -> ebike.getId().equals("2")), "EBike with ID 2 should be present");
+        assertTrue(ebikes.stream().anyMatch(ebike -> ebike.id().equals("1")), "EBike with ID 1 should be present");
+        assertTrue(ebikes.stream().anyMatch(ebike -> ebike.id().equals("2")), "EBike with ID 2 should be present");
     }
 
     @Test
@@ -98,13 +98,13 @@ public abstract class AbstractEBikeRepositoryTest {
         Optional<EBikeDTO> retrievedEBikeOptional = ebikeRepository.findEBikeById("1");
         assertTrue(retrievedEBikeOptional.isPresent(), "EBike should be found by ID");
         EBikeDTO retrievedEBike = retrievedEBikeOptional.get();
-        assertEquals("1", retrievedEBike.getId(), "EBike ID should match");
-        assertEquals("INACTIVE", retrievedEBike.getState(), "EBike state should match updated value");
-        assertEquals(15.0, retrievedEBike.getX(), "EBike X coordinate should match updated value");
-        assertEquals(25.0, retrievedEBike.getY(), "EBike Y coordinate should match updated value");
-        assertEquals(0.5, retrievedEBike.getDirectionX(), "EBike directionX should match updated value");
-        assertEquals(0.5, retrievedEBike.getDirectionY(), "EBike directionY should match updated value");
-        assertEquals(60.0, retrievedEBike.getSpeed(), "EBike speed should match updated value");
-        assertEquals(90, retrievedEBike.getBatteryLevel(), "EBike battery level should match updated value");
+        assertEquals("1", retrievedEBike.id(), "EBike ID should match");
+        assertEquals("INACTIVE", retrievedEBike.state(), "EBike state should match updated value");
+        assertEquals(15.0, retrievedEBike.x(), "EBike X coordinate should match updated value");
+        assertEquals(25.0, retrievedEBike.y(), "EBike Y coordinate should match updated value");
+        assertEquals(0.5, retrievedEBike.directionX(), "EBike directionX should match updated value");
+        assertEquals(0.5, retrievedEBike.directionY(), "EBike directionY should match updated value");
+        assertEquals(60.0, retrievedEBike.speed(), "EBike speed should match updated value");
+        assertEquals(90, retrievedEBike.batteryLevel(), "EBike battery level should match updated value");
     }
 }

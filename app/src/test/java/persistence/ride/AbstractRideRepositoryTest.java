@@ -33,9 +33,9 @@ public abstract class AbstractRideRepositoryTest {
         Optional<RideDTO> retrievedRideOptional = rideRepository.findRideById("1");
         assertTrue(retrievedRideOptional.isPresent(), "Ride should be found by ID");
         RideDTO retrievedRide = retrievedRideOptional.get();
-        assertEquals("1", retrievedRide.getId(), "Ride ID should match");
-        assertEquals(user.getId(), retrievedRide.getUser().getId(), "User ID should match");
-        assertEquals(ebike.getId(), retrievedRide.getEbike().getId(), "EBike ID should match");
+        assertEquals("1", retrievedRide.id(), "Ride ID should match");
+        assertEquals(user.id(), retrievedRide.user().id(), "User ID should match");
+        assertEquals(ebike.id(), retrievedRide.EBike().id(), "EBike ID should match");
     }
 
     @Test
@@ -49,7 +49,7 @@ public abstract class AbstractRideRepositoryTest {
 
         List<RideDTO> rides = rideRepository.findAllRides();
         assertEquals(1, rides.size(), "There should be only one ride in the repository");
-        assertEquals("1", rides.get(0).getId(), "Ride ID should match the first ride");
+        assertEquals("1", rides.get(0).id(), "Ride ID should match the first ride");
     }
 
     @Test
@@ -61,9 +61,9 @@ public abstract class AbstractRideRepositoryTest {
         Optional<RideDTO> retrievedRideOptional = rideRepository.findRideById("1");
         assertTrue(retrievedRideOptional.isPresent(), "Ride should be found by ID");
         RideDTO retrievedRide = retrievedRideOptional.get();
-        assertEquals("1", retrievedRide.getId(), "Ride ID should match");
-        assertEquals(user.getId(), retrievedRide.getUser().getId(), "User ID should match");
-        assertEquals(ebike.getId(), retrievedRide.getEbike().getId(), "EBike ID should match");
+        assertEquals("1", retrievedRide.id(), "Ride ID should match");
+        assertEquals(user.id(), retrievedRide.user().id(), "User ID should match");
+        assertEquals(ebike.id(), retrievedRide.EBike().id(), "EBike ID should match");
     }
 
     @Test
@@ -79,8 +79,8 @@ public abstract class AbstractRideRepositoryTest {
 
         List<RideDTO> rides = rideRepository.findAllRides();
         assertEquals(2, rides.size(), "There should be two rides in the repository");
-        assertTrue(rides.stream().anyMatch(ride -> ride.getId().equals("1")), "Ride with ID 1 should be present");
-        assertTrue(rides.stream().anyMatch(ride -> ride.getId().equals("2")), "Ride with ID 2 should be present");
+        assertTrue(rides.stream().anyMatch(ride -> ride.id().equals("1")), "Ride with ID 1 should be present");
+        assertTrue(rides.stream().anyMatch(ride -> ride.id().equals("2")), "Ride with ID 2 should be present");
     }
 
     @Test
@@ -96,7 +96,7 @@ public abstract class AbstractRideRepositoryTest {
         Optional<RideDTO> retrievedRideOptional = rideRepository.findRideById("1");
         assertTrue(retrievedRideOptional.isPresent(), "Ride should be found by ID");
         RideDTO retrievedRide = retrievedRideOptional.get();
-        assertEquals("1", retrievedRide.getId(), "Ride ID should match");
-        assertTrue(retrievedRide.getEndDate().isPresent(), "End date should be present");
+        assertEquals("1", retrievedRide.id(), "Ride ID should match");
+        assertTrue(retrievedRide.endDate().isPresent(), "End date should be present");
     }
 }

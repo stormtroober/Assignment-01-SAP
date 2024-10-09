@@ -29,7 +29,7 @@ public class DiskRideRepository implements RideRepository {
         if (SAVE_FILE.exists()) {
             List<RideDTO> rides = readRidesFromFile();
             return rides.stream()
-                    .filter(ride -> Objects.equals(ride.getId(), rideId))
+                    .filter(ride -> Objects.equals(ride.id(), rideId))
                     .findFirst();
         }
         return Optional.empty();
@@ -45,7 +45,7 @@ public class DiskRideRepository implements RideRepository {
         if (SAVE_FILE.exists()) {
             List<RideDTO> rides = readRidesFromFile();
             boolean rideExists = rides.stream()
-                    .anyMatch(existingRide -> Objects.equals(existingRide.getId(), ride.getId()));
+                    .anyMatch(existingRide -> Objects.equals(existingRide.id(), ride.id()));
 
             if (!rideExists) {
                 rides.add(ride);
@@ -63,7 +63,7 @@ public class DiskRideRepository implements RideRepository {
         if (SAVE_FILE.exists()) {
             List<RideDTO> rides = readRidesFromFile();
             for (int i = 0; i < rides.size(); i++) {
-                if (Objects.equals(rides.get(i).getId(), ride.getId())) {
+                if (Objects.equals(rides.get(i).id(), ride.id())) {
                     rides.set(i, ride);
                     writeRidesToFile(rides);
                     return;
