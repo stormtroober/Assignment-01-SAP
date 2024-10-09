@@ -2,7 +2,7 @@ package persistence.ebike;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sap.ass01.layered.persistence.DTO.EBikeDTO;
+import sap.ass01.layered.persistence.dto.EBikeDTO;
 import sap.ass01.layered.persistence.repository.EBikeRepository;
 
 import java.util.List;

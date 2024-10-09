@@ -1,4 +1,4 @@
-package sap.ass01.layered.persistence.DTO;
+package sap.ass01.layered.persistence.dto;
 
 public class EBikeDTO {
     private final String id;

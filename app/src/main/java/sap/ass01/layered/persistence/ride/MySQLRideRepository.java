@@ -1,8 +1,8 @@
-package sap.ass01.layered.persistence.mysql;
+package sap.ass01.layered.persistence.ride;
 
-import sap.ass01.layered.persistence.DTO.RideDTO;
-import sap.ass01.layered.persistence.DTO.UserDTO;
-import sap.ass01.layered.persistence.DTO.EBikeDTO;
+import sap.ass01.layered.persistence.dto.RideDTO;
+import sap.ass01.layered.persistence.dto.UserDTO;
+import sap.ass01.layered.persistence.dto.EBikeDTO;
 import sap.ass01.layered.persistence.repository.RideRepository;
 
 import java.sql.*;

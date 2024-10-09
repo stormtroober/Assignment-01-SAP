@@ -1,4 +1,4 @@
-package sap.ass01.layered.persistence.DTO;
+package sap.ass01.layered.persistence.dto;
 
 import java.util.Date;
 import java.util.Optional;

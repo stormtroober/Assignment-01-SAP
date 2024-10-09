@@ -4,7 +4,7 @@ package persistence.user;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sap.ass01.layered.persistence.DTO.UserDTO;
+import sap.ass01.layered.persistence.dto.UserDTO;
 import sap.ass01.layered.persistence.repository.UserRepository;
 
 import java.util.List;

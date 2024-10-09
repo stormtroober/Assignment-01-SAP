@@ -1,9 +1,9 @@
-package sap.ass01.layered.persistence.inMemory;
+package sap.ass01.layered.persistence.ride;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import sap.ass01.layered.persistence.DTO.RideDTO;
+import sap.ass01.layered.persistence.dto.RideDTO;
 import sap.ass01.layered.persistence.repository.RideRepository;
 
 import java.io.File;
@@ -13,12 +13,12 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
 
-public class InMemoryRideRepository implements RideRepository {
+public class DiskRideRepository implements RideRepository {
 
     private final Gson gson;
     private static final File SAVE_FILE = new File("persistence/in_memory/rides.json");
 
-    public InMemoryRideRepository() {
+    public DiskRideRepository() {
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(new TypeToken<Optional<Date>>() {}.getType(), new OptionalTypeAdapter<Date>())
                 .create();

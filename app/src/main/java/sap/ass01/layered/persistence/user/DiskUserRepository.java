@@ -1,8 +1,8 @@
-package sap.ass01.layered.persistence.inMemory;
+package sap.ass01.layered.persistence.user;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import sap.ass01.layered.persistence.DTO.UserDTO;
+import sap.ass01.layered.persistence.dto.UserDTO;
 import sap.ass01.layered.persistence.repository.UserRepository;
 
 import java.io.File;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class InMemoryUserRepository implements UserRepository {
+public class DiskUserRepository implements UserRepository {
 
     private final Gson gson = new Gson();
     private final static File SAVE_FILE = new File("persistence/in_memory/users.json");

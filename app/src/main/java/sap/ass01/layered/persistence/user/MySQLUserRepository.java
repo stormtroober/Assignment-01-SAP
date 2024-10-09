@@ -1,6 +1,6 @@
-package sap.ass01.layered.persistence.mysql;
+package sap.ass01.layered.persistence.user;
 
-import sap.ass01.layered.persistence.DTO.UserDTO;
+import sap.ass01.layered.persistence.dto.UserDTO;
 import sap.ass01.layered.persistence.repository.UserRepository;
 
 import java.sql.*;

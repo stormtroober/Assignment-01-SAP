@@ -1,6 +1,6 @@
-package sap.ass01.layered.persistence.mysql;
+package sap.ass01.layered.persistence.ebike;
 
-import sap.ass01.layered.persistence.DTO.EBikeDTO;
+import sap.ass01.layered.persistence.dto.EBikeDTO;
 import sap.ass01.layered.persistence.repository.EBikeRepository;
 
 import java.sql.*;

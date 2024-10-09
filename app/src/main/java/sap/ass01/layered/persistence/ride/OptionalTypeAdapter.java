@@ -1,4 +1,4 @@
-package sap.ass01.layered.persistence.inMemory;
+package sap.ass01.layered.persistence.ride;
 
 import com.google.gson.*;
 

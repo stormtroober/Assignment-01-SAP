@@ -1,4 +1,4 @@
-package sap.ass01.layered.persistence.MongoDB;
+package sap.ass01.layered.persistence.user;
 
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoClient;
@@ -7,7 +7,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.IndexOptions;
 import org.bson.Document;
-import sap.ass01.layered.persistence.DTO.UserDTO;
+import sap.ass01.layered.persistence.dto.UserDTO;
 import sap.ass01.layered.persistence.repository.UserRepository;
 
 import java.util.ArrayList;

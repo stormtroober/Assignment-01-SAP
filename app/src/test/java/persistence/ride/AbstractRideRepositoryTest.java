@@ -2,9 +2,9 @@ package persistence.ride;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sap.ass01.layered.persistence.DTO.EBikeDTO;
-import sap.ass01.layered.persistence.DTO.RideDTO;
-import sap.ass01.layered.persistence.DTO.UserDTO;
+import sap.ass01.layered.persistence.dto.EBikeDTO;
+import sap.ass01.layered.persistence.dto.RideDTO;
+import sap.ass01.layered.persistence.dto.UserDTO;
 import sap.ass01.layered.persistence.repository.RideRepository;
 
 import java.util.Date;

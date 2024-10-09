@@ -1,4 +1,4 @@
-package sap.ass01.layered.persistence.DTO;
+package sap.ass01.layered.persistence.dto;
 
 public class UserDTO {
     private final String id;

@@ -1,7 +1,7 @@
 package persistence.ebike;
 
 import org.junit.jupiter.api.AfterEach;
-import sap.ass01.layered.persistence.mysql.MySqlEBikeRepository;
+import sap.ass01.layered.persistence.ebike.MySqlEBikeRepository;
 import sap.ass01.layered.persistence.repository.EBikeRepository;
 
 public class EBikeMySqlTest extends AbstractEBikeRepositoryTest{

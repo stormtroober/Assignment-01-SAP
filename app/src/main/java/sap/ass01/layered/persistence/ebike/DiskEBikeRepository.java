@@ -1,8 +1,8 @@
-package sap.ass01.layered.persistence.inMemory;
+package sap.ass01.layered.persistence.ebike;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import sap.ass01.layered.persistence.DTO.EBikeDTO;
+import sap.ass01.layered.persistence.dto.EBikeDTO;
 import sap.ass01.layered.persistence.repository.EBikeRepository;
 
 import java.io.File;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class InMemoryEBikeRepository implements EBikeRepository {
+public class DiskEBikeRepository implements EBikeRepository {
 
     private final Gson gson = new Gson();
     private static final File SAVE_FILE = new File("persistence/in_memory/ebikes.json");

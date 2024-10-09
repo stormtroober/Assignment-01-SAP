@@ -1,7 +1,6 @@
 package sap.ass01.layered.persistence.repository;
 
-import sap.ass01.layered.persistence.DTO.EBikeDTO;
-import sap.ass01.layered.persistence.DTO.RideDTO;
+import sap.ass01.layered.persistence.dto.RideDTO;
 
 import java.util.List;
 import java.util.Optional;
