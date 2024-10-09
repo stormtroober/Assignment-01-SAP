@@ -28,7 +28,7 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
           MYSQL_DATABASE: ebikeDB
           MYSQL_USER: root
           MYSQL_PASSWORD: ''
