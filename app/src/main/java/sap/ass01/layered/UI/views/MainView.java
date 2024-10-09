@@ -5,8 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import sap.ass01.layered.UI.Dialogs.LoginDialog;
-import sap.ass01.layered.UI.Dialogs.RegisterDialog;
+import sap.ass01.layered.UI.Dialogs.AccessDialogs.LoginDialog;
+import sap.ass01.layered.UI.Dialogs.AccessDialogs.RegisterDialog;
 
 public class MainView extends JFrame implements ActionListener {
 
@@ -44,21 +44,24 @@ public class MainView extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
-            LoginDialog loginDialog = new LoginDialog(this);
-            loginDialog.setVisible(true);
-            loginDialog.getUserName().ifPresent(userName -> {
-                if (userName.equals("admin")) {
-                    new AdminView().display();
-                } else if (userName.equals("user")) {
-                    new UserView().display();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Invalid username");
-                }
-                this.dispose();
-            });
+            new Thread(() -> {
+                LoginDialog loginDialog = new LoginDialog(this);
+                loginDialog.setVisible(true);
+                loginDialog.getUserName().ifPresent(userName -> {
+                    if (userName.equals("admin")) {
+                        new AdminView().display();
+                    } else if (userName.equals("user")) {
+                        new UserView().display();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Invalid username");
+                    }
+                });
+            }).start();
         } else if (e.getSource() == registerButton) {
-            // Handle sign up action
-            JOptionPane.showMessageDialog(this, "Register button clicked");
+            new Thread(() -> {
+                RegisterDialog registerDialog = new RegisterDialog(this);
+                registerDialog.setVisible(true);
+            }).start();
         }
     }
 

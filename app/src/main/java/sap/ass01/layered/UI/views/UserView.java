@@ -1,10 +1,12 @@
 package sap.ass01.layered.UI.views;
 
-import javax.swing.*;
+import sap.ass01.layered.UI.Dialogs.UserDialogs.RechargeCreditDialog;
+import sap.ass01.layered.UI.Dialogs.UserDialogs.StartRideDialog;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class UserView extends BaseView {
+public class UserView extends AbstractView {
 
     public UserView() {
         super("User View");
@@ -15,16 +17,16 @@ public class UserView extends BaseView {
         addTopPanelButton("Start Ride", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Handle start ride action
-                JOptionPane.showMessageDialog(UserView.this, "Start Ride button clicked");
+                StartRideDialog startRideDialog = new StartRideDialog(UserView.this);
+                startRideDialog.setVisible(true);
             }
         });
 
         addTopPanelButton("Recharge Credit", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Handle recharge credit action
-                JOptionPane.showMessageDialog(UserView.this, "Recharge Credit button clicked");
+                RechargeCreditDialog rechargeCreditDialog = new RechargeCreditDialog(UserView.this);
+                rechargeCreditDialog.setVisible(true);
             }
         });
     }
