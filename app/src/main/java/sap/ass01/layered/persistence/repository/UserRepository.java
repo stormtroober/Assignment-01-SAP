@@ -12,5 +12,6 @@ public interface UserRepository {
     List<UserDTO> findAllUsers();
     void saveUser(UserDTO user);
     void updateUser(UserDTO user);
+    void cleanDatabase();
 
 }

@@ -51,6 +51,13 @@ public class InMemoryEBikeRepository implements EBikeRepository {
     }
 
     @Override
+    public void cleanDatabase() {
+        if (SAVE_FILE.exists()) {
+            SAVE_FILE.delete();
+        }
+    }
+
+    @Override
     public void saveEBike(EBikeDTO ebike) {
         if (SAVE_FILE.exists()) {
             List<EBikeDTO> ebikes = readEBikesFromFile();

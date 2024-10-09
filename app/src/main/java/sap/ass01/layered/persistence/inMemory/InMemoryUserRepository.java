@@ -51,6 +51,13 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
+    public void cleanDatabase() {
+        if (SAVE_FILE.exists()) {
+            SAVE_FILE.delete();
+        }
+    }
+
+    @Override
     public void saveUser(UserDTO user) {
         if(SAVE_FILE.exists()){
             List<UserDTO> users = readUsersFromFile();

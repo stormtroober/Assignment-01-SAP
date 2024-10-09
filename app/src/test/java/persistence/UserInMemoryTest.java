@@ -4,22 +4,24 @@ package persistence;
 import org.junit.jupiter.api.AfterEach;
 import sap.ass01.layered.persistence.inMemory.InMemoryUserRepository;
 import sap.ass01.layered.persistence.repository.UserRepository;
+import sap.ass01.layered.persistence.repository.factory.UserRepositoryFactory;
 
 import java.io.File;
 
+import static sap.ass01.layered.persistence.repository.DatabaseType.IN_MEMORY;
+
 public class UserInMemoryTest extends AbstractUserRepositoryTest {
 
-    private File saveFile = new File("persistence/in_memory/users.json");
+    private UserRepository repository;
 
     @Override
     protected UserRepository createRepository() {
-        return new InMemoryUserRepository();
+        repository = UserRepositoryFactory.createRepository(IN_MEMORY);
+        return repository;
     }
 
     @AfterEach
     public void cleanDatabase() {
-        if (saveFile.exists()) {
-            saveFile.delete();
-        }
+        repository.cleanDatabase();
     }
 }

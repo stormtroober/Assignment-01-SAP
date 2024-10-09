@@ -3,22 +3,24 @@ package persistence;
 import org.junit.jupiter.api.AfterEach;
 import sap.ass01.layered.persistence.inMemory.InMemoryEBikeRepository;
 import sap.ass01.layered.persistence.repository.EBikeRepository;
+import sap.ass01.layered.persistence.repository.factory.EBikeRepositoryFactory;
 
 import java.io.File;
 
+import static sap.ass01.layered.persistence.repository.DatabaseType.IN_MEMORY;
+
 public class EBikeInMemoryTest extends AbstractEBikeRepositoryTest {
 
-    File saveFile = new File("persistence/in_memory/ebikes.json");
+    private EBikeRepository repository;
 
     @Override
     protected EBikeRepository createRepository() {
-        return new InMemoryEBikeRepository();
+        repository = EBikeRepositoryFactory.createRepository(IN_MEMORY);
+        return repository;
     }
 
     @AfterEach
     public void cleanDatabase() {
-        if (saveFile != null && saveFile.exists()) {
-            saveFile.delete();
-        }
+        repository.cleanDatabase();
     }
 }

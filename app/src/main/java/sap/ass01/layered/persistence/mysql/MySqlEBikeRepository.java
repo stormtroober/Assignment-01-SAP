@@ -15,7 +15,7 @@ public class MySqlEBikeRepository implements EBikeRepository {
     public MySqlEBikeRepository() {
         try {
             // Establish a connection to the MySQL database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebikeDB", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebikeDB", "ebikeUser", "password");
             // Create the ebikes table if it does not exist
             createTableIfNotExists();
         } catch (SQLException e) {
