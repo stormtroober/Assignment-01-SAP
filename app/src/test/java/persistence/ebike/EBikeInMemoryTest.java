@@ -1,20 +1,18 @@
-package persistence;
+package persistence.ebike;
 
 import org.junit.jupiter.api.AfterEach;
-import sap.ass01.layered.persistence.MongoDB.MongoEBikeRepository;
 import sap.ass01.layered.persistence.repository.EBikeRepository;
 import sap.ass01.layered.persistence.repository.factory.EBikeRepositoryFactory;
 
 import static sap.ass01.layered.persistence.repository.DatabaseType.IN_MEMORY;
-import static sap.ass01.layered.persistence.repository.DatabaseType.MONGODB;
 
-public class EBikeMongoDBTest extends AbstractEBikeRepositoryTest{
+public class EBikeInMemoryTest extends AbstractEBikeRepositoryTest {
 
     private EBikeRepository repository;
 
     @Override
     protected EBikeRepository createRepository() {
-        repository = EBikeRepositoryFactory.createRepository(MONGODB);
+        repository = EBikeRepositoryFactory.createRepository(IN_MEMORY);
         return repository;
     }
 

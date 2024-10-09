@@ -1,12 +1,9 @@
 // File: app/src/test/java/persistence/UserInMemoryTest.java
-package persistence;
+package persistence.user;
 
 import org.junit.jupiter.api.AfterEach;
-import sap.ass01.layered.persistence.inMemory.InMemoryUserRepository;
 import sap.ass01.layered.persistence.repository.UserRepository;
 import sap.ass01.layered.persistence.repository.factory.UserRepositoryFactory;
-
-import java.io.File;
 
 import static sap.ass01.layered.persistence.repository.DatabaseType.IN_MEMORY;
 
