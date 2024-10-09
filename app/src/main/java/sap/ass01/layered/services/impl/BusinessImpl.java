@@ -46,7 +46,7 @@ public class BusinessImpl implements AdminService, LoginService, UserService {
     public CompletableFuture<UserDTO> logIn(String name) {
         return CompletableFuture.supplyAsync(() -> {
             User user = users.get(name);
-            return new UserDTO(user.getId(), user.getCredit(), user.getPermission().name());
+            return new UserDTO(user.getId(), user.getCredit(), user.getPermission().equals(User.UserType.ADMIN));
         });
     }
 
@@ -88,7 +88,7 @@ public class BusinessImpl implements AdminService, LoginService, UserService {
     public CompletableFuture<UserDTO> getUser(String id) {
         return CompletableFuture.supplyAsync(() -> {
             User user = users.get(id);
-            return new UserDTO(user.getId(), user.getCredit(), user.getPermission().name());
+            return new UserDTO(user.getId(), user.getCredit(), user.getPermission().equals(User.UserType.ADMIN));
         });
     }
 

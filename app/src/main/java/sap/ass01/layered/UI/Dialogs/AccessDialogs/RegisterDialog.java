@@ -1,9 +1,12 @@
 package sap.ass01.layered.UI.Dialogs.AccessDialogs;
 
 import sap.ass01.layered.UI.Dialogs.AbstractDialog;
+import sap.ass01.layered.services.impl.BusinessImpl;
 
 import javax.swing.*;
+import javax.swing.text.html.Option;
 import java.awt.event.ActionEvent;
+import java.util.Optional;
 
 public class RegisterDialog extends AbstractDialog {
 
@@ -36,5 +39,13 @@ public class RegisterDialog extends AbstractDialog {
                 JOptionPane.showMessageDialog(this, "Please enter a valid name");
             }
         }
+    }
+
+    public Optional<String> getUserName() {
+        return Optional.ofNullable(nameField.getText());
+    }
+
+    public boolean isAdmin() {
+        return adminCheckBox.isSelected();
     }
 }

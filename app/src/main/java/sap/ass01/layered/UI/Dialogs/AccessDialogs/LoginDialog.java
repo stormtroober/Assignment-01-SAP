@@ -1,6 +1,8 @@
 package sap.ass01.layered.UI.Dialogs.AccessDialogs;
 
 import sap.ass01.layered.UI.Dialogs.AbstractDialog;
+import sap.ass01.layered.services.Services.LoginService;
+import sap.ass01.layered.services.impl.BusinessImpl;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
