@@ -6,6 +6,6 @@ import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 
 public interface AdminService {
-    CompletableFuture<EBikeDTO> createEBike(String bikeId);
+    CompletableFuture<EBikeDTO> createEBike(String bikeId, int x, int y);
     CompletableFuture<Collection<EBikeDTO>> getAllEBikes();
 }

@@ -29,7 +29,7 @@ public class Mapper {
     }
 
     public static EBike toEBike(EBikeDTO ebikeDTO) {
-        EBike ebike = new EBike(ebikeDTO.id());
+        EBike ebike = new EBike(ebikeDTO.id(), ebikeDTO.x(), ebikeDTO.y());
         ebike.updateState(EBike.EBikeState.valueOf(ebikeDTO.state()));
         ebike.updateLocation(new P2d(ebikeDTO.x(), ebikeDTO.y()));
         ebike.updateDirection(new V2d(ebikeDTO.directionX(), ebikeDTO.directionY()));

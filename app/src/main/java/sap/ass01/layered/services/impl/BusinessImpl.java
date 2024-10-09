@@ -26,9 +26,9 @@ public class BusinessImpl implements AdminService, LoginService, UserService {
     }
 
     @Override
-    public CompletableFuture<EBikeDTO> createEBike(String bikeId) {
+    public CompletableFuture<EBikeDTO> createEBike(String bikeId, int x, int y) {
         return CompletableFuture.supplyAsync(() -> {
-            EBike bike = new EBike(bikeId);
+            EBike bike = new EBike(bikeId, x, y);
             bikes.put(bikeId, bike);
             return new EBikeDTO(bike.getId(), bike.getLocation().x(), bike.getLocation().y(), bike.getBatteryLevel(), bike.getState().name());
         });
