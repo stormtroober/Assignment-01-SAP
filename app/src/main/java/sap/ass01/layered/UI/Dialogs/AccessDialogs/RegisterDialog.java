@@ -2,6 +2,7 @@ package sap.ass01.layered.UI.Dialogs.AccessDialogs;
 
 import sap.ass01.layered.UI.Dialogs.AbstractDialog;
 import sap.ass01.layered.services.impl.BusinessImpl;
+import sap.ass01.layered.services.Services.LoginService;
 
 import javax.swing.*;
 import javax.swing.text.html.Option;
@@ -12,9 +13,11 @@ public class RegisterDialog extends AbstractDialog {
 
     private JTextField nameField;
     private JCheckBox adminCheckBox;
+    private final LoginService loginService;
 
-    public RegisterDialog(JFrame parent) {
+    public RegisterDialog(JFrame parent, LoginService loginService) {
         super(parent, "Register");
+        this.loginService = loginService;
         setupDialog();
     }
 
@@ -32,9 +35,10 @@ public class RegisterDialog extends AbstractDialog {
             String name = nameField.getText();
             boolean isAdmin = adminCheckBox.isSelected();
             if (!name.isEmpty()) {
-                // Handle registration logic here
-                JOptionPane.showMessageDialog(this, "Registration successful");
-                dispose();
+                loginService.signIn(name, isAdmin).thenRun(() -> {
+                    JOptionPane.showMessageDialog(this, "Registration successful");
+                    dispose();
+                });
             } else {
                 JOptionPane.showMessageDialog(this, "Please enter a valid name");
             }

@@ -11,6 +11,7 @@ public class UserView extends AbstractView {
     public UserView() {
         super("User View");
         setupView();
+        refreshView();
     }
 
     private void setupView() {
@@ -29,5 +30,10 @@ public class UserView extends AbstractView {
                 rechargeCreditDialog.setVisible(true);
             }
         });
+    }
+
+
+    public void refreshView() {
+        updateVisualizerPanel(false);
     }
 }
