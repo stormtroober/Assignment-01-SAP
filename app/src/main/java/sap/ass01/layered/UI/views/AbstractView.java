@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
+import sap.ass01.layered.UI.Models.EBikeViewModel;
+import sap.ass01.layered.UI.Models.UserViewModel;
 
 public abstract class AbstractView extends JFrame {
 
@@ -14,6 +18,9 @@ public abstract class AbstractView extends JFrame {
     private boolean isAdmin;
     private long dx;
     private long dy;
+
+    protected List<EBikeViewModel> eBikes;
+    protected List<UserViewModel> users;
 
     public AbstractView(String title) {
         setTitle(title);
@@ -55,8 +62,10 @@ public abstract class AbstractView extends JFrame {
         topPanel.add(button);
     }
 
-    public void updateVisualizerPanel(boolean isAdmin) {
+    public void updateVisualizerPanel(boolean isAdmin, List<EBikeViewModel> eBikes, List<UserViewModel> users) {
         this.isAdmin = isAdmin;
+        this.eBikes = eBikes;
+        this.users = users;
         centralPanel.repaint();
     }
 
@@ -67,7 +76,7 @@ public abstract class AbstractView extends JFrame {
         g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2.clearRect(0, 0, this.getWidth(), this.getHeight());
 
-        if (isAdmin) {
+        /*if (isAdmin) {
             // Placeholder for e-bikes
             g2.drawOval((int) dx, (int) dy, 20, 20);
             g2.drawString("E-Bike ID - battery", (int) dx, (int) dy + 35);
@@ -87,8 +96,42 @@ public abstract class AbstractView extends JFrame {
             int y = 20;
             g2.drawRect(10, y, 20, 20);
             g2.drawString("EBike ID - battery: N/A", 35, y + 15);
+        }*/
+        if (isAdmin){
+            paintAdminView(g2);
+        } else {
+            paintUserView(g2);
         }
     }
+
+    private void paintAdminView(Graphics2D g2) {
+        int y = 20;
+        for (EBikeViewModel bike : eBikes) {
+            g2.drawOval((int) dx, (int) dy, 20, 20);
+            g2.drawString("E-Bike: " + bike.getId() + " - battery: " + bike.getBatteryLevel(), (int) dx, (int) dy + 35);
+            g2.drawString("(x: " + bike.getX() + ", y: " + bike.getY() + ")", (int) dx, (int) dy + 50);
+            g2.drawString("STATUS: " + bike.getState(), (int) dx, (int) dy + 65);
+            dy += 80; // Move down for the next bike
+        }
+
+        for (UserViewModel user : users) {
+            g2.drawRect(10, y, 20, 20);
+            g2.drawString("User: " + user.getId() + " - credit: " + user.getCredit(), 35, y + 15);
+            y += 30;
+        }
+    }
+
+    private void paintUserView(Graphics2D g2) {
+        int y = 20;
+        for (EBikeViewModel bike : eBikes) {
+            g2.drawOval((int) dx, (int) dy, 20, 20);
+            g2.drawString("E-Bike: " + bike.getId() + " - battery: " + bike.getBatteryLevel(), (int) dx, (int) dy + 35);
+            g2.drawString("(x: " + bike.getX() + ", y: " + bike.getY() + ")", (int) dx, (int) dy + 50);
+            dy += 80; // Move down for the next bike
+        }
+    }
+
+
 
     public void display() {
         SwingUtilities.invokeLater(() -> this.setVisible(true));

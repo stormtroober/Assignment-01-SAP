@@ -5,10 +5,14 @@ import sap.ass01.layered.UI.Dialogs.AdminDialogs.RechargeBikeDialog;
 import sap.ass01.layered.services.Services.AdminService;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.impl.ServiceFactory;
+import sap.ass01.layered.UI.Mapper.PresentationMapper;
+import sap.ass01.layered.UI.Models.EBikeViewModel;
+import sap.ass01.layered.UI.Models.UserViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Collection;
+import java.util.List;
 
 public class AdminView extends AbstractView {
 
@@ -52,13 +56,17 @@ public class AdminView extends AbstractView {
 
     private void updateAllBikes(Collection<EBikeDTO> allBikes) {
         // Update the UI components with the new available bikes data
+        List<EBikeViewModel> bikesModel = allBikes.stream()
+                .map(PresentationMapper::toEBikeViewModel)
+                .toList();
         log("All bikes updated: " + allBikes);
         // Call a method to refresh the visual representation
+        updateVisualizerPanel(true, bikesModel, List.of());
         refreshView();
     }
 
     public void refreshView() {
-        updateVisualizerPanel(true);
+        updateVisualizerPanel(true, eBikes, users);
     }
 
     private void log(String msg){
