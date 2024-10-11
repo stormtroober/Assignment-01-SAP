@@ -1,11 +1,24 @@
 package sap.ass01.layered.services.Services;
 
 import sap.ass01.layered.services.dto.EBikeDTO;
-
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import java.util.Collection;
-import java.util.concurrent.CompletableFuture;
 
 public interface AdminService {
-    CompletableFuture<EBikeDTO> createEBike(String bikeId, int x, int y);
-    CompletableFuture<Collection<EBikeDTO>> getAllEBikes();
+    /**
+     * Creates a new E-Bike with the given ID and initial location.
+     * @param bikeId Unique identifier for the bike.
+     * @param x Initial X-coordinate.
+     * @param y Initial Y-coordinate.
+     * @return Single emitting the created EBikeDTO or an error.
+     */
+    Single<EBikeDTO> createEBike(String bikeId, double x, double y);
+
+    /**
+     * Observes all E-Bikes in real-time.
+     * Admins can subscribe to receive updates about all bikes.
+     * @return Observable emitting collections of EBikeDTO.
+     */
+    Observable<Collection<EBikeDTO>> observeAllBikes();
 }
