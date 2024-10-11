@@ -2,11 +2,15 @@ package sap.ass01.layered.UI.views;
 
 import sap.ass01.layered.UI.Dialogs.UserDialogs.RechargeCreditDialog;
 import sap.ass01.layered.UI.Dialogs.UserDialogs.StartRideDialog;
+import sap.ass01.layered.services.Services.UserService;
+import sap.ass01.layered.services.impl.ServiceFactory;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UserView extends AbstractView {
+
+    private final UserService userService = ServiceFactory.getUserService();
 
     public UserView() {
         super("User View");

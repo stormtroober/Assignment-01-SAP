@@ -2,6 +2,7 @@ package sap.ass01.layered.UI.Dialogs.AccessDialogs;
 
 import sap.ass01.layered.UI.Dialogs.AbstractDialog;
 import sap.ass01.layered.services.Services.LoginService;
+import sap.ass01.layered.services.impl.ServiceFactory;
 
 import javax.swing.*;
 import javax.swing.text.html.Option;
@@ -12,11 +13,10 @@ public class RegisterDialog extends AbstractDialog {
 
     private JTextField nameField;
     private JCheckBox adminCheckBox;
-    private final LoginService loginService;
+    private final LoginService loginService = ServiceFactory.getLoginService();
 
-    public RegisterDialog(JFrame parent, LoginService loginService) {
+    public RegisterDialog(JFrame parent) {
         super(parent, "Register");
-        this.loginService = loginService;
         setupDialog();
     }
 

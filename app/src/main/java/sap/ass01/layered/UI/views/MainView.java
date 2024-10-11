@@ -13,11 +13,11 @@ import sap.ass01.layered.services.impl.ServiceImpl;
 public class MainView extends JFrame implements ActionListener {
 
     private JButton loginButton, registerButton;
-    private final ServiceImpl serviceImpl;
+
 
     public MainView() {
         setupView();
-        serviceImpl = new ServiceImpl();
+
     }
 
     protected void setupView() {
@@ -49,12 +49,12 @@ public class MainView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
             new Thread(() -> {
-                LoginDialog loginDialog = new LoginDialog(this, serviceImpl);
+                LoginDialog loginDialog = new LoginDialog(this);
                 loginDialog.setVisible(true);
             }).start();
         } else if (e.getSource() == registerButton) {
             new Thread(() -> {
-                RegisterDialog registerDialog = new RegisterDialog(this, serviceImpl);
+                RegisterDialog registerDialog = new RegisterDialog(this);
                 registerDialog.setVisible(true);
             }).start();
         }

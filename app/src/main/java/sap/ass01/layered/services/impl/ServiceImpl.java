@@ -87,8 +87,9 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
     }
 
     @Override
-    public Completable startRide(String userId, String rideId, String bikeId) {
-        return Completable.create(emitter -> {
+    public Observable<RideDTO> startRide(String userId, String rideId, String bikeId) {
+        return Observable.<RideDTO>create(emitter -> {
+            // Validate user and bike
             User user = users.get(userId);
             if (user == null) {
                 emitter.onError(new IllegalArgumentException("User not found."));
@@ -109,29 +110,52 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
                 bike.setState(EBike.EBikeState.IN_USE);
             }
 
+            // Start ride
             Ride ride = new Ride(rideId, user, bike);
             ride.start();
 
             RideSimulation simulation = new RideSimulation(ride, user);
             rideEntries.put(rideId, new RideEntry(ride, simulation));
 
-            // Subscribe to ride updates and update bike state accordingly
+            // Subscribe to ride updates from the RideSimulation
             simulation.getRideObservable()
                     .observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io())
                     .subscribe(
-                            this::handleRideUpdate,
-                            emitter::onError,
-                            () -> handleRideCompletion(rideId)
+                            rideDTO -> {
+                                // Emit every ride update to the subscriber
+                                emitAllBikes();
+                                emitAvailableBikes();
+                                emitter.onNext(rideDTO);
+                            },
+                            throwable -> {
+                                // Emit error if something goes wrong
+                                emitter.onError(throwable);
+                            },
+                            () -> {
+                                // Complete the observable once the ride is done
+                                handleRideCompletion(rideId);
+                                emitter.onComplete();
+                            }
                     );
 
+            // Start the ride simulation process
             simulation.startSimulation();
 
+            // Emit the current bike status immediately
+            emitter.onNext(new RideDTO(
+                    bike.getId(),
+                    bike.getLocation().x(),
+                    bike.getLocation().y(),
+                    user.getCredit(),
+                    bike.getBatteryLevel()
+            ));
+
+            // Emit all bikes' status
             emitAllBikes();
             emitAvailableBikes();
-
-            emitter.onComplete();
         }).subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
     }
+
 
     @Override
     public Completable endRide(String userId, String rideId, String bikeId) {

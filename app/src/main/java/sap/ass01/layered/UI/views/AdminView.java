@@ -2,6 +2,8 @@ package sap.ass01.layered.UI.views;
 
 import sap.ass01.layered.UI.Dialogs.AdminDialogs.AddEBikeDialog;
 import sap.ass01.layered.UI.Dialogs.AdminDialogs.RechargeBikeDialog;
+import sap.ass01.layered.services.Services.AdminService;
+import sap.ass01.layered.services.impl.ServiceFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +12,7 @@ import java.awt.event.ActionListener;
 
 public class AdminView extends AbstractView {
 
-
+    private final AdminService adminService = ServiceFactory.getAdminService();
 
     public AdminView() {
         super("Admin View");

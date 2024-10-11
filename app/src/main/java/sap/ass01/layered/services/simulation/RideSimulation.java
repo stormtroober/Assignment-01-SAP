@@ -13,76 +13,75 @@ import java.util.concurrent.TimeUnit;
 public class RideSimulation {
     private final Ride ride;
     private final User user;
-    private final PublishSubject<RideDTO> rideUpdates;
-    private final Observable<RideDTO> rideObservable;
+    private final PublishSubject<RideDTO> rideUpdates = PublishSubject.create();
     private volatile boolean stopped = false;
 
     public RideSimulation(Ride ride, User user) {
         this.ride = ride;
         this.user = user;
-        this.rideUpdates = PublishSubject.create();
-        this.rideObservable = rideUpdates.hide().publish().autoConnect();
     }
 
     public Observable<RideDTO> getRideObservable() {
-        return rideObservable;
+        return rideUpdates.hide();
     }
 
     public void startSimulation() {
         if (ride.isOngoing()) {
-            Observable.interval(0, 100, TimeUnit.MILLISECONDS)
-                    .takeUntil(tick -> stopped)
+            Observable.interval(100, TimeUnit.MILLISECONDS) // Emit every 100ms
+                    .takeUntil(tick -> stopped)            // Stop if the simulation is stopped
                     .observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io())
-                    .subscribe(tick -> updateRide(),
-                            Throwable::printStackTrace,
-                            this::completeSimulation);
+                    .subscribe(
+                            tick -> updateRide(),
+                            throwable -> {
+                                // Handle error if necessary
+                                rideUpdates.onError(throwable);
+                            },
+                            this::completeSimulation  // Complete the simulation when done
+                    );
         }
     }
 
     private void updateRide() {
         EBike bike = ride.getEbike();
-        bike.setSpeed(1.0);
 
-        // Update location
         synchronized (bike) {
+            // Simulate movement and battery usage
             V2d direction = bike.getDirection();
-            double speed = bike.getSpeed();
+            double speed = 1.0;  // Set speed to a constant value for simplicity
             V2d movement = direction.mul(speed);
             bike.setLocation(bike.getLocation().sum(movement));
 
-            // Boundary checks
-            var location = bike.getLocation();
-            if (location.x() > 200 || location.x() < -200) {
+            // Boundary checks to reverse direction
+            if (bike.getLocation().x() > 200 || bike.getLocation().x() < -200) {
                 bike.setDirection(new V2d(-direction.x(), direction.y()));
             }
-            if (location.y() > 200 || location.y() < -200) {
+            if (bike.getLocation().y() > 200 || bike.getLocation().y() < -200) {
                 bike.setDirection(new V2d(direction.x(), -direction.y()));
             }
 
-            // Random direction change
-            if (Math.random() < 0.05) { // Approximately every 2 ticks
+            // Randomly change direction (5% chance)
+            if (Math.random() < 0.05) {
                 bike.setDirection(new V2d(Math.random() - 0.5, Math.random() - 0.5).getNormalized());
             }
 
-            // Decrease battery
+            // Decrease battery and user credit
             bike.decreaseBattery(1);
-
-            // Decrease user credit
             user.decreaseCredit(1);
-        }
 
-        // Emit update
-        RideDTO rideDTO = new RideDTO(
-                bike.getId(),
-                bike.getLocation().x(),
-                bike.getLocation().y(),
-                user.getCredit(),
-                bike.getBatteryLevel()
-        );
-        rideUpdates.onNext(rideDTO);
+            // Emit updated ride information
+            RideDTO rideDTO = new RideDTO(
+                    bike.getId(),
+                    bike.getLocation().x(),
+                    bike.getLocation().y(),
+                    user.getCredit(),
+                    bike.getBatteryLevel()
+            );
+            rideUpdates.onNext(rideDTO);
+        }
     }
 
     private void completeSimulation() {
+        // Emit the completion of the simulation
         rideUpdates.onComplete();
     }
 

@@ -4,6 +4,7 @@ import sap.ass01.layered.UI.Dialogs.AbstractDialog;
 import sap.ass01.layered.UI.views.AdminView;
 import sap.ass01.layered.UI.views.UserView;
 import sap.ass01.layered.services.Services.LoginService;
+import sap.ass01.layered.services.impl.ServiceFactory;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,11 +14,10 @@ public class LoginDialog extends AbstractDialog {
 
     private JTextField userNameField;
     private Optional<String> userName = Optional.empty();
-    private final LoginService loginService;
+    private final LoginService loginService = ServiceFactory.getLoginService();
 
-    public LoginDialog(JFrame parent, LoginService loginService) {
+    public LoginDialog(JFrame parent) {
         super(parent, "Login");
-        this.loginService = loginService;
         setupDialog();
     }
 

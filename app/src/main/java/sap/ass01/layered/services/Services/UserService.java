@@ -16,12 +16,13 @@ public interface UserService {
 
     /**
      * Starts a ride for a user on a specific bike.
+     *
      * @param userId ID of the user.
      * @param rideId Unique ID for the ride.
      * @param bikeId ID of the bike.
      * @return Completable indicating success or failure.
      */
-    Completable startRide(String userId, String rideId, String bikeId);
+    Observable<RideDTO> startRide(String userId, String rideId, String bikeId);
 
     /**
      * Ends a ride for a user on a specific bike.
