@@ -1,45 +1,33 @@
 package sap.ass01.layered.domain.model;
 
 public class User {
+    public enum UserType { ADMIN, USER }
 
+    private final String id;
+    private final UserType type;
+    private volatile int credit;
 
-    private String id;
-    private int credit;
-    public enum UserType {
-        USER, ADMIN
-    }
-    private UserType permission;
-
-    public User(String id, UserType permission) {
+    public User(String id, UserType type) {
         this.id = id;
-        this.credit = 0;
-        this.permission = permission;
+        this.type = type;
+        this.credit = 100; // Default credit
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
+    public UserType getType() { return type; }
 
-    public int getCredit() {
-        return credit;
-    }
-
-    public UserType getPermission() {
-        return permission;
-    }
-
-    public void rechargeCredit(int deltaCredit) {
-        credit += deltaCredit;
-    }
+    public int getCredit() { return credit; }
 
     public void decreaseCredit(int amount) {
-        credit -= amount;
-        if (credit < 0) {
-            credit = 0;
-        }
+        this.credit = Math.max(this.credit - amount, 0);
     }
 
+    public void increaseCredit(int amount) {
+        this.credit += amount;
+    }
+
+    @Override
     public String toString() {
-        return "{ id: " + id + ", credit: " + credit + " }";
+        return String.format("User{id='%s', type='%s', credit=%d}", id, type, credit);
     }
 }

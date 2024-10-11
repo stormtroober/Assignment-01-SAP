@@ -8,7 +8,7 @@ import sap.ass01.layered.domain.model.*;
 public class Mapper {
 
     public static UserDTO toUserDTO(User user) {
-        return new UserDTO(user.getId(), user.getCredit(), user.getPermission().name());
+        return new UserDTO(user.getId(), user.getCredit(), user.getType().name());
     }
 
     public static User toUser(UserDTO userDTO) {
@@ -30,10 +30,10 @@ public class Mapper {
 
     public static EBike toEBike(EBikeDTO ebikeDTO) {
         EBike ebike = new EBike(ebikeDTO.id(), ebikeDTO.x(), ebikeDTO.y());
-        ebike.updateState(EBike.EBikeState.valueOf(ebikeDTO.state()));
-        ebike.updateLocation(new P2d(ebikeDTO.x(), ebikeDTO.y()));
-        ebike.updateDirection(new V2d(ebikeDTO.directionX(), ebikeDTO.directionY()));
-        ebike.updateSpeed(ebikeDTO.speed());
+        ebike.setState(EBike.EBikeState.valueOf(ebikeDTO.state()));
+        ebike.setLocation(new P2d(ebikeDTO.x(), ebikeDTO.y()));
+        ebike.setDirection(new V2d(ebikeDTO.directionX(), ebikeDTO.directionY()));
+        ebike.setSpeed(ebikeDTO.speed());
         return ebike;
     }
 
@@ -41,9 +41,9 @@ public class Mapper {
         return new RideDTO(
                 ride.getId(),
                 toUserDTO(ride.getUser()),
-                toEBikeDTO(ride.getEBike()),
-                ride.getStartedDate(),
-                ride.getEndDate()
+                toEBikeDTO(ride.getEbike()),
+                ride.getStartTime(),
+                ride.getEndTime()
         );
     }
 

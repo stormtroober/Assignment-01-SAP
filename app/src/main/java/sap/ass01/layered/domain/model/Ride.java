@@ -4,57 +4,41 @@ import java.util.Date;
 import java.util.Optional;
 
 public class Ride {
-
-    private Date startedDate;
-    private Optional<Date> endDate;
-    private User user;
-    private EBike ebike;
-    private boolean ongoing;
-    private String id;
+    private final String id;
+    private final User user;
+    private final EBike ebike;
+    private final Date startTime;
+    private volatile Optional<Date> endTime;
+    private volatile boolean ongoing;
 
     public Ride(String id, User user, EBike ebike) {
         this.id = id;
-        this.startedDate = new Date();
-        this.endDate = Optional.empty();
         this.user = user;
         this.ebike = ebike;
+        this.startTime = new Date();
+        this.endTime = Optional.empty();
         this.ongoing = false;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
+    public User getUser() { return user; }
+    public EBike getEbike() { return ebike; }
+    public Date getStartTime() { return startTime; }
+    public Optional<Date> getEndTime() { return endTime; }
+    public boolean isOngoing() { return ongoing; }
 
-    public void start() {
-        ongoing = true;
-    }
+    public void start() { this.ongoing = true; }
 
     public void end() {
-        endDate = Optional.of(new Date());
-        ongoing = false;
+        if (this.ongoing) {
+            this.endTime = Optional.of(new Date());
+            this.ongoing = false;
+        }
     }
 
-    public boolean isOngoing() {
-        return this.ongoing;
-    }
-
-    public Date getStartedDate() {
-        return startedDate;
-    }
-
-    public Optional<Date> getEndDate() {
-        return endDate;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public EBike getEBike() {
-        return ebike;
-    }
-
+    @Override
     public String toString() {
-        return "{ id: " + this.id + ", user: " + user.getId() + ", bike: " + ebike.getId() + " }";
+        return String.format("Ride{id='%s', user='%s', ebike='%s', ongoing=%s}",
+                id, user.getId(), ebike.getId(), ongoing);
     }
 }

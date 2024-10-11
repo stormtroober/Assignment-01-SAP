@@ -1,82 +1,59 @@
 package sap.ass01.layered.domain.model;
 
 public class EBike {
+    public enum EBikeState { AVAILABLE, IN_USE, MAINTENANCE }
 
-    private String id;
-    public enum EBikeState { AVAILABLE, IN_USE, MAINTENANCE}
-    private EBikeState state;
-    private P2d loc;
-    private V2d direction;
-    private double speed;
-    private int batteryLevel;  /* 0..100 */
+    private final String id;
+    private volatile EBikeState state;
+    private volatile P2d location;
+    private volatile V2d direction;
+    private volatile double speed; // Units per simulation tick
+    private volatile int batteryLevel; // 0..100
 
     public EBike(String id, double x, double y) {
         this.id = id;
         this.state = EBikeState.AVAILABLE;
-        this.loc = new P2d(x, y);
-        direction = new V2d(1,0);
-        speed = 0;
+        this.location = new P2d(x, y);
+        this.direction = new V2d(1, 0); // Initial direction
+        this.speed = 0; // Default speed
+        this.batteryLevel = 100;
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public EBikeState getState() {
-        return state;
-    }
+    public String getId() { return id; }
 
-    public void rechargeBattery() {
-        batteryLevel = 100;
-        state = EBikeState.AVAILABLE;
-    }
+    public synchronized EBikeState getState() { return state; }
+    public synchronized void setState(EBikeState state) { this.state = state; }
 
-    public int getBatteryLevel() {
-        return batteryLevel;
-    }
+    public synchronized P2d getLocation() { return location; }
+    public synchronized void setLocation(P2d location) { this.location = location; }
 
-    public void decreaseBatteryLevel(int delta) {
-        batteryLevel -= delta;
-        if (batteryLevel < 0) {
-            batteryLevel = 0;
-            state = EBikeState.MAINTENANCE;
+    public synchronized V2d getDirection() { return direction; }
+    public synchronized void setDirection(V2d direction) { this.direction = direction; }
+
+    public synchronized double getSpeed() { return speed; }
+    public synchronized void setSpeed(double speed) { this.speed = speed; }
+
+    public synchronized int getBatteryLevel() { return batteryLevel; }
+    public synchronized void decreaseBattery(int amount) {
+        this.batteryLevel = Math.max(this.batteryLevel - amount, 0);
+        if (this.batteryLevel == 0) {
+            this.state = EBikeState.MAINTENANCE;
         }
     }
 
-
-    public boolean isAvailable() {
-        return state.equals(EBikeState.AVAILABLE);
+    public synchronized void rechargeBattery() {
+        this.batteryLevel = 100;
+        this.state = EBikeState.AVAILABLE;
     }
 
-    public void updateState(EBikeState state) {
-        this.state = state;
+    public synchronized boolean isAvailable() {
+        return this.state == EBikeState.AVAILABLE;
     }
 
-    public void updateLocation(P2d newLoc) {
-        loc = newLoc;
-    }
-
-    public void updateSpeed(double speed) {
-        this.speed = speed;
-    }
-
-    public void updateDirection(V2d dir) {
-        this.direction = dir;
-    }
-
-    public double getSpeed() {
-        return speed;
-    }
-
-    public V2d getDirection() {
-        return direction;
-    }
-
-    public P2d getLocation(){
-        return loc;
-    }
-
+    @Override
     public String toString() {
-        return "{ id: " + id + ", loc: " + loc + ", batteryLevel: " + batteryLevel + ", state: " + state + " }";
+        return String.format("EBike{id='%s', location=%s, batteryLevel=%d%%, state='%s'}",
+                id, location, batteryLevel, state);
     }
 }
