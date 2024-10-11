@@ -4,7 +4,6 @@ import sap.ass01.layered.UI.Dialogs.AbstractDialog;
 import sap.ass01.layered.UI.views.AdminView;
 import sap.ass01.layered.UI.views.UserView;
 import sap.ass01.layered.services.Services.LoginService;
-import sap.ass01.layered.services.impl.BusinessImpl;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -33,15 +32,27 @@ public class LoginDialog extends AbstractDialog {
         if (e.getSource() == confirmButton) {
             userName = Optional.ofNullable(userNameField.getText());
             if (userName.isPresent() && !userName.get().isEmpty()) {
-                loginService.logIn(userName.get()).thenAccept(user -> {
-                     if (user.admin()) {
-                         JOptionPane.showMessageDialog(this, "Admin login successful");
-                         new AdminView().display();
-                     } else {
-                         JOptionPane.showMessageDialog(this, "User login successful");
-                         new UserView().display();
-                     }
-                     dispose();
+//                loginService.logIn(userName.get()).thenAccept(user -> {
+//                    if (user.admin()) {
+//                        JOptionPane.showMessageDialog(this, "Admin login successful");
+//                        new AdminView().display();
+//                    } else {
+//                        JOptionPane.showMessageDialog(this, "User login successful");
+//                        new UserView().display();
+//                    }
+//                    dispose();
+//                });
+                loginService.logIn(userName.get()).subscribe(user -> {
+                    if (user.admin()) {
+                        JOptionPane.showMessageDialog(this, "Admin login successful");
+                        new AdminView().display();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "User login successful");
+                        new UserView().display();
+                    }
+                    dispose();
+                }, error -> {
+                    JOptionPane.showMessageDialog(this, "Login failed: " + error.getMessage());
                 });
 
             } else {

@@ -4,19 +4,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.Provider;
 
 import sap.ass01.layered.UI.Dialogs.AccessDialogs.LoginDialog;
 import sap.ass01.layered.UI.Dialogs.AccessDialogs.RegisterDialog;
-import sap.ass01.layered.services.impl.BusinessImpl;
+import sap.ass01.layered.services.impl.ServiceImpl;
 
 public class MainView extends JFrame implements ActionListener {
 
     private JButton loginButton, registerButton;
-    private final BusinessImpl businessImpl;
+    private final ServiceImpl serviceImpl;
 
     public MainView() {
         setupView();
-        businessImpl = new BusinessImpl();
+        serviceImpl = new ServiceImpl();
     }
 
     protected void setupView() {
@@ -48,12 +49,12 @@ public class MainView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
             new Thread(() -> {
-                LoginDialog loginDialog = new LoginDialog(this, businessImpl);
+                LoginDialog loginDialog = new LoginDialog(this, serviceImpl);
                 loginDialog.setVisible(true);
             }).start();
         } else if (e.getSource() == registerButton) {
             new Thread(() -> {
-                RegisterDialog registerDialog = new RegisterDialog(this, businessImpl);
+                RegisterDialog registerDialog = new RegisterDialog(this, serviceImpl);
                 registerDialog.setVisible(true);
             }).start();
         }

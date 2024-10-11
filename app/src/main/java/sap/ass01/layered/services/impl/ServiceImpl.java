@@ -242,7 +242,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
         return new UserDTO(
                 user.getId(),
                 user.getCredit(),
-                user.getType().name()
+                user.getType().equals(User.UserType.ADMIN)
         );
     }
 }

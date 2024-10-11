@@ -1,7 +1,6 @@
 package sap.ass01.layered.UI.Dialogs.AccessDialogs;
 
 import sap.ass01.layered.UI.Dialogs.AbstractDialog;
-import sap.ass01.layered.services.impl.BusinessImpl;
 import sap.ass01.layered.services.Services.LoginService;
 
 import javax.swing.*;
@@ -35,9 +34,15 @@ public class RegisterDialog extends AbstractDialog {
             String name = nameField.getText();
             boolean isAdmin = adminCheckBox.isSelected();
             if (!name.isEmpty()) {
-                loginService.signIn(name, isAdmin).thenRun(() -> {
+//                loginService.signIn(name, isAdmin).thenRun(() -> {
+//                    JOptionPane.showMessageDialog(this, "Registration successful");
+//                    dispose();
+//                });
+                loginService.signUp(name, isAdmin).subscribe(() -> {
                     JOptionPane.showMessageDialog(this, "Registration successful");
                     dispose();
+                }, error -> {
+                    JOptionPane.showMessageDialog(this, "Registration failed: " + error.getMessage());
                 });
             } else {
                 JOptionPane.showMessageDialog(this, "Please enter a valid name");
