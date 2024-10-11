@@ -3,10 +3,12 @@ package sap.ass01.layered.UI.views;
 import sap.ass01.layered.UI.Dialogs.UserDialogs.RechargeCreditDialog;
 import sap.ass01.layered.UI.Dialogs.UserDialogs.StartRideDialog;
 import sap.ass01.layered.services.Services.UserService;
+import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.impl.ServiceFactory;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 
 public class UserView extends AbstractView {
 
@@ -15,6 +17,7 @@ public class UserView extends AbstractView {
     public UserView() {
         super("User View");
         setupView();
+        observeAvailableBikes();
         refreshView();
     }
 
@@ -22,7 +25,7 @@ public class UserView extends AbstractView {
         addTopPanelButton("Start Ride", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                StartRideDialog startRideDialog = new StartRideDialog(UserView.this);
+                StartRideDialog startRideDialog = new StartRideDialog(UserView.this, userService);
                 startRideDialog.setVisible(true);
             }
         });
@@ -34,6 +37,25 @@ public class UserView extends AbstractView {
                 rechargeCreditDialog.setVisible(true);
             }
         });
+    }
+
+    private void observeAvailableBikes() {
+        userService.observeAvailableBikes()
+                .subscribe(
+                        this::updateAvailableBikes,
+                        throwable -> {
+                            // Handle error
+                            System.err.println("Error observing available bikes: " + throwable.getMessage());
+                        }
+                );
+    }
+
+
+    private void updateAvailableBikes(Collection<EBikeDTO> availableBikes) {
+        // Update the UI components with the new available bikes data
+        System.out.println("Available bikes updated: " + availableBikes);
+        // Call a method to refresh the visual representation
+        refreshView();
     }
 
 

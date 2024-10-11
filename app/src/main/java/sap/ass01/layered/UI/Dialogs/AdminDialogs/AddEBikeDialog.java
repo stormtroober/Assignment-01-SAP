@@ -1,6 +1,7 @@
 package sap.ass01.layered.UI.Dialogs.AdminDialogs;
 
 import sap.ass01.layered.UI.Dialogs.AbstractDialog;
+import sap.ass01.layered.services.Services.AdminService;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -10,9 +11,11 @@ public class AddEBikeDialog extends AbstractDialog {
     private JTextField idField;
     private JTextField xCoordField;
     private JTextField yCoordField;
+    private final AdminService adminService;
 
-    public AddEBikeDialog(JFrame parent) {
+    public AddEBikeDialog(JFrame parent, AdminService adminService) {
         super(parent, "Adding E-Bike");
+        this.adminService = adminService;
         setupDialog();
     }
 
@@ -34,6 +37,18 @@ public class AddEBikeDialog extends AbstractDialog {
             double xCoord = Double.parseDouble(xCoordField.getText());
             double yCoord = Double.parseDouble(yCoordField.getText());
             // Handle the addition of the e-bike here
+            adminService.createEBike(id, xCoord, yCoord)
+                    .subscribe(
+                            ebikeDTO -> {
+                                // Handle success
+                                JOptionPane.showMessageDialog(this, "E-Bike added successfully: " + ebikeDTO);
+                                dispose();
+                            },
+                            throwable -> {
+                                // Handle error
+                                JOptionPane.showMessageDialog(this, "Error adding E-Bike: " + throwable.getMessage());
+                            }
+                    );
             dispose();
         }
     }
