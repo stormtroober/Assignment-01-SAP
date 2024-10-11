@@ -233,6 +233,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
     }
 
     private void emitAllBikes() {
+        log("Emitting all bikes");
         Collection<EBikeDTO> bikeDTOs = new ArrayList<>();
         for (EBike bike : bikes.values()) {
             bikeDTOs.add(mapToDTO(bike));
@@ -241,6 +242,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
     }
 
     private void emitAvailableBikes() {
+        log("Emitting available bikes");
         Collection<EBikeDTO> availableDTOs = new ArrayList<>();
         for (EBike bike : bikes.values()) {
             if (bike.isAvailable()) {
@@ -268,5 +270,9 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
                 user.getCredit(),
                 user.getType().equals(User.UserType.ADMIN)
         );
+    }
+
+    private void log(String msg){
+        System.out.println("[ServiceImpl] "+msg);
     }
 }

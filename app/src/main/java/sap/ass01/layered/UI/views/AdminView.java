@@ -52,12 +52,16 @@ public class AdminView extends AbstractView {
 
     private void updateAllBikes(Collection<EBikeDTO> allBikes) {
         // Update the UI components with the new available bikes data
-        System.out.println("Available bikes updated: " + allBikes);
+        log("All bikes updated: " + allBikes);
         // Call a method to refresh the visual representation
         refreshView();
     }
 
     public void refreshView() {
         updateVisualizerPanel(true);
+    }
+
+    private void log(String msg){
+        System.out.println("[AdminView] "+msg);
     }
 }

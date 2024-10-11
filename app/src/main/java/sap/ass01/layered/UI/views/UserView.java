@@ -4,6 +4,7 @@ import sap.ass01.layered.UI.Dialogs.UserDialogs.RechargeCreditDialog;
 import sap.ass01.layered.UI.Dialogs.UserDialogs.StartRideDialog;
 import sap.ass01.layered.services.Services.UserService;
 import sap.ass01.layered.services.dto.EBikeDTO;
+import sap.ass01.layered.services.dto.RideDTO;
 import sap.ass01.layered.services.impl.ServiceFactory;
 
 import java.awt.event.ActionEvent;
@@ -50,16 +51,25 @@ public class UserView extends AbstractView {
                 );
     }
 
-
     private void updateAvailableBikes(Collection<EBikeDTO> availableBikes) {
         // Update the UI components with the new available bikes data
-        System.out.println("Available bikes updated: " + availableBikes);
+        log("Available bikes updated: " + availableBikes);
         // Call a method to refresh the visual representation
         refreshView();
     }
 
+    public void updateRide(RideDTO rideDTO) {
+        // Update the UI components with the new ride data
+        log("Ride updated: " + rideDTO);
+        // Call a method to refresh the visual representation
+        refreshView();
+    }
 
     public void refreshView() {
         updateVisualizerPanel(false);
+    }
+
+    private void log(String msg){
+        System.out.println("[UserView] " + msg);
     }
 }
