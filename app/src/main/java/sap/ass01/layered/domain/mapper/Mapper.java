@@ -7,15 +7,11 @@ import sap.ass01.layered.domain.model.*;
 
 public class Mapper {
 
-    public static UserDTO toUserDTO(User user) {
+    public static UserDTO toDTO(User user) {
         return new UserDTO(user.getId(), user.getCredit(), user.getType().name());
     }
 
-    public static User toUser(UserDTO userDTO) {
-        return new User(userDTO.id(), User.UserType.valueOf(userDTO.permission()));
-    }
-
-    public static EBikeDTO toEBikeDTO(EBike ebike) {
+    public static EBikeDTO toDTO(EBike ebike) {
         return new EBikeDTO(
                 ebike.getId(),
                 ebike.getState().name(),
@@ -28,7 +24,21 @@ public class Mapper {
         );
     }
 
-    public static EBike toEBike(EBikeDTO ebikeDTO) {
+    public static RideDTO toDTO(Ride ride) {
+        return new RideDTO(
+                ride.getId(),
+                toDTO(ride.getUser()),
+                toDTO(ride.getEbike()),
+                ride.getStartTime(),
+                ride.getEndTime()
+        );
+    }
+    
+    public static User toDomain(UserDTO userDTO) {
+        return new User(userDTO.id(), User.UserType.valueOf(userDTO.permission()));
+    }
+
+    public static EBike toDomain(EBikeDTO ebikeDTO) {
         EBike ebike = new EBike(ebikeDTO.id(), ebikeDTO.x(), ebikeDTO.y());
         ebike.setState(EBike.EBikeState.valueOf(ebikeDTO.state()));
         ebike.setLocation(new P2d(ebikeDTO.x(), ebikeDTO.y()));
@@ -37,17 +47,7 @@ public class Mapper {
         return ebike;
     }
 
-    public static RideDTO toRideDTO(Ride ride) {
-        return new RideDTO(
-                ride.getId(),
-                toUserDTO(ride.getUser()),
-                toEBikeDTO(ride.getEbike()),
-                ride.getStartTime(),
-                ride.getEndTime()
-        );
-    }
-
-    public static Ride toRide(RideDTO rideDTO, User user, EBike ebike) {
+    public static Ride toDomain(RideDTO rideDTO, User user, EBike ebike) {
         return new Ride(rideDTO.id(), user, ebike);
     }
 }
