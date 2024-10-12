@@ -2,20 +2,17 @@ package sap.ass01.layered.UI.views;
 
 import sap.ass01.layered.UI.Dialogs.UserDialogs.RechargeCreditDialog;
 import sap.ass01.layered.UI.Dialogs.UserDialogs.StartRideDialog;
-import sap.ass01.layered.UI.Mapper.PresentationMapper;
+import sap.ass01.layered.UI.Mapper.Mapper;
 import sap.ass01.layered.UI.Models.EBikeViewModel;
-import sap.ass01.layered.UI.Models.UserViewModel;
 import sap.ass01.layered.services.Services.UserService;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.dto.RideDTO;
-import sap.ass01.layered.services.dto.UserDTO;
 import sap.ass01.layered.services.impl.ServiceFactory;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserView extends AbstractView {
 
@@ -61,7 +58,7 @@ public class UserView extends AbstractView {
         // Update the UI components with the new available bikes data
         // Convert EBikeDTOs to ViewModels
         List<EBikeViewModel> bikeModels = availableBikes.stream()
-                .map(PresentationMapper::toEBikeViewModel)
+                .map(Mapper::toDomain)
                 .toList();
 
          log("Available bikes updated: " + availableBikes);

@@ -108,15 +108,15 @@ public abstract class AbstractView extends JFrame {
         int y = 20;
         for (EBikeViewModel bike : eBikes) {
             g2.drawOval((int) dx, (int) dy, 20, 20);
-            g2.drawString("E-Bike: " + bike.getId() + " - battery: " + bike.getBatteryLevel(), (int) dx, (int) dy + 35);
-            g2.drawString("(x: " + bike.getX() + ", y: " + bike.getY() + ")", (int) dx, (int) dy + 50);
-            g2.drawString("STATUS: " + bike.getState(), (int) dx, (int) dy + 65);
+            g2.drawString("E-Bike: " + bike.id() + " - battery: " + bike.batteryLevel(), (int) dx, (int) dy + 35);
+            g2.drawString("(x: " + bike.x() + ", y: " + bike.y() + ")", (int) dx, (int) dy + 50);
+            g2.drawString("STATUS: " + bike.state(), (int) dx, (int) dy + 65);
             dy += 80; // Move down for the next bike
         }
 
         for (UserViewModel user : users) {
             g2.drawRect(10, y, 20, 20);
-            g2.drawString("User: " + user.getId() + " - credit: " + user.getCredit(), 35, y + 15);
+            g2.drawString("User: " + user.id() + " - credit: " + user.credit(), 35, y + 15);
             y += 30;
         }
     }
@@ -125,8 +125,8 @@ public abstract class AbstractView extends JFrame {
         int y = 20;
         for (EBikeViewModel bike : eBikes) {
             g2.drawOval((int) dx, (int) dy, 20, 20);
-            g2.drawString("E-Bike: " + bike.getId() + " - battery: " + bike.getBatteryLevel(), (int) dx, (int) dy + 35);
-            g2.drawString("(x: " + bike.getX() + ", y: " + bike.getY() + ")", (int) dx, (int) dy + 50);
+            g2.drawString("E-Bike: " + bike.id() + " - battery: " + bike.batteryLevel(), (int) dx, (int) dy + 35);
+            g2.drawString("(x: " + bike.x() + ", y: " + bike.y() + ")", (int) dx, (int) dy + 50);
             dy += 80; // Move down for the next bike
         }
     }
