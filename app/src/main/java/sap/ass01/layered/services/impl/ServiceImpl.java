@@ -3,10 +3,18 @@ package sap.ass01.layered.services.impl;
 import io.reactivex.rxjava3.core.*;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
+import sap.ass01.layered.domain.mapper.Mapper;
 import sap.ass01.layered.domain.model.EBike;
 import sap.ass01.layered.domain.model.Ride;
 import sap.ass01.layered.domain.model.RideEntry;
 import sap.ass01.layered.domain.model.User;
+import sap.ass01.layered.persistence.repository.DatabaseType;
+import sap.ass01.layered.persistence.repository.EBikeRepository;
+import sap.ass01.layered.persistence.repository.RideRepository;
+import sap.ass01.layered.persistence.repository.UserRepository;
+import sap.ass01.layered.persistence.repository.factory.EBikeRepositoryFactory;
+import sap.ass01.layered.persistence.repository.factory.RideRepositoryFactory;
+import sap.ass01.layered.persistence.repository.factory.UserRepositoryFactory;
 import sap.ass01.layered.services.Services.AdminService;
 import sap.ass01.layered.services.Services.LoginService;
 import sap.ass01.layered.services.Services.UserService;
@@ -27,8 +35,32 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
     private final BehaviorSubject<Collection<EBikeDTO>> allBikesSubject = BehaviorSubject.createDefault(Collections.emptyList());
     private final BehaviorSubject<Collection<EBikeDTO>> availableBikesSubject = BehaviorSubject.createDefault(Collections.emptyList());
 
+    private final EBikeRepository eBikeRepository;
+    private final UserRepository userRepository;
+    private final RideRepository rideRepository;
+
     public ServiceImpl() {
-        // Initialize subjects with current bike data if needed
+        eBikeRepository = EBikeRepositoryFactory.createRepository(DatabaseType.IN_MEMORY);
+        userRepository = UserRepositoryFactory.createRepository(DatabaseType.IN_MEMORY);
+        rideRepository = RideRepositoryFactory.createRepository(DatabaseType.IN_MEMORY);
+
+        // Load data from repositories
+        eBikeRepository.findAllEBikes().forEach(eBike -> {
+            bikes.put(eBike.id(), Mapper.toDomain(eBike));
+        });
+
+        userRepository.findAllUsers().forEach(user -> {
+            users.put(user.id(), Mapper.toDomain(user));
+        });
+
+        rideRepository.findAllRides().forEach(ride -> {
+            User user = Mapper.toDomain(ride.user());
+            EBike bike = Mapper.toDomain(ride.bike());
+            if (bikes.contains(bike) && users.contains(user)) {
+                Ride rideTmp = Mapper.toDomain(ride, user, bike);
+                rideEntries.put(ride.id(), new RideEntry(rideTmp, new RideSimulation(rideTmp, user)));
+            }
+        });
     }
 
     // ------------------- AdminService Implementation -------------------

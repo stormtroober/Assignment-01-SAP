@@ -35,7 +35,7 @@ public abstract class AbstractRideRepositoryTest {
         RideDTO retrievedRide = retrievedRideOptional.get();
         assertEquals("1", retrievedRide.id(), "Ride ID should match");
         assertEquals(user.id(), retrievedRide.user().id(), "User ID should match");
-        assertEquals(ebike.id(), retrievedRide.EBike().id(), "EBike ID should match");
+        assertEquals(ebike.id(), retrievedRide.bike().id(), "EBike ID should match");
     }
 
     @Test
@@ -63,7 +63,7 @@ public abstract class AbstractRideRepositoryTest {
         RideDTO retrievedRide = retrievedRideOptional.get();
         assertEquals("1", retrievedRide.id(), "Ride ID should match");
         assertEquals(user.id(), retrievedRide.user().id(), "User ID should match");
-        assertEquals(ebike.id(), retrievedRide.EBike().id(), "EBike ID should match");
+        assertEquals(ebike.id(), retrievedRide.bike().id(), "EBike ID should match");
     }
 
     @Test
