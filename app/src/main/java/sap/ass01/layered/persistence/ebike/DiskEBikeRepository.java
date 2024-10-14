@@ -33,7 +33,12 @@ public class DiskEBikeRepository implements EBikeRepository {
 
     @Override
     public List<EBikeDTO> findAllEBikes() {
-        return readEBikesFromFile();
+        if(SAVE_FILE.exists()) {
+            return readEBikesFromFile();
+        }
+        else{
+            return new ArrayList<>();
+        }
     }
 
     @Override
