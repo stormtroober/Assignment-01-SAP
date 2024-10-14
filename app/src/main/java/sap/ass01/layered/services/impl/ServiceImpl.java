@@ -94,6 +94,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
             }
             User user = new User(userId, isAdmin ? User.UserType.ADMIN : User.UserType.USER);
             users.put(userId, user);
+            userRepository.saveUser(Mapper.toDTO(user));
         }).subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
     }
 
@@ -104,10 +105,15 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
                     .filter(user -> user.getId().equals(userId))
                     .findFirst();
             if (userOpt.isEmpty()) {
-                throw new IllegalArgumentException("User not found.");
+                userRepository.findUserById(userId)
+                        .ifPresentOrElse(userDTO -> users.put(userDTO.id(), Mapper.toDomain(userDTO)),
+                                () -> {
+                                    throw new IllegalArgumentException("User not found.");
+                                });
             }
             User user = userOpt.get();
             return mapToDTO(user);
+
         }).subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
     }
 
