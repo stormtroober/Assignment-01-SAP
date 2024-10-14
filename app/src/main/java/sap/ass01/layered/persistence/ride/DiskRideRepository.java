@@ -37,7 +37,12 @@ public class DiskRideRepository implements RideRepository {
 
     @Override
     public List<RideDTO> findAllRides() {
-        return readRidesFromFile();
+        if(SAVE_FILE.exists()) {
+            return readRidesFromFile();
+        }
+        else{
+            return new ArrayList<>();
+        }
     }
 
     @Override

@@ -33,7 +33,12 @@ public class DiskUserRepository implements UserRepository {
 
     @Override
     public List<UserDTO> findAllUsers() {
-        return readUsersFromFile();
+        if(SAVE_FILE.exists()) {
+            return readUsersFromFile();
+        }
+        else{
+            return new ArrayList<>();
+        }
     }
 
     @Override
