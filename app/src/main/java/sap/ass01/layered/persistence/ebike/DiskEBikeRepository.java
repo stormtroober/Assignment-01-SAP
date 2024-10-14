@@ -105,8 +105,16 @@ public class DiskEBikeRepository implements EBikeRepository {
     }
 
     private void writeEBikesToFile(List<EBikeDTO> ebikes) {
-        try (FileWriter writer = new FileWriter(SAVE_FILE)) {
-            gson.toJson(ebikes, writer);
+        try {
+            // Ensure the directory exists
+            File parentDir = SAVE_FILE.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+
+            try (FileWriter writer = new FileWriter(SAVE_FILE)) {
+                gson.toJson(ebikes, writer);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -106,10 +106,19 @@ public class DiskUserRepository implements UserRepository {
     }
 
     private void writeUsersToFile(List<UserDTO> users) {
-        try (FileWriter writer = new FileWriter(SAVE_FILE)) {
-            gson.toJson(users, writer);
+        try {
+            // Ensure the directory exists
+            File parentDir = SAVE_FILE.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+
+            try (FileWriter writer = new FileWriter(SAVE_FILE)) {
+                gson.toJson(users, writer);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

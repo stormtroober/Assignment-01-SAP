@@ -109,8 +109,16 @@ public class DiskRideRepository implements RideRepository {
     }
 
     private void writeRidesToFile(List<RideDTO> rides) {
-        try (FileWriter writer = new FileWriter(SAVE_FILE)) {
-            gson.toJson(rides, writer);
+        try {
+            // Ensure the directory exists
+            File parentDir = SAVE_FILE.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+
+            try (FileWriter writer = new FileWriter(SAVE_FILE)) {
+                gson.toJson(rides, writer);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
