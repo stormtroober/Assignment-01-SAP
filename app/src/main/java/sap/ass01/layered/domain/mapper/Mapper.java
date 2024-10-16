@@ -35,11 +35,11 @@ public class Mapper {
     }
     
     public static User toDomain(UserDTO userDTO) {
-        return new User(userDTO.id(), User.UserType.valueOf(userDTO.permission()));
+        return new User(userDTO.id(), User.UserType.valueOf(userDTO.permission()), userDTO.credit() );
     }
 
     public static EBike toDomain(EBikeDTO ebikeDTO) {
-        EBike ebike = new EBike(ebikeDTO.id(), ebikeDTO.x(), ebikeDTO.y());
+        EBike ebike = new EBike(ebikeDTO.id(), ebikeDTO.x(), ebikeDTO.y(), EBike.EBikeState.valueOf(ebikeDTO.state()), ebikeDTO.batteryLevel());
         ebike.setState(EBike.EBikeState.valueOf(ebikeDTO.state()));
         ebike.setLocation(new P2d(ebikeDTO.x(), ebikeDTO.y()));
         ebike.setDirection(new V2d(ebikeDTO.directionX(), ebikeDTO.directionY()));

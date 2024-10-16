@@ -46,6 +46,11 @@ public class RideSimulation {
         EBike bike = ride.getEbike();
 
         synchronized (bike) {
+            if(bike.getBatteryLevel() == 0 || user.getCredit() == 0) {
+                ride.end();
+                stopSimulation();
+                completeSimulation();
+            }
             // Simulate movement and battery usage
             V2d direction = bike.getDirection();
             double speed = 0.5;  // Set speed to a constant value for simplicity
@@ -72,15 +77,11 @@ public class RideSimulation {
             bike.decreaseBattery(1);
             user.decreaseCredit(1);
 
-            if(bike.getBatteryLevel() == 0 || user.getCredit() == 0) {
-                ride.end();
-                stopSimulation();
-                completeSimulation();
-            }
+
 
             // Emit updated ride information
             RideDTO rideDTO = new RideDTO(
-                    bike.getId(),
+                    ride.getId(),
                     bike.getLocation().x(),
                     bike.getLocation().y(),
                     user.getCredit(),

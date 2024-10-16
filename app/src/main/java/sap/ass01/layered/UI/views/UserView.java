@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UserView extends AbstractView {
 
@@ -53,32 +54,47 @@ public class UserView extends AbstractView {
                         this::updateAvailableBikes,
                         throwable -> {
                             // Handle error
-                            System.err.println("Error observing available bikes: " + throwable.getMessage());
+                            log("Error observing available bikes: " + throwable.getMessage());
+                            throwable.printStackTrace(); // Print stack trace for detailed debugging
                         }
                 );
     }
 
     private void updateAvailableBikes(Collection<EBikeDTO> availableBikes) {
-        Optional<EBikeViewModel> ongoingBike = ongoingRide.map(RideViewModel::bike);
+        try {
+            log("Updating available bikes: " + availableBikes);
+            Optional<EBikeViewModel> ongoingBike = ongoingRide.map(RideViewModel::bike);
 
-        eBikes = availableBikes.stream()
-                .map(Mapper::toDomain)
-                .filter(bike -> ongoingBike.map(ongoing -> !ongoing.id().equals(bike.id())).orElse(true))
-                .toList();
+            // Create a mutable list from the stream
+            List<EBikeViewModel> updatedBikes = availableBikes.stream()
+                    .map(Mapper::toDomain)
+                    .collect(Collectors.toList());
 
+            // Add the ongoing bike if present
+            ongoingBike.ifPresent(updatedBikes::add);
 
-        log("Available bikes updated: " + availableBikes);
-        // Call a method to refresh the visual representation
-        updateVisualizerPanel();
+            eBikes = updatedBikes;
+            log("Available bikes updated: " + eBikes);
+            // Call a method to refresh the visual representation
+            updateVisualizerPanel();
+        } catch (Exception e) {
+            log("Exception while updating available bikes: " + e.getMessage());
+            e.printStackTrace(); // Print stack trace for detailed debugging
+        }
     }
 
     public void initRide(RideViewModel ride){
         this.ongoingRide = Optional.of(ride);
     }
     public void updateRide(RideDTO rideDTO) {
-
+        log("My ride prev ->" + eBikes.toString());
         if(ongoingRide.isPresent()){
+            log("On going is present");
             ongoingRide = Optional.of(Mapper.toDomain(rideDTO, ongoingRide.get()));
+            log("Value of ongoing ride ->"+ongoingRide.get().toString());
+            eBikes = eBikes.stream()
+                    .map(bike -> bike.id().equals(ongoingRide.get().bike().id()) ? ongoingRide.get().bike() : bike)
+                    .toList();
 
         }
 
@@ -98,5 +114,10 @@ public class UserView extends AbstractView {
 
     private void log(String msg){
         System.out.println("[UserView] " + msg);
+    }
+
+    public void endRide() {
+        ongoingRide = Optional.empty();
+        updateVisualizerPanel();
     }
 }

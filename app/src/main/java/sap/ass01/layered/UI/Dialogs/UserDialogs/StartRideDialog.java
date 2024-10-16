@@ -42,25 +42,27 @@ public class StartRideDialog extends AbstractDialog {
             //String userId = "u"; // Replace with actual user ID
             String rideId = UUID.randomUUID().toString(); // Generate a unique ride ID
 
-
+            Optional<EBikeViewModel> bike = ((UserView) getParent()).findBike(bikeId);
+            // Handle success
+            if(bike.isPresent()) {
+                log("*******************************************************");
+                RideViewModel rideViewModel = new RideViewModel(rideId, user, bike.get());
+                ((UserView) getParent()).initRide(rideViewModel);
+                log(rideViewModel.toString());
+            }
 
             userService.startRide(user.id(), rideId, bikeId)
                     .subscribe(
                             rideDTO -> {
-                                Optional<EBikeViewModel> bike = ((UserView) getParent()).findBike(bikeId);
-                                // Handle success
-                                System.out.println("Ride started successfully: " + rideDTO);
-                                if(bike.isPresent()){
-                                    System.out.println("*******************************************************");
-                                    ((UserView) getParent()).initRide(new RideViewModel(rideId, user, bike.get()));
-                                    observeRideUpdates(user.id(), rideId);
-                                    dispose();
-                                }
+
+                                observeRideUpdates(user.id(), rideId);
+                                dispose();
+
 
                             },
                             throwable -> {
                                 // Handle error
-                                System.err.println("Error starting ride: " + throwable.getMessage());
+                                log("Error starting ride: " + throwable.getMessage());
                                 JOptionPane.showMessageDialog(this, "Error starting ride: " + throwable.getMessage());
                             }
                     );
@@ -72,13 +74,22 @@ public class StartRideDialog extends AbstractDialog {
                 .subscribe(
                         rideDTO -> {
                             // Update the view with the new ride DTO
-                            System.out.println("Ride update: " + rideDTO);
+                            log("Ride update: " + rideDTO);
                             ((UserView) getParent()).updateRide(rideDTO);
                         },
                         throwable -> {
                             // Handle error
                             System.err.println("Error observing ride: " + throwable.getMessage());
+                        },
+                        () -> {
+                            // Handle completion
+                            log("Ride completed");
+                            ((UserView) getParent()).endRide();
                         }
                 );
+    }
+
+    private void log(String msg){
+        System.out.println("[StartRideDialog] "+msg);
     }
 }

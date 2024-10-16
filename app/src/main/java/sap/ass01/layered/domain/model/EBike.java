@@ -10,13 +10,13 @@ public class EBike {
     private volatile double speed; // Units per simulation tick
     private volatile int batteryLevel; // 0..100
 
-    public EBike(String id, double x, double y) {
+    public EBike(String id, double x, double y, EBikeState state, int battery) {
         this.id = id;
-        this.state = EBikeState.AVAILABLE;
+        this.state = state;
         this.location = new P2d(x, y);
         this.direction = new V2d(1, 0); // Initial direction
         this.speed = 0; // Default speed
-        this.batteryLevel = 100;
+        this.batteryLevel = battery;
     }
 
 

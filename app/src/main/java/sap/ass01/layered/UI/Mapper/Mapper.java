@@ -25,7 +25,8 @@ public class Mapper {
         return new RideViewModel(
                 rideDTO.id(),
                 rideViewModel.user().updateCredit(rideDTO.credit()),
-                rideViewModel.bike().updateBatteryLevel(rideDTO.charge())
+                rideViewModel.bike().updateBatteryLevel(rideDTO.charge()).updateLocation(rideDTO.x(), rideDTO.y())
+
         );
     }
 

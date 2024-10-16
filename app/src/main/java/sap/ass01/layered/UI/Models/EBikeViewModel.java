@@ -10,4 +10,7 @@ public record EBikeViewModel (String id, double x, double y, int batteryLevel, S
         return new EBikeViewModel(id, x, y, batteryLevel, state);
     }
 
+    public EBikeViewModel updateLocation(double x, double y) {
+        return new EBikeViewModel(id, x, y, batteryLevel, state);
+    }
 }

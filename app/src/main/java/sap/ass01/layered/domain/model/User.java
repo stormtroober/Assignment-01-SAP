@@ -7,10 +7,10 @@ public class User {
     private final UserType type;
     private volatile int credit;
 
-    public User(String id, UserType type) {
+    public User(String id, UserType type, int credit) {
         this.id = id;
         this.type = type;
-        this.credit = 100; // Default credit
+        this.credit = credit; // Default credit
     }
 
     public String getId() { return id; }

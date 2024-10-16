@@ -13,8 +13,8 @@ public class ClassesTests {
 
     @BeforeEach
     public void setup() {
-        user = new User("1", User.UserType.USER);
-        ebike = new EBike("1", 0, 0);
+        user = new User("1", User.UserType.USER, 100 );
+        ebike = new EBike("1", 0, 0, EBike.EBikeState.AVAILABLE, 100);
     }
 
     @Test

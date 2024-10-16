@@ -75,7 +75,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
             if (existingBike.isPresent()) {
                 throw new IllegalArgumentException("Bike ID already exists.");
             }
-            EBike bike = new EBike(bikeId, x, y);
+            EBike bike = new EBike(bikeId, x, y, EBike.EBikeState.AVAILABLE,100 );
             eBikeRepository.saveEBike(Mapper.toDTO(bike));
             bikes.put(bikeId, bike);
             emitAllBikes();
@@ -97,7 +97,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
             if (users.containsKey(userId)) {
                 throw new IllegalArgumentException("User already exists.");
             }
-            User user = new User(userId, isAdmin ? User.UserType.ADMIN : User.UserType.USER);
+            User user = new User(userId, isAdmin ? User.UserType.ADMIN : User.UserType.USER, 100);
             users.put(userId, user);
             userRepository.saveUser(Mapper.toDTO(user));
         }).subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
@@ -171,7 +171,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
                                 userRepository.updateUser(Mapper.toDTO(user));
                                 emitAllBikes();
 
-                                emitter.onNext(rideDTO);
+                                //emitter.onNext(rideDTO);
                             },
                             throwable -> {
                                 // Emit error if something goes wrong
