@@ -15,6 +15,7 @@ public class RideSimulation {
     private final User user;
     private final PublishSubject<RideDTO> rideUpdates = PublishSubject.create();
     private volatile boolean stopped = false;
+    private long lastTimeChangedDir = System.currentTimeMillis();
 
     public RideSimulation(Ride ride, User user) {
         this.ride = ride;
@@ -59,14 +60,23 @@ public class RideSimulation {
                 bike.setDirection(new V2d(direction.x(), -direction.y()));
             }
 
-            // Randomly change direction (5% chance)
-            if (Math.random() < 0.05) {
-                bike.setDirection(new V2d(Math.random() - 0.5, Math.random() - 0.5).getNormalized());
+            // Change direction every 500ms
+            long elapsedTimeSinceLastChangeDir = System.currentTimeMillis() - lastTimeChangedDir;
+            if (elapsedTimeSinceLastChangeDir > 500) {
+                double angle = Math.random() * 60 - 30;
+                bike.setDirection(direction.rotate(angle));
+                lastTimeChangedDir = System.currentTimeMillis();
             }
 
             // Decrease battery and user credit
             bike.decreaseBattery(1);
             user.decreaseCredit(1);
+
+            if(bike.getBatteryLevel() == 0 || user.getCredit() == 0) {
+                ride.end();
+                stopSimulation();
+                completeSimulation();
+            }
 
             // Emit updated ride information
             RideDTO rideDTO = new RideDTO(

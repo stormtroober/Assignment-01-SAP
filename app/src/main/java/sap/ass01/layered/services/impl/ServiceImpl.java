@@ -68,10 +68,12 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
     @Override
     public Single<EBikeDTO> createEBike(String bikeId, double x, double y) {
         return Single.fromCallable(() -> {
-            if (bikes.containsKey(bikeId)) {
+            Optional<sap.ass01.layered.persistence.dto.EBikeDTO> existingBike = eBikeRepository.findEBikeById(bikeId);
+            if (existingBike.isPresent()) {
                 throw new IllegalArgumentException("Bike ID already exists.");
             }
             EBike bike = new EBike(bikeId, x, y);
+            eBikeRepository.saveEBike(Mapper.toDTO(bike));
             bikes.put(bikeId, bike);
             emitAllBikes();
             emitAvailableBikes();
@@ -151,7 +153,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
             // Start ride
             Ride ride = new Ride(rideId, user, bike);
             ride.start();
-
+            rideRepository.saveRide(Mapper.toDTO(ride));
             RideSimulation simulation = new RideSimulation(ride, user);
             rideEntries.put(rideId, new RideEntry(ride, simulation));
 
@@ -161,6 +163,9 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
                     .subscribe(
                             rideDTO -> {
                                 // Emit every ride update to the subscriber
+                                rideRepository.updateRide(Mapper.toDTO(ride));
+                                eBikeRepository.updateEBike(Mapper.toDTO(bike));
+                                userRepository.updateUser(Mapper.toDTO(user));
                                 emitAllBikes();
                                 emitAvailableBikes();
                                 emitter.onNext(rideDTO);
@@ -172,6 +177,9 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
                             () -> {
                                 // Complete the observable once the ride is done
                                 handleRideCompletion(rideId);
+                                rideRepository.updateRide(Mapper.toDTO(ride));
+                                eBikeRepository.updateEBike(Mapper.toDTO(bike));
+                                userRepository.updateUser(Mapper.toDTO(user));
                                 emitter.onComplete();
                             }
                     );
@@ -217,14 +225,16 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
             EBike bike = rideEntry.ride().getEbike();
             synchronized (bike) {
                 bike.setState(EBike.EBikeState.AVAILABLE);
-                bike.rechargeBattery(); // Assuming ride completion recharges the bike
+//                bike.rechargeBattery(); // Assuming ride completion recharges the bike
             }
 
             // End ride
             rideEntry.ride().end();
 
-            // Remove ride entry
-            rideEntries.remove(rideId);
+            // Update repositories
+            rideRepository.updateRide(Mapper.toDTO(rideEntry.ride()));
+            eBikeRepository.updateEBike(Mapper.toDTO(bike));
+            userRepository.updateUser(Mapper.toDTO(rideEntry.ride().getUser()));
 
             emitAllBikes();
             emitAvailableBikes();
@@ -262,7 +272,6 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
             EBike bike = rideEntry.ride().getEbike();
             synchronized (bike) {
                 bike.setState(EBike.EBikeState.AVAILABLE);
-                bike.rechargeBattery();
             }
             rideEntries.remove(rideId);
             emitAllBikes();
