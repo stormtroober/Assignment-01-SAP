@@ -1,6 +1,8 @@
 package sap.ass01.layered.UI.Dialogs.UserDialogs;
 
 import sap.ass01.layered.UI.Dialogs.AbstractDialog;
+import sap.ass01.layered.UI.Models.EBikeViewModel;
+import sap.ass01.layered.UI.Models.RideViewModel;
 import sap.ass01.layered.UI.Models.UserViewModel;
 import sap.ass01.layered.services.Services.UserService;
 import sap.ass01.layered.services.dto.RideDTO;
@@ -8,18 +10,19 @@ import sap.ass01.layered.UI.views.UserView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.Optional;
 import java.util.UUID;
 
 public class StartRideDialog extends AbstractDialog {
 
     private JTextField idEBikeField;
     private final UserService userService;
-    private final String userId;
+    private final UserViewModel user;
 
-    public StartRideDialog(JFrame parent, UserService userService, String userId) {
+    public StartRideDialog(JFrame parent, UserService userService, UserViewModel user) {
         super(parent, "Start Riding an E-Bike");
         this.userService = userService;
-        this.userId = userId;
+        this.user = user;
         setupDialog();
     }
 
@@ -39,15 +42,21 @@ public class StartRideDialog extends AbstractDialog {
             //String userId = "u"; // Replace with actual user ID
             String rideId = UUID.randomUUID().toString(); // Generate a unique ride ID
 
-            System.out.println("Starting ride with userId: " + userId + ", bikeId: " + bikeId + ", rideId: " + rideId);
 
-            userService.startRide(userId, rideId, bikeId)
+
+            userService.startRide(user.id(), rideId, bikeId)
                     .subscribe(
                             rideDTO -> {
+                                Optional<EBikeViewModel> bike = ((UserView) getParent()).findBike(bikeId);
                                 // Handle success
                                 System.out.println("Ride started successfully: " + rideDTO);
-                                observeRideUpdates(userId, rideId);
-                                dispose();
+                                if(bike.isPresent()){
+                                    System.out.println("*******************************************************");
+                                    ((UserView) getParent()).initRide(new RideViewModel(rideId, user, bike.get()));
+                                    observeRideUpdates(user.id(), rideId);
+                                    dispose();
+                                }
+
                             },
                             throwable -> {
                                 // Handle error

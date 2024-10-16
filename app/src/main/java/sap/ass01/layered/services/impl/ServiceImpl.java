@@ -170,7 +170,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
                                 eBikeRepository.updateEBike(Mapper.toDTO(bike));
                                 userRepository.updateUser(Mapper.toDTO(user));
                                 emitAllBikes();
-                                emitAvailableBikes();
+
                                 emitter.onNext(rideDTO);
                             },
                             throwable -> {
@@ -295,12 +295,14 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
         log("Emitting available bikes");
         Collection<EBikeDTO> availableDTOs = new ArrayList<>();
         for (EBike bike : bikes.values()) {
-            if (bike.isAvailable()) {
+            if (bike.isAvailable() ) {
                 availableDTOs.add(mapToDTO(bike));
             }
         }
         availableBikesSubject.onNext(availableDTOs);
     }
+
+
 
     private EBikeDTO mapToDTO(EBike bike) {
         synchronized (bike) {

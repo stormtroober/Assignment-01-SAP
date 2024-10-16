@@ -15,26 +15,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public class UserView extends AbstractView {
 
     private final UserService userService = ServiceFactory.getUserService();
-    private final String userId;
-    private RideViewModel ongoingRide;
+    private Optional<RideViewModel> ongoingRide = Optional.empty();
 
-    public UserView(String userId) {
-        super("User View");
-        this.userId = userId;
+    public UserView(UserViewModel user) {
+        super("User View", user);
         setupView();
         observeAvailableBikes();
-        refreshView();
+        updateVisualizerPanel();
     }
 
     private void setupView() {
         addTopPanelButton("Start Ride", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                StartRideDialog startRideDialog = new StartRideDialog(UserView.this, userService, userId);
+                StartRideDialog startRideDialog = new StartRideDialog(UserView.this, userService, actualUser);
                 startRideDialog.setVisible(true);
             }
         });
@@ -60,36 +59,41 @@ public class UserView extends AbstractView {
     }
 
     private void updateAvailableBikes(Collection<EBikeDTO> availableBikes) {
-        // Update the UI components with the new available bikes data
-        // Convert EBikeDTOs to ViewModels
-        List<EBikeViewModel> bikeModels = availableBikes.stream()
+        Optional<EBikeViewModel> ongoingBike = ongoingRide.map(RideViewModel::bike);
+
+        eBikes = availableBikes.stream()
                 .map(Mapper::toDomain)
+                .filter(bike -> ongoingBike.map(ongoing -> !ongoing.id().equals(bike.id())).orElse(true))
                 .toList();
 
-         log("Available bikes updated: " + availableBikes);
+
+        log("Available bikes updated: " + availableBikes);
         // Call a method to refresh the visual representation
-        updateVisualizerPanel(false, bikeModels, List.of());
-        refreshView();
+        updateVisualizerPanel();
     }
 
+    public void initRide(RideViewModel ride){
+        this.ongoingRide = Optional.of(ride);
+    }
     public void updateRide(RideDTO rideDTO) {
-        // Update the UI components with the new ride data
-        if (ongoingRide == null){
-           UserViewModel user = new UserViewModel(userId, 0, false);
-           EBikeViewModel eBike = new EBikeViewModel(rideDTO.id(), rideDTO.x(), rideDTO.y(), rideDTO.charge(), "AVAILABLE");
-           ongoingRide = new RideViewModel(rideDTO.id(), user, eBike);
-        } else {
-            ongoingRide = Mapper.toDomain(rideDTO, ongoingRide);
+
+        if(ongoingRide.isPresent()){
+            ongoingRide = Optional.of(Mapper.toDomain(rideDTO, ongoingRide.get()));
+
         }
-        updateVisualizerPanel(false, eBikes, users);
+
+
         log("Ride updated: " + rideDTO);
 
+        log("My ride ->" + eBikes.toString());
         // Call a method to refresh the visual representation
-        refreshView();
+        updateVisualizerPanel();
     }
 
-    public void refreshView() {
-        updateVisualizerPanel(false, eBikes, users);
+    public Optional<EBikeViewModel> findBike(String bikeId) {
+        return eBikes.stream()
+                .filter(bike -> bike.id().equals(bikeId))
+                .findFirst();
     }
 
     private void log(String msg){

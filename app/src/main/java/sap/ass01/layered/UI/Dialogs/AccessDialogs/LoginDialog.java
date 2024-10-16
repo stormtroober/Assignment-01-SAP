@@ -1,6 +1,7 @@
 package sap.ass01.layered.UI.Dialogs.AccessDialogs;
 
 import sap.ass01.layered.UI.Dialogs.AbstractDialog;
+import sap.ass01.layered.UI.Mapper.Mapper;
 import sap.ass01.layered.UI.views.AdminView;
 import sap.ass01.layered.UI.views.UserView;
 import sap.ass01.layered.services.Services.LoginService;
@@ -45,10 +46,10 @@ public class LoginDialog extends AbstractDialog {
                 loginService.logIn(userName.get()).subscribe(user -> {
                     if (user.admin()) {
                         JOptionPane.showMessageDialog(this, "Admin login successful");
-                        new AdminView().display();
+                        new AdminView(Mapper.toDomain(user)).display();
                     } else {
                         JOptionPane.showMessageDialog(this, "User login successful");
-                        new UserView(user.id()).display();
+                        new UserView(Mapper.toDomain(user)).display();
                     }
                     dispose();
                 }, error -> {

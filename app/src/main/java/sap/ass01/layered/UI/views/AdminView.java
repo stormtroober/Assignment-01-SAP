@@ -2,6 +2,7 @@ package sap.ass01.layered.UI.views;
 
 import sap.ass01.layered.UI.Dialogs.AdminDialogs.AddEBikeDialog;
 import sap.ass01.layered.UI.Dialogs.AdminDialogs.RechargeBikeDialog;
+import sap.ass01.layered.UI.Models.UserViewModel;
 import sap.ass01.layered.services.Services.AdminService;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.impl.ServiceFactory;
@@ -17,11 +18,11 @@ public class AdminView extends AbstractView {
 
     private final AdminService adminService = ServiceFactory.getAdminService();
 
-    public AdminView() {
-        super("Admin View");
+    public AdminView(UserViewModel user) {
+        super("Admin View", user);
         setupView();
         observeAllBikes();
-        refreshView();
+        updateVisualizerPanel();
     }
 
     private void setupView() {
@@ -60,16 +61,16 @@ public class AdminView extends AbstractView {
         List<EBikeViewModel> bikesModel = allBikes.stream()
                 .map(Mapper::toDomain)
                 .toList();
+        eBikes = bikesModel;
         log("All bikes updated: " + allBikes);
         // Call a method to refresh the visual representation
-        updateVisualizerPanel(true, bikesModel, List.of());
         refreshView();
     }
 
 
 
     public void refreshView() {
-        updateVisualizerPanel(true, eBikes, users);
+        updateVisualizerPanel();
     }
 
     private void log(String msg){
