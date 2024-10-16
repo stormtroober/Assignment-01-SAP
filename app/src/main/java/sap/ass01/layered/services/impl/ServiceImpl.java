@@ -137,11 +137,17 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
             if (user == null) {
                 emitter.onError(new IllegalArgumentException("User not found."));
                 return;
+            }else if(user.getCredit() == 0){
+                emitter.onError(new IllegalArgumentException("User has no credit."));
+                return;
             }
 
             EBike bike = bikes.get(bikeId);
             if (bike == null) {
                 emitter.onError(new IllegalArgumentException("Bike not found."));
+                return;
+            }else if (bike.getBatteryLevel() == 0){
+                emitter.onError(new IllegalArgumentException("Bike has no battery."));
                 return;
             }
 
@@ -269,13 +275,9 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
     }
 
     private void handleRideCompletion(String rideId) {
-        // Ensure the bike state is updated to AVAILABLE when simulation completes
+
         RideEntry rideEntry = rideEntries.get(rideId);
         if (rideEntry != null) {
-            EBike bike = rideEntry.ride().getEbike();
-            synchronized (bike) {
-                bike.setState(EBike.EBikeState.AVAILABLE);
-            }
             rideEntries.remove(rideId);
             emitAllBikes();
             emitAvailableBikes();
