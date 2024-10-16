@@ -61,6 +61,9 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
                 rideEntries.put(ride.id(), new RideEntry(rideTmp, new RideSimulation(rideTmp, user)));
             }
         });
+
+        emitAllBikes();
+        emitAvailableBikes();
     }
 
     // ------------------- AdminService Implementation -------------------
