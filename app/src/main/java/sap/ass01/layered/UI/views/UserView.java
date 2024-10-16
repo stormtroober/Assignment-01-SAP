@@ -4,6 +4,8 @@ import sap.ass01.layered.UI.Dialogs.UserDialogs.RechargeCreditDialog;
 import sap.ass01.layered.UI.Dialogs.UserDialogs.StartRideDialog;
 import sap.ass01.layered.UI.Mapper.Mapper;
 import sap.ass01.layered.UI.Models.EBikeViewModel;
+import sap.ass01.layered.UI.Models.RideViewModel;
+import sap.ass01.layered.UI.Models.UserViewModel;
 import sap.ass01.layered.services.Services.UserService;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.dto.RideDTO;
@@ -17,9 +19,12 @@ import java.util.List;
 public class UserView extends AbstractView {
 
     private final UserService userService = ServiceFactory.getUserService();
+    private final String userId;
+    private RideViewModel ongoingRide;
 
-    public UserView() {
+    public UserView(String userId) {
         super("User View");
+        this.userId = userId;
         setupView();
         observeAvailableBikes();
         refreshView();
@@ -29,7 +34,7 @@ public class UserView extends AbstractView {
         addTopPanelButton("Start Ride", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                StartRideDialog startRideDialog = new StartRideDialog(UserView.this, userService);
+                StartRideDialog startRideDialog = new StartRideDialog(UserView.this, userService, userId);
                 startRideDialog.setVisible(true);
             }
         });
@@ -63,12 +68,22 @@ public class UserView extends AbstractView {
 
          log("Available bikes updated: " + availableBikes);
         // Call a method to refresh the visual representation
+        updateVisualizerPanel(false, bikeModels, List.of());
         refreshView();
     }
 
     public void updateRide(RideDTO rideDTO) {
         // Update the UI components with the new ride data
+        if (ongoingRide == null){
+           UserViewModel user = new UserViewModel(userId, 0, false);
+           EBikeViewModel eBike = new EBikeViewModel(rideDTO.id(), rideDTO.x(), rideDTO.y(), rideDTO.charge(), "AVAILABLE");
+           ongoingRide = new RideViewModel(rideDTO.id(), user, eBike);
+        } else {
+            ongoingRide = Mapper.toDomain(rideDTO, ongoingRide);
+        }
+        updateVisualizerPanel(false, eBikes, users);
         log("Ride updated: " + rideDTO);
+
         // Call a method to refresh the visual representation
         refreshView();
     }

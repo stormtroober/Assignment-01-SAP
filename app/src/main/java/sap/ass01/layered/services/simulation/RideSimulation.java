@@ -48,7 +48,7 @@ public class RideSimulation {
         synchronized (bike) {
             // Simulate movement and battery usage
             V2d direction = bike.getDirection();
-            double speed = 1.0;  // Set speed to a constant value for simplicity
+            double speed = 0.5;  // Set speed to a constant value for simplicity
             V2d movement = direction.mul(speed);
             bike.setLocation(bike.getLocation().sum(movement));
 

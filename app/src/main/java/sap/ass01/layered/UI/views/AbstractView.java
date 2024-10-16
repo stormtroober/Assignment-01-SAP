@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import sap.ass01.layered.UI.Models.EBikeViewModel;
+import sap.ass01.layered.UI.Models.RideViewModel;
 import sap.ass01.layered.UI.Models.UserViewModel;
 
 public abstract class AbstractView extends JFrame {
@@ -21,6 +22,7 @@ public abstract class AbstractView extends JFrame {
 
     protected List<EBikeViewModel> eBikes;
     protected List<UserViewModel> users;
+    protected RideViewModel ongoingRide;
 
     public AbstractView(String title) {
         setTitle(title);
@@ -62,6 +64,11 @@ public abstract class AbstractView extends JFrame {
         topPanel.add(button);
     }
 
+    /*public void updateRidePanel(RideViewModel ride) {
+        this.ongoingRide = ride;
+        centralPanel.repaint();
+    }*/
+
     public void updateVisualizerPanel(boolean isAdmin, List<EBikeViewModel> eBikes, List<UserViewModel> users) {
         this.isAdmin = isAdmin;
         this.eBikes = eBikes;
@@ -102,6 +109,8 @@ public abstract class AbstractView extends JFrame {
         } else {
             paintUserView(g2);
         }
+
+        //paintRideDetails(g2);
     }
 
     private void paintAdminView(Graphics2D g2) {
@@ -127,9 +136,29 @@ public abstract class AbstractView extends JFrame {
             g2.drawOval((int) dx, (int) dy, 20, 20);
             g2.drawString("E-Bike: " + bike.id() + " - battery: " + bike.batteryLevel(), (int) dx, (int) dy + 35);
             g2.drawString("(x: " + bike.x() + ", y: " + bike.y() + ")", (int) dx, (int) dy + 50);
-            dy += 80; // Move down for the next bike
+            dy += 80;// Move down for the next bike
+
+            g2.drawRect(10, y, 20, 20);
+            g2.drawString("EBike: " + bike.id() + " - battery level: " + bike.batteryLevel(), 35, y + 15);
+            y += 30;
         }
     }
+
+    /*private void paintRideDetails(Graphics2D g2) {
+        int y = 20;
+
+        if (ongoingRide != null) {
+            g2.setColor(Color.BLUE); // Different color for the ride details
+            g2.drawString("Ongoing Ride:", (int) dx, y);
+            y += 20;
+            g2.drawString("Ride ID: " + ongoingRide.id(), (int) dx, y);
+            y += 20;
+            g2.drawString("E-Bike ID: " + ongoingRide.bike(), (int) dx, y);
+        } else {
+            g2.setColor(Color.RED);
+            g2.drawString("No ongoing ride.", (int) dx, y);
+        }
+    }*/
 
 
 

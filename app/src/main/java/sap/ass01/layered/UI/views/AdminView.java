@@ -53,6 +53,8 @@ public class AdminView extends AbstractView {
                 );
     }
 
+
+
     private void updateAllBikes(Collection<EBikeDTO> allBikes) {
         // Update the UI components with the new available bikes data
         List<EBikeViewModel> bikesModel = allBikes.stream()
@@ -63,6 +65,8 @@ public class AdminView extends AbstractView {
         updateVisualizerPanel(true, bikesModel, List.of());
         refreshView();
     }
+
+
 
     public void refreshView() {
         updateVisualizerPanel(true, eBikes, users);
