@@ -42,7 +42,7 @@ public class UserView extends AbstractView {
         addTopPanelButton("Recharge Credit", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RechargeCreditDialog rechargeCreditDialog = new RechargeCreditDialog(UserView.this);
+                RechargeCreditDialog rechargeCreditDialog = new RechargeCreditDialog(UserView.this, userService, actualUser);
                 rechargeCreditDialog.setVisible(true);
             }
         });

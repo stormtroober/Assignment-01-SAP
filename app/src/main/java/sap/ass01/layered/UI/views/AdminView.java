@@ -37,7 +37,7 @@ public class AdminView extends AbstractView {
 
         JButton rechargeBikeButton = new JButton("Recharge Bike");
         rechargeBikeButton.addActionListener(e -> {
-            RechargeBikeDialog rechargeBikeDialog = new RechargeBikeDialog(AdminView.this);
+            RechargeBikeDialog rechargeBikeDialog = new RechargeBikeDialog(AdminView.this, adminService);
             rechargeBikeDialog.setVisible(true);
         });
         topPanel.add(rechargeBikeButton);
