@@ -1,6 +1,6 @@
-package sap.ass01.layered.UI.Dialogs.AdminDialogs;
+package sap.ass01.layered.ui.dialogs.admin;
 
-import sap.ass01.layered.UI.Dialogs.AbstractDialog;
+import sap.ass01.layered.ui.dialogs.AbstractDialog;
 import sap.ass01.layered.services.Services.AdminService;
 
 import javax.swing.*;

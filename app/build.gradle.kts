@@ -33,7 +33,7 @@ java {
 }
 
 application {
-    mainClass = "org.example.App"
+    mainClass = ""
 }
 
 tasks.named<Test>("test") {

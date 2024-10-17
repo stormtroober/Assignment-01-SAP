@@ -1,4 +1,4 @@
-package sap.ass01.layered.UI.Dialogs;
+package sap.ass01.layered.ui.dialogs;
 
 import javax.swing.*;
 import java.awt.*;

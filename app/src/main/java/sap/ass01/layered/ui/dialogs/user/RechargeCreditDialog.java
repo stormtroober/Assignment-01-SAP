@@ -1,7 +1,7 @@
-package sap.ass01.layered.UI.Dialogs.UserDialogs;
+package sap.ass01.layered.ui.dialogs.user;
 
-import sap.ass01.layered.UI.Dialogs.AbstractDialog;
-import sap.ass01.layered.UI.Models.UserViewModel;
+import sap.ass01.layered.ui.dialogs.AbstractDialog;
+import sap.ass01.layered.ui.models.UserViewModel;
 import sap.ass01.layered.services.Services.UserService;
 
 import javax.swing.*;

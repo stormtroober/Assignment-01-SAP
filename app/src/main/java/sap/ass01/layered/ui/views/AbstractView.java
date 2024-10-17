@@ -1,4 +1,4 @@
-package sap.ass01.layered.UI.views;
+package sap.ass01.layered.ui.views;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,8 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import sap.ass01.layered.UI.Models.EBikeViewModel;
-import sap.ass01.layered.UI.Models.UserViewModel;
+import sap.ass01.layered.ui.models.EBikeViewModel;
+import sap.ass01.layered.ui.models.UserViewModel;
 
 public abstract class AbstractView extends JFrame {
 

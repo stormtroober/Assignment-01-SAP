@@ -1,19 +1,17 @@
-package sap.ass01.layered.UI.views;
+package sap.ass01.layered.ui.views;
 
-import sap.ass01.layered.UI.Dialogs.UserDialogs.RechargeCreditDialog;
-import sap.ass01.layered.UI.Dialogs.UserDialogs.StartRideDialog;
-import sap.ass01.layered.UI.Mapper.Mapper;
-import sap.ass01.layered.UI.Models.EBikeViewModel;
-import sap.ass01.layered.UI.Models.RideViewModel;
-import sap.ass01.layered.UI.Models.UserViewModel;
+import sap.ass01.layered.ui.dialogs.user.RechargeCreditDialog;
+import sap.ass01.layered.ui.dialogs.user.StartRideDialog;
+import sap.ass01.layered.ui.mapper.Mapper;
+import sap.ass01.layered.ui.models.EBikeViewModel;
+import sap.ass01.layered.ui.models.RideViewModel;
+import sap.ass01.layered.ui.models.UserViewModel;
 import sap.ass01.layered.services.Services.UserService;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.dto.RideDTO;
 import sap.ass01.layered.services.impl.ServiceFactory;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;

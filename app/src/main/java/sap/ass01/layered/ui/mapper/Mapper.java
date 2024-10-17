@@ -1,11 +1,11 @@
-package sap.ass01.layered.UI.Mapper;
+package sap.ass01.layered.ui.mapper;
 
 import sap.ass01.layered.services.dto.UserDTO;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.dto.RideDTO;
-import sap.ass01.layered.UI.Models.EBikeViewModel;
-import sap.ass01.layered.UI.Models.UserViewModel;
-import sap.ass01.layered.UI.Models.RideViewModel;
+import sap.ass01.layered.ui.models.EBikeViewModel;
+import sap.ass01.layered.ui.models.UserViewModel;
+import sap.ass01.layered.ui.models.RideViewModel;
 
 public class Mapper {
 

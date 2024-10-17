@@ -1,9 +1,9 @@
-package sap.ass01.layered.UI.Dialogs.AccessDialogs;
+package sap.ass01.layered.ui.dialogs.access;
 
-import sap.ass01.layered.UI.Dialogs.AbstractDialog;
-import sap.ass01.layered.UI.Mapper.Mapper;
-import sap.ass01.layered.UI.views.AdminView;
-import sap.ass01.layered.UI.views.UserView;
+import sap.ass01.layered.ui.dialogs.AbstractDialog;
+import sap.ass01.layered.ui.mapper.Mapper;
+import sap.ass01.layered.ui.views.AdminView;
+import sap.ass01.layered.ui.views.UserView;
 import sap.ass01.layered.services.Services.LoginService;
 import sap.ass01.layered.services.impl.ServiceFactory;
 

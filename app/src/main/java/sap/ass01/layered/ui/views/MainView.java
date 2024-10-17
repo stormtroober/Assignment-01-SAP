@@ -1,14 +1,12 @@
-package sap.ass01.layered.UI.views;
+package sap.ass01.layered.ui.views;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.security.Provider;
 
-import sap.ass01.layered.UI.Dialogs.AccessDialogs.LoginDialog;
-import sap.ass01.layered.UI.Dialogs.AccessDialogs.RegisterDialog;
-import sap.ass01.layered.services.impl.ServiceImpl;
+import sap.ass01.layered.ui.dialogs.access.LoginDialog;
+import sap.ass01.layered.ui.dialogs.access.RegisterDialog;
 
 public class MainView extends JFrame implements ActionListener {
 

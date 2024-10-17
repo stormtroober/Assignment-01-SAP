@@ -1,4 +1,4 @@
-package sap.ass01.layered.UI.Models;
+package sap.ass01.layered.ui.models;
 
 
 

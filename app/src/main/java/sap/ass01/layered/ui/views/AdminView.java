@@ -1,13 +1,13 @@
-package sap.ass01.layered.UI.views;
+package sap.ass01.layered.ui.views;
 
-import sap.ass01.layered.UI.Dialogs.AdminDialogs.AddEBikeDialog;
-import sap.ass01.layered.UI.Dialogs.AdminDialogs.RechargeBikeDialog;
-import sap.ass01.layered.UI.Models.UserViewModel;
+import sap.ass01.layered.ui.dialogs.admin.AddEBikeDialog;
+import sap.ass01.layered.ui.dialogs.admin.RechargeBikeDialog;
+import sap.ass01.layered.ui.models.UserViewModel;
 import sap.ass01.layered.services.Services.AdminService;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.impl.ServiceFactory;
-import sap.ass01.layered.UI.Mapper.Mapper;
-import sap.ass01.layered.UI.Models.EBikeViewModel;
+import sap.ass01.layered.ui.mapper.Mapper;
+import sap.ass01.layered.ui.models.EBikeViewModel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,12 +1,11 @@
-package sap.ass01.layered.UI.Dialogs.UserDialogs;
+package sap.ass01.layered.ui.dialogs.user;
 
-import sap.ass01.layered.UI.Dialogs.AbstractDialog;
-import sap.ass01.layered.UI.Models.EBikeViewModel;
-import sap.ass01.layered.UI.Models.RideViewModel;
-import sap.ass01.layered.UI.Models.UserViewModel;
+import sap.ass01.layered.ui.dialogs.AbstractDialog;
+import sap.ass01.layered.ui.models.EBikeViewModel;
+import sap.ass01.layered.ui.models.RideViewModel;
+import sap.ass01.layered.ui.models.UserViewModel;
 import sap.ass01.layered.services.Services.UserService;
-import sap.ass01.layered.services.dto.RideDTO;
-import sap.ass01.layered.UI.views.UserView;
+import sap.ass01.layered.ui.views.UserView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

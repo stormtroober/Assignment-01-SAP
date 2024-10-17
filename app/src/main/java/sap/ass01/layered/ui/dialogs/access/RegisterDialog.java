@@ -1,11 +1,10 @@
-package sap.ass01.layered.UI.Dialogs.AccessDialogs;
+package sap.ass01.layered.ui.dialogs.access;
 
-import sap.ass01.layered.UI.Dialogs.AbstractDialog;
+import sap.ass01.layered.ui.dialogs.AbstractDialog;
 import sap.ass01.layered.services.Services.LoginService;
 import sap.ass01.layered.services.impl.ServiceFactory;
 
 import javax.swing.*;
-import javax.swing.text.html.Option;
 import java.awt.event.ActionEvent;
 import java.util.Optional;
 
