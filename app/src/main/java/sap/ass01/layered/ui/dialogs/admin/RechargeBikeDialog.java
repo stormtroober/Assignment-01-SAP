@@ -2,6 +2,7 @@ package sap.ass01.layered.ui.dialogs.admin;
 
 import sap.ass01.layered.ui.dialogs.AbstractDialog;
 import sap.ass01.layered.services.Services.AdminService;
+import sap.ass01.layered.services.dto.EBikeDTO;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -27,8 +28,7 @@ public class RechargeBikeDialog extends AbstractDialog {
         super.actionPerformed(e);
         if (e.getSource() == confirmButton) {
             String id = idField.getText();
-            // Handle the recharge bike logic here
-            /*adminService.rechargeEBike(id)
+            adminService.rechargeEBike(id)
                     .subscribe(
                             ebikeDTO -> {
                                 // Handle success
@@ -39,8 +39,7 @@ public class RechargeBikeDialog extends AbstractDialog {
                                 // Handle error
                                 JOptionPane.showMessageDialog(this, "Error recharging E-Bike: " + throwable.getMessage());
                             }
-                    );*/
-            dispose();
+                    );
         }
     }
 }

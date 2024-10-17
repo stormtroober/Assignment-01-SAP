@@ -89,6 +89,27 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
         return allBikesSubject.hide().observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
     }
 
+    @Override
+    public Single<EBikeDTO> rechargeEBike(String bikeId) {
+        return Single.fromCallable(() -> {
+            EBike bike = bikes.get(bikeId);
+            if (bike == null) {
+                eBikeRepository.findEBikeById(bikeId)
+                        .ifPresentOrElse(eBikeDTO -> bikes.put(eBikeDTO.id(), Mapper.toDomain(eBikeDTO)),
+                                () -> {
+                                    throw new IllegalArgumentException("Bike not found.");
+                                });
+            }
+            synchronized (Objects.requireNonNull(bike)) {
+                bike.rechargeBattery();
+            }
+            eBikeRepository.updateEBike(Mapper.toDTO(bike));
+            emitAllBikes();
+            emitAvailableBikes();
+            return mapToDTO(bike);
+        }).subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
+    }
+
     // ------------------- LoginService Implementation -------------------
 
     @Override
@@ -266,13 +287,26 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
                 .observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
     }
 
-    // ------------------- Helper Methods -------------------
-
-    private void handleRideUpdate(RideDTO rideDTO) {
-        // Potential place to handle real-time updates, e.g., logging or additional processing
-        // For now, we just emit available bikes to update the views
-        emitAvailableBikes();
+    @Override
+    public Single<UserDTO> rechargeCredit(String userId, int amount) {
+        return Single.fromCallable(() -> {
+            User user = users.get(userId);
+            if (user == null) {
+                userRepository.findUserById(userId)
+                        .ifPresentOrElse(userDTO -> users.put(userDTO.id(), Mapper.toDomain(userDTO)),
+                                () -> {
+                                    throw new IllegalArgumentException("User not found.");
+                                });
+            }
+            synchronized (Objects.requireNonNull(user)) {
+                user.increaseCredit(amount);
+            }
+            userRepository.updateUser(Mapper.toDTO(user));
+            return mapToDTO(user);
+        }).subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
     }
+
+    // ------------------- Helper Methods -------------------
 
     private void handleRideCompletion(String rideId) {
 

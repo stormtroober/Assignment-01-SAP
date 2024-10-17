@@ -46,9 +46,16 @@ public class RideSimulation {
         EBike bike = ride.getEbike();
 
         synchronized (bike) {
-            if(bike.getBatteryLevel() == 0 || user.getCredit() == 0) {
+            if(bike.getBatteryLevel() == 0) {
                 ride.end();
                 stopSimulation();
+                completeSimulation();
+            }
+
+            if(user.getCredit() == 0) {
+                ride.end();
+                stopSimulation();
+                bike.setState(EBike.EBikeState.AVAILABLE);
                 completeSimulation();
             }
             // Simulate movement and battery usage

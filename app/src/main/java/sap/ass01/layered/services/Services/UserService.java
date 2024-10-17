@@ -1,9 +1,12 @@
 package sap.ass01.layered.services.Services;
 
+import io.reactivex.rxjava3.core.Single;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.dto.RideDTO;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
+import sap.ass01.layered.services.dto.UserDTO;
+
 import java.util.Collection;
 
 public interface UserService {
@@ -40,4 +43,12 @@ public interface UserService {
      * @return Observable emitting RideDTO updates.
      */
     Observable<RideDTO> observeRide(String userId, String rideId);
+
+    /**
+     * Recharges the credit of a user.
+     * @param userId ID of the user.
+     * @param amount Amount to recharge.
+     * @return Single emitting the updated UserDTO or an error.
+     */
+    Single<UserDTO> rechargeCredit(String userId, int amount);
 }
