@@ -95,10 +95,15 @@ public abstract class AbstractView extends JFrame {
         for (EBikeViewModel bike : eBikes) {
             int x = centerX + (int) bike.x();
             int y = centerY - (int) bike.y();
+            int dy = 20;
             g2.drawOval(x, y, 20, 20);
             g2.drawString("E-Bike: " + bike.id() + " - battery: " + bike.batteryLevel(), x, y + 35);
+            g2.drawString("E-Bike: " + bike.id() + " - battery: " + bike.batteryLevel(), 10, dy + 35);
             g2.drawString("(x: " + bike.x() + ", y: " + bike.y() + ")", x, y + 50);
         }
+        String credit = "Credit: " + actualUser.credit();
+        g2.drawString(credit, 10, 20);
+        g2.drawString("AVAILABLE EBIKES: ", 10, 35);
     }
 
     public void display() {

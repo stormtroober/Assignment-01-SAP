@@ -11,6 +11,7 @@ import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.dto.RideDTO;
 import sap.ass01.layered.services.impl.ServiceFactory;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
@@ -22,6 +23,7 @@ public class UserView extends AbstractView {
 
     private final UserService userService = ServiceFactory.getUserService();
     private Optional<RideViewModel> ongoingRide = Optional.empty();
+    private JButton rideButton;
 
     public UserView(UserViewModel user) {
         super("User View", user);
@@ -31,7 +33,7 @@ public class UserView extends AbstractView {
     }
 
     private void setupView() {
-        addTopPanelButton("Start Ride", new ActionListener() {
+        /*addTopPanelButton("Start Ride", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 StartRideDialog startRideDialog = new StartRideDialog(UserView.this, userService, actualUser);
@@ -45,7 +47,46 @@ public class UserView extends AbstractView {
                 RechargeCreditDialog rechargeCreditDialog = new RechargeCreditDialog(UserView.this, userService, actualUser);
                 rechargeCreditDialog.setVisible(true);
             }
+        });*/
+        rideButton = new JButton("Start Ride");
+        rideButton.addActionListener(e -> toggleRide());
+        buttonPanel.add(rideButton);
+
+        addTopPanelButton("Recharge Credit", e -> {
+            RechargeCreditDialog rechargeCreditDialog = new RechargeCreditDialog(UserView.this, userService, actualUser);
+            rechargeCreditDialog.setVisible(true);
         });
+        updateRideButtonState();
+    }
+
+    private void toggleRide() {
+        if (ongoingRide.isPresent()) {
+            stopRide();
+        } else {
+            startRide();
+        }
+    }
+
+    private void startRide() {
+        StartRideDialog startRideDialog = new StartRideDialog(UserView.this, userService, actualUser);
+        startRideDialog.setVisible(true);
+    }
+
+    private void stopRide() {
+        ongoingRide.ifPresent(ride -> {
+            userService.endRide(actualUser.id(), ride.id(), ride.bike().id())
+                    .subscribe(
+                            this::endRide,
+                            throwable -> {
+                                log("Error ending ride: " + throwable.getMessage());
+                                throwable.printStackTrace();
+                            }
+                    );
+        });
+    }
+
+    private void updateRideButtonState() {
+        rideButton.setText(ongoingRide.isPresent() ? "Stop Ride" : "Start Ride");
     }
 
     private void observeAvailableBikes() {
@@ -85,6 +126,7 @@ public class UserView extends AbstractView {
 
     public void initRide(RideViewModel ride){
         this.ongoingRide = Optional.of(ride);
+        updateRideButtonState();
     }
     public void updateRide(RideDTO rideDTO) {
         log("My ride prev ->" + eBikes.toString());
@@ -97,13 +139,12 @@ public class UserView extends AbstractView {
                     .toList();
 
         }
-
-
         log("Ride updated: " + rideDTO);
-
         log("My ride ->" + eBikes.toString());
         // Call a method to refresh the visual representation
         updateVisualizerPanel();
+        updateRideButtonState();
+        updateCredit(rideDTO.credit());
     }
 
     public Optional<EBikeViewModel> findBike(String bikeId) {
@@ -118,6 +159,12 @@ public class UserView extends AbstractView {
 
     public void endRide() {
         ongoingRide = Optional.empty();
+        updateVisualizerPanel();
+        updateRideButtonState();
+    }
+
+    public void updateCredit(int credit){
+        actualUser = actualUser.updateCredit(credit);
         updateVisualizerPanel();
     }
 }
