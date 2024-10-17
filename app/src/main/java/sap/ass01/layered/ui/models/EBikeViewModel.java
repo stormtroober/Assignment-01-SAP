@@ -3,10 +3,12 @@ package sap.ass01.layered.ui.models;
 
 import java.awt.*;
 
-public record EBikeViewModel(String id, double x, double y, int batteryLevel, String state, Color color) {
+public record EBikeViewModel(String id, double x, double y, int batteryLevel, EBikeViewModel.EBikeState state, Color color) {
+
+    public enum EBikeState { AVAILABLE, IN_USE, MAINTENANCE }
     private static final Color DEFAULT_COLOR = Color.BLACK; // Default color
 
-    public EBikeViewModel(String id, double x, double y, int batteryLevel, String state) {
+    public EBikeViewModel(String id, double x, double y, int batteryLevel, EBikeState state) {
         this(id, x, y, batteryLevel, state, DEFAULT_COLOR);
     }
 
@@ -14,7 +16,7 @@ public record EBikeViewModel(String id, double x, double y, int batteryLevel, St
         return new EBikeViewModel(id, x, y, batteryLevel, state, color);
     }
 
-    public EBikeViewModel updateState(String state) {
+    public EBikeViewModel updateState(EBikeState state) {
         return new EBikeViewModel(id, x, y, batteryLevel, state, color);
     }
 

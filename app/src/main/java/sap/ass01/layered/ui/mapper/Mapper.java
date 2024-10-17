@@ -16,8 +16,8 @@ public class Mapper {
 
     // Mapping EBikeDTO to EBikeViewModel
     public static EBikeViewModel toDomain(EBikeDTO eBikeDTO) {
-
-        return new EBikeViewModel(eBikeDTO.id(), eBikeDTO.x(), eBikeDTO.y(), eBikeDTO.batteryLevel(), eBikeDTO.state());
+        EBikeViewModel.EBikeState state = EBikeViewModel.EBikeState.valueOf(eBikeDTO.state());
+        return new EBikeViewModel(eBikeDTO.id(), eBikeDTO.x(), eBikeDTO.y(), eBikeDTO.batteryLevel(), state);
     }
 
     // Mapping RideDTO to RideViewModel
@@ -36,12 +36,13 @@ public class Mapper {
     }
 
     public static EBikeDTO toDTO(EBikeViewModel ebikeViewModel) {
+        String state = ebikeViewModel.state().name().toLowerCase();
         return new EBikeDTO(
                 ebikeViewModel.id(),
                 ebikeViewModel.x(),
                 ebikeViewModel.y(),
                 ebikeViewModel.batteryLevel(),
-                ebikeViewModel.state()
+                state
 
         );
     }
