@@ -33,7 +33,7 @@ java {
 }
 
 application {
-    mainClass = ""
+    mainClass = "sap.ass01.layered.ui.views.MainView"
 }
 
 tasks.named<Test>("test") {
