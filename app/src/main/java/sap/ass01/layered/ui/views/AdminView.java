@@ -1,6 +1,7 @@
 package sap.ass01.layered.ui.views;
 
 import sap.ass01.layered.plugin.ColorStatePlugin;
+import sap.ass01.layered.services.PluginService;
 import sap.ass01.layered.ui.models.EBikeViewModel;
 import sap.ass01.layered.services.dto.UserDTO;
 import sap.ass01.layered.services.Services.AdminService;
@@ -17,11 +18,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 public class AdminView extends AbstractView {
 
     private final AdminService adminService = ServiceFactory.getAdminService();
+    private final PluginService pluginService = ServiceFactory.getPluginService();
     private final List<UserViewModel> userList = new ArrayList<>();
 
     public AdminView(UserViewModel user) {
@@ -49,6 +50,11 @@ public class AdminView extends AbstractView {
         });
         topPanel.add(rechargeBikeButton);
 
+        JButton loadPluginButton = getLoadPluginButton();
+        topPanel.add(loadPluginButton);
+    }
+
+    private JButton getLoadPluginButton() {
         JButton loadPluginButton = new JButton("Load Plugin");
         loadPluginButton.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
@@ -57,14 +63,10 @@ public class AdminView extends AbstractView {
             if (returnValue == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
                 String pluginID = selectedFile.getName().replace(".jar", "");
-                pluginManager.registerPlugin(pluginID, selectedFile, ColorStatePlugin.class);
-                log("Plugin loaded: " + pluginID);
-                // Update all bikes and refresh the view
-                adminService.observeAllBikes()
-                        .subscribe(this::updateAllBikes);
+                pluginService.registerPlugin(pluginID, selectedFile);
             }
         });
-        topPanel.add(loadPluginButton);
+        return loadPluginButton;
     }
 
     private void observeAllBikes() {
@@ -136,13 +138,13 @@ public class AdminView extends AbstractView {
         System.out.println("[AdminView] " + msg);
     }
 
-    public EBikeViewModel applyEffect(String pluginID, EBikeViewModel bike) {
-        ColorStatePlugin plugin = pluginManager.getPlugin(pluginID, ColorStatePlugin.class);
+    private EBikeViewModel applyEffect(String pluginID, EBikeViewModel bike) {
+        ColorStatePlugin plugin = pluginService.getColorStatePlugin(pluginID);
         if (plugin != null) {
             try {
                 return plugin.colorState(bike);
             } catch (Exception e) {
-                log("Error applying plugin: " + e.getMessage());
+                log("Error applying plugin effect: " + e.getMessage());
             }
         }
         return bike;

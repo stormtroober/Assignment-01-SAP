@@ -17,6 +17,7 @@ public class PluginManager {
             Class<?> loadedClass = loader.loadClass(expectedClassName);
             T plugin = pluginClass.cast(loadedClass.getDeclaredConstructor().newInstance());
             plugins.put(pluginID, plugin);
+            System.out.println("Plugin loaded: " + pluginID);
         } catch (Exception e) {
             System.err.println("Error loading plugin: " + e.getMessage());
         }
