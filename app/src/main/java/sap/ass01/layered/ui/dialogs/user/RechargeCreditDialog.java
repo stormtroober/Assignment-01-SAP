@@ -3,6 +3,7 @@ package sap.ass01.layered.ui.dialogs.user;
 import sap.ass01.layered.ui.dialogs.AbstractDialog;
 import sap.ass01.layered.ui.models.UserViewModel;
 import sap.ass01.layered.services.Services.UserService;
+import sap.ass01.layered.ui.views.UserView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -33,20 +34,17 @@ public class RechargeCreditDialog extends AbstractDialog {
         super.actionPerformed(e);
         if (e.getSource() == confirmButton) {
             String creditAmount = creditAmountField.getText();
-            // Handle the recharge credit logic here
-            /*userService.rechargeCredit(user.id(), Double.parseDouble(creditAmount))
+            userService.rechargeCredit(user.id(), Integer.parseInt(creditAmount))
                     .subscribe(
-                            userDTO -> {
-                                // Handle success
-                                JOptionPane.showMessageDialog(this, "Credit recharged successfully: " + userDTO);
+                            updatedUser -> {
+                                ((UserView) getParent()).updateCredit(updatedUser.credit());
                                 dispose();
                             },
                             throwable -> {
                                 // Handle error
                                 JOptionPane.showMessageDialog(this, "Error recharging credit: " + throwable.getMessage());
                             }
-                    );*/
-            dispose();
+                    );
         }
     }
 }

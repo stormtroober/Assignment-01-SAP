@@ -21,4 +21,13 @@ public interface AdminService {
      * @return Observable emitting collections of EBikeDTO.
      */
     Observable<Collection<EBikeDTO>> observeAllBikes();
+
+    /**
+     * Recharges the battery of the E-Bike with the given ID.
+     * @param bikeId Unique identifier for the bike.
+     * @return Single emitting the updated EBikeDTO or an error.
+     */
+    Single<EBikeDTO> rechargeEBike(String bikeId);
+
+
 }
