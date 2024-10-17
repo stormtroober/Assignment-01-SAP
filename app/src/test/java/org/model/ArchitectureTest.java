@@ -13,7 +13,7 @@ public class ArchitectureTest {
     @ArchTest
     public static final ArchRule layer_dependencies_are_respected = layeredArchitecture()
             .consideringAllDependencies()
-            .layer("Presentation").definedBy("sap.ass01.layered.UI..")
+            .layer("Presentation").definedBy("sap.ass01.layered.ui..")
             .layer("Business").definedBy("sap.ass01.layered.domain..", "sap.ass01.layered.services..")
             .layer("Persistence").definedBy("sap.ass01.layered.persistence..")
             .whereLayer("Presentation").mayNotBeAccessedByAnyLayer()
