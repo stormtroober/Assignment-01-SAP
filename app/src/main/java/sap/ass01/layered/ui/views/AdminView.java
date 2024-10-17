@@ -1,6 +1,8 @@
 package sap.ass01.layered.ui.views;
 
 import sap.ass01.layered.services.dto.UserDTO;
+import sap.ass01.layered.plugin.ColorStatePlugin;
+import sap.ass01.layered.plugin.PluginClassLoader;
 import sap.ass01.layered.ui.dialogs.admin.AddEBikeDialog;
 import sap.ass01.layered.ui.dialogs.admin.RechargeBikeDialog;
 import sap.ass01.layered.ui.models.UserViewModel;
@@ -13,6 +15,7 @@ import sap.ass01.layered.ui.models.EBikeViewModel;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,6 +23,7 @@ public class AdminView extends AbstractView {
 
     private final AdminService adminService = ServiceFactory.getAdminService();
     private final List<UserViewModel> userList = new ArrayList<>();
+    private ColorStatePlugin plugin;
 
     public AdminView(UserViewModel user) {
         super("Admin View", user);
@@ -27,6 +31,9 @@ public class AdminView extends AbstractView {
         observeAllBikes();
         observeAllUsers();
         refreshView();
+
+        //registerNewEffectPlugin("ColorStateEffect", new File("plugins/ColorStateEffect.jar"));
+        //testPluginOnBikeInstance();
     }
 
     private void setupView() {
@@ -113,5 +120,35 @@ public class AdminView extends AbstractView {
 
     private void log(String msg) {
         System.out.println("[AdminView] " + msg);
+    }
+
+    private void registerNewEffectPlugin(String pluginID, File libFile)  {
+        try{
+            var loader = new PluginClassLoader(libFile.getAbsolutePath());
+            String className = "sap.ass01.layered.effects.ColorStateEffect";
+            Class<?> pluginClass = loader.loadClass(className);
+            plugin = (ColorStatePlugin) pluginClass.getDeclaredConstructor(null).newInstance(null);
+            log("Added plugin-in " + pluginID);
+        } catch (Exception e) {
+            log("Error loading plugin: " + e.getMessage());
+        }
+    }
+
+    public EBikeViewModel applyEffect(EBikeViewModel bike) {
+        EBikeViewModel updatedBike = bike;
+        if (plugin != null) {
+            try{
+                updatedBike = plugin.colorState(bike);
+            } catch (Exception e) {
+                log("Error applying plugin: " + e.getMessage());
+            }
+        }
+        return updatedBike;
+    }
+
+    private void testPluginOnBikeInstance() {
+        EBikeViewModel bike = new EBikeViewModel("bike1", 10.0, 20.0, 80, "active");
+        log("Before applying plugin: " + bike);
+        log("After applying plugin: " + applyEffect(bike));
     }
 }
