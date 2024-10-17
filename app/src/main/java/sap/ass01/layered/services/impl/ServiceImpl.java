@@ -34,6 +34,8 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
     // Subjects to emit bike updates
     private final BehaviorSubject<Collection<EBikeDTO>> allBikesSubject = BehaviorSubject.createDefault(Collections.emptyList());
     private final BehaviorSubject<Collection<EBikeDTO>> availableBikesSubject = BehaviorSubject.createDefault(Collections.emptyList());
+    //Subject to emit user updates
+    private final BehaviorSubject<Collection<UserDTO>> allUsersSubject = BehaviorSubject.createDefault(Collections.emptyList());
 
     private final EBikeRepository eBikeRepository;
     private final UserRepository userRepository;
@@ -64,6 +66,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
 
         emitAllBikes();
         emitAvailableBikes();
+        emitAllUsers();
     }
 
     // ------------------- AdminService Implementation -------------------
@@ -87,6 +90,11 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
     @Override
     public Observable<Collection<EBikeDTO>> observeAllBikes() {
         return allBikesSubject.hide().observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
+    }
+
+    @Override
+    public Observable<Collection<UserDTO>> observeAllUsers() {
+        return allUsersSubject.hide().observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
     }
 
     @Override
@@ -121,6 +129,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
             User user = new User(userId, isAdmin ? User.UserType.ADMIN : User.UserType.USER, 100);
             users.put(userId, user);
             userRepository.saveUser(Mapper.toDTO(user));
+            emitAllUsers();
         }).subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
     }
 
@@ -197,6 +206,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
                                 eBikeRepository.updateEBike(Mapper.toDTO(bike));
                                 userRepository.updateUser(Mapper.toDTO(user));
                                 emitAllBikes();
+                                emitAllUsers();
 
                                 //emitter.onNext(rideDTO);
                             },
@@ -229,6 +239,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
             // Emit all bikes' status
             emitAllBikes();
             emitAvailableBikes();
+            emitAllUsers();
         }).subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
     }
 
@@ -268,6 +279,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
 
             emitAllBikes();
             emitAvailableBikes();
+            emitAllUsers();
 
             emitter.onComplete();
         }).subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
@@ -302,6 +314,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
                 user.increaseCredit(amount);
             }
             userRepository.updateUser(Mapper.toDTO(user));
+            emitAllUsers();
             return mapToDTO(user);
         }).subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
     }
@@ -336,6 +349,15 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
             }
         }
         availableBikesSubject.onNext(availableDTOs);
+    }
+
+    private void emitAllUsers() {
+        log("Emitting all users");
+        Collection<UserDTO> userDTOs = new ArrayList<>();
+        for (User user : users.values()) {
+            userDTOs.add(mapToDTO(user));
+        }
+        allUsersSubject.onNext(userDTOs);
     }
 
 

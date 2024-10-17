@@ -76,7 +76,7 @@ public abstract class AbstractView extends JFrame {
         }
     }
 
-    private void paintAdminView(Graphics2D g2) {
+    protected void paintAdminView(Graphics2D g2) {
         int centerX = centralPanel.getWidth() / 2;
         int centerY = centralPanel.getHeight() / 2;
         for (EBikeViewModel bike : eBikes) {
