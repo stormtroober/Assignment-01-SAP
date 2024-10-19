@@ -16,19 +16,16 @@ public class ArchitectureTest {
             .layer("Presentation").definedBy("sap.ass01.layered.ui..")
             .layer("Business").definedBy("sap.ass01.layered.domain..", "sap.ass01.layered.services..")
             .layer("Persistence").definedBy("sap.ass01.layered.persistence..")
-            .layer("Plugin").definedBy("sap.ass01.layered.plugin..")  // Plugin layer
+            //.layer("Plugin").definedBy("sap.ass01.layered.plugin..")  // Plugin layer
 
             // Ensuring that no layer accesses the Presentation layer
             .whereLayer("Presentation").mayNotBeAccessedByAnyLayer()
 
             // Business layer can only be accessed by Presentation and Plugin layers
-            .whereLayer("Business").mayOnlyBeAccessedByLayers("Presentation", "Plugin")
+            .whereLayer("Business").mayOnlyBeAccessedByLayers("Presentation")
 
             // Persistence layer can only be accessed by Business and Plugin layers
-            .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Business", "Plugin")
-
-            // Plugin layer can be accessed by Presentation layer for dynamic UI behavior, if needed
-            .whereLayer("Plugin").mayOnlyBeAccessedByLayers("Business", "Presentation");
+            .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Business");
 
 
 }

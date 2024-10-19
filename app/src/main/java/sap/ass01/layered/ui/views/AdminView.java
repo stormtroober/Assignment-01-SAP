@@ -1,10 +1,7 @@
 package sap.ass01.layered.ui.views;
 
-import sap.ass01.layered.plugin.ColorStatePlugin;
-import sap.ass01.layered.services.Services.PluginService;
-import sap.ass01.layered.services.dto.EBikeDTOExt;
-import sap.ass01.layered.services.impl.ServiceImpl;
-import sap.ass01.layered.ui.models.EBikeViewModel;
+import sap.ass01.layered.ui.plugin.PluginService;
+import sap.ass01.layered.ui.plugin.EBikeDTOExt;
 import sap.ass01.layered.services.dto.UserDTO;
 import sap.ass01.layered.services.Services.AdminService;
 import sap.ass01.layered.services.dto.EBikeDTO;
@@ -13,6 +10,7 @@ import sap.ass01.layered.ui.mapper.Mapper;
 import sap.ass01.layered.ui.models.UserViewModel;
 import sap.ass01.layered.ui.dialogs.admin.AddEBikeDialog;
 import sap.ass01.layered.ui.dialogs.admin.RechargeBikeDialog;
+import sap.ass01.layered.ui.plugin.PluginServiceImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +22,7 @@ import java.util.List;
 public class AdminView extends AbstractView {
 
     private final AdminService adminService = ServiceFactory.getAdminService();
-    private final PluginService pluginService = ServiceFactory.getPluginService();
+    private final PluginService pluginService =  new PluginServiceImpl();
     private final List<UserViewModel> userList = new ArrayList<>();
 
     public AdminView(UserViewModel user) {
@@ -66,6 +64,7 @@ public class AdminView extends AbstractView {
                 File selectedFile = fileChooser.getSelectedFile();
                 String pluginID = selectedFile.getName().replace(".jar", "");
                 pluginService.registerPlugin(pluginID, selectedFile);
+                adminService.refreshAllBikes();
             }
         });
         return loadPluginButton;

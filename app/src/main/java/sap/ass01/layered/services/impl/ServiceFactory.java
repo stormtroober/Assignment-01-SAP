@@ -2,7 +2,7 @@ package sap.ass01.layered.services.impl;
 
 import sap.ass01.layered.services.Services.AdminService;
 import sap.ass01.layered.services.Services.LoginService;
-import sap.ass01.layered.services.Services.PluginService;
+import sap.ass01.layered.ui.plugin.PluginService;
 import sap.ass01.layered.services.Services.UserService;
 
 public class ServiceFactory {
@@ -17,10 +17,6 @@ public class ServiceFactory {
     }
 
     public static UserService getUserService() {
-        return serviceImpl;
-    }
-
-    public static PluginService getPluginService() {
         return serviceImpl;
     }
 }

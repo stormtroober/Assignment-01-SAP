@@ -1,4 +1,4 @@
-package sap.ass01.layered.services.dto;
+package sap.ass01.layered.ui.plugin;
 
 import java.awt.*;
 

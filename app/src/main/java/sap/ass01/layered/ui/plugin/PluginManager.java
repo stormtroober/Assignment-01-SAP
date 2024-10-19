@@ -1,10 +1,8 @@
-package sap.ass01.layered.plugin;
+package sap.ass01.layered.ui.plugin;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.jar.JarFile;
 
 public class PluginManager {
     private final Map<String, Object> plugins = new HashMap<>();

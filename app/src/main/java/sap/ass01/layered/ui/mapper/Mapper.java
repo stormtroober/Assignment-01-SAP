@@ -1,6 +1,6 @@
 package sap.ass01.layered.ui.mapper;
 
-import sap.ass01.layered.services.dto.EBikeDTOExt;
+import sap.ass01.layered.ui.plugin.EBikeDTOExt;
 import sap.ass01.layered.services.dto.UserDTO;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.dto.RideDTO;

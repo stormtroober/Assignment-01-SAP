@@ -1,8 +1,6 @@
-package sap.ass01.layered.services.Services;
+package sap.ass01.layered.ui.plugin;
 
-import sap.ass01.layered.domain.model.EBike;
 import sap.ass01.layered.services.dto.EBikeDTO;
-import sap.ass01.layered.services.dto.EBikeDTOExt;
 
 import java.io.File;
 

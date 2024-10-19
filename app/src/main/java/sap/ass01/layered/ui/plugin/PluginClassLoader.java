@@ -1,4 +1,4 @@
-package sap.ass01.layered.plugin;
+package sap.ass01.layered.ui.plugin;
 
 import java.io.IOException;
 import java.io.InputStream;
