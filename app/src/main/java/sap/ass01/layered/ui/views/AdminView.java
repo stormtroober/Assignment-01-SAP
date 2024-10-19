@@ -1,7 +1,9 @@
 package sap.ass01.layered.ui.views;
 
 import sap.ass01.layered.plugin.ColorStatePlugin;
-import sap.ass01.layered.services.PluginService;
+import sap.ass01.layered.services.Services.PluginService;
+import sap.ass01.layered.services.dto.EBikeDTOExt;
+import sap.ass01.layered.services.impl.ServiceImpl;
 import sap.ass01.layered.ui.models.EBikeViewModel;
 import sap.ass01.layered.services.dto.UserDTO;
 import sap.ass01.layered.services.Services.AdminService;
@@ -103,16 +105,20 @@ public class AdminView extends AbstractView {
     }
 
     private void updateAllBikes(Collection<EBikeDTO> allBikes) {
-        // Update the UI components with the new available bikes data
-        // Apply plugin effect if loaded
-        eBikes = allBikes.stream()
-                .map(Mapper::toDomain)
-                .map(bike -> applyEffect("ColorStateEffect", bike)) // Apply plugin effect if loaded
-                .toList();
-        log("All bikes updated: " + allBikes);
-        // Call a method to refresh the visual representation
-        refreshView();
-    }
+    // Update the UI components with the new available bikes data
+    eBikes = allBikes.stream()
+            .map(bike -> {
+                // Convert EBikeDTO to EBikeDTOExt using the plugin
+                EBikeDTOExt bikeExt = pluginService.applyPluginEffect("ColorStateEffect", bike);
+                // Map EBikeDTOExt to EBikeViewModel
+                return Mapper.toDomain(bikeExt);
+            })
+            .toList();
+
+    log("All bikes updated: " + allBikes);
+    // Call a method to refresh the visual representation
+    refreshView();
+}
 
     @Override
     protected void paintAdminView(Graphics2D g2) {
@@ -136,17 +142,5 @@ public class AdminView extends AbstractView {
 
     private void log(String msg) {
         System.out.println("[AdminView] " + msg);
-    }
-
-    private EBikeViewModel applyEffect(String pluginID, EBikeViewModel bike) {
-        ColorStatePlugin plugin = pluginService.getColorStatePlugin(pluginID);
-        if (plugin != null) {
-            try {
-                return plugin.colorState(bike);
-            } catch (Exception e) {
-                log("Error applying plugin effect: " + e.getMessage());
-            }
-        }
-        return bike;
     }
 }

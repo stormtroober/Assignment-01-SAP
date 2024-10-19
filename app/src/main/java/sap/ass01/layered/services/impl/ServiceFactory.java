@@ -2,7 +2,7 @@ package sap.ass01.layered.services.impl;
 
 import sap.ass01.layered.services.Services.AdminService;
 import sap.ass01.layered.services.Services.LoginService;
-import sap.ass01.layered.services.PluginService;
+import sap.ass01.layered.services.Services.PluginService;
 import sap.ass01.layered.services.Services.UserService;
 
 public class ServiceFactory {

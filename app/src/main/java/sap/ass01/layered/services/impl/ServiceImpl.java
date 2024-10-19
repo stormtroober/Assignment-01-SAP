@@ -16,16 +16,19 @@ import sap.ass01.layered.persistence.repository.factory.EBikeRepositoryFactory;
 import sap.ass01.layered.persistence.repository.factory.RideRepositoryFactory;
 import sap.ass01.layered.persistence.repository.factory.UserRepositoryFactory;
 import sap.ass01.layered.plugin.ColorStatePlugin;
+import sap.ass01.layered.domain.model.EBikeExtended;
 import sap.ass01.layered.plugin.PluginManager;
-import sap.ass01.layered.services.PluginService;
+import sap.ass01.layered.services.Services.PluginService;
 import sap.ass01.layered.services.Services.AdminService;
 import sap.ass01.layered.services.Services.LoginService;
 import sap.ass01.layered.services.Services.UserService;
 import sap.ass01.layered.services.dto.EBikeDTO;
+import sap.ass01.layered.services.dto.EBikeDTOExt;
 import sap.ass01.layered.services.dto.RideDTO;
 import sap.ass01.layered.services.dto.UserDTO;
 import sap.ass01.layered.services.simulation.RideSimulation;
 
+import java.awt.*;
 import java.io.File;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -85,8 +88,13 @@ public class ServiceImpl implements AdminService, LoginService, UserService, Plu
     }
 
     @Override
-    public ColorStatePlugin getColorStatePlugin(String pluginID) {
-        return pluginManager.getPlugin(pluginID, ColorStatePlugin.class);
+    public EBikeDTOExt applyPluginEffect(String pluginID, EBikeDTO bike) {
+        ColorStatePlugin plugin = pluginManager.getPlugin(pluginID, ColorStatePlugin.class);
+        Color color = Color.BLACK;
+        if (plugin != null) {
+            color = plugin.colorState(bike);
+        }
+        return new EBikeDTOExt(bike.id(), bike.x(), bike.y(), bike.batteryLevel(), bike.state(), color);
     }
 
     // ------------------- AdminService Implementation -------------------

@@ -1,5 +1,6 @@
 package sap.ass01.layered.ui.mapper;
 
+import sap.ass01.layered.services.dto.EBikeDTOExt;
 import sap.ass01.layered.services.dto.UserDTO;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.dto.RideDTO;
@@ -28,6 +29,11 @@ public class Mapper {
                 rideViewModel.bike().updateBatteryLevel(rideDTO.charge()).updateLocation(rideDTO.x(), rideDTO.y())
 
         );
+    }
+
+    public static EBikeViewModel toDomain(EBikeDTOExt eBikeDTOExt) {
+        EBikeViewModel.EBikeState state = EBikeViewModel.EBikeState.valueOf(eBikeDTOExt.state().toUpperCase());
+        return new EBikeViewModel(eBikeDTOExt.id(), eBikeDTOExt.x(), eBikeDTOExt.y(), eBikeDTOExt.batteryLevel(), state, eBikeDTOExt.color());
     }
 
     // Optionally, reverse mapping for scenarios where it's needed
