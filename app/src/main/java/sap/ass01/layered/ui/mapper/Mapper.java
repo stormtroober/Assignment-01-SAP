@@ -1,5 +1,6 @@
 package sap.ass01.layered.ui.mapper;
 
+import sap.ass01.layered.services.dto.EBikeDTOExt;
 import sap.ass01.layered.services.dto.UserDTO;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.dto.RideDTO;
@@ -16,8 +17,8 @@ public class Mapper {
 
     // Mapping EBikeDTO to EBikeViewModel
     public static EBikeViewModel toDomain(EBikeDTO eBikeDTO) {
-
-        return new EBikeViewModel(eBikeDTO.id(), eBikeDTO.x(), eBikeDTO.y(), eBikeDTO.batteryLevel(), eBikeDTO.state());
+        EBikeViewModel.EBikeState state = EBikeViewModel.EBikeState.valueOf(eBikeDTO.state());
+        return new EBikeViewModel(eBikeDTO.id(), eBikeDTO.x(), eBikeDTO.y(), eBikeDTO.batteryLevel(), state);
     }
 
     // Mapping RideDTO to RideViewModel
@@ -30,18 +31,24 @@ public class Mapper {
         );
     }
 
+    public static EBikeViewModel toDomain(EBikeDTOExt eBikeDTOExt) {
+        EBikeViewModel.EBikeState state = EBikeViewModel.EBikeState.valueOf(eBikeDTOExt.state().toUpperCase());
+        return new EBikeViewModel(eBikeDTOExt.id(), eBikeDTOExt.x(), eBikeDTOExt.y(), eBikeDTOExt.batteryLevel(), state, eBikeDTOExt.color());
+    }
+
     // Optionally, reverse mapping for scenarios where it's needed
     public static UserDTO toDTO(UserViewModel userViewModel) {
         return new UserDTO(userViewModel.id(), userViewModel.credit(), userViewModel.admin());
     }
 
     public static EBikeDTO toDTO(EBikeViewModel ebikeViewModel) {
+        String state = ebikeViewModel.state().name().toLowerCase();
         return new EBikeDTO(
                 ebikeViewModel.id(),
                 ebikeViewModel.x(),
                 ebikeViewModel.y(),
                 ebikeViewModel.batteryLevel(),
-                ebikeViewModel.state()
+                state
 
         );
     }

@@ -15,18 +15,27 @@ import sap.ass01.layered.persistence.repository.UserRepository;
 import sap.ass01.layered.persistence.repository.factory.EBikeRepositoryFactory;
 import sap.ass01.layered.persistence.repository.factory.RideRepositoryFactory;
 import sap.ass01.layered.persistence.repository.factory.UserRepositoryFactory;
+import sap.ass01.layered.plugin.ColorStatePlugin;
+import sap.ass01.layered.domain.model.EBikeExtended;
+import sap.ass01.layered.plugin.PluginManager;
+import sap.ass01.layered.services.Services.PluginService;
 import sap.ass01.layered.services.Services.AdminService;
 import sap.ass01.layered.services.Services.LoginService;
 import sap.ass01.layered.services.Services.UserService;
 import sap.ass01.layered.services.dto.EBikeDTO;
+import sap.ass01.layered.services.dto.EBikeDTOExt;
 import sap.ass01.layered.services.dto.RideDTO;
 import sap.ass01.layered.services.dto.UserDTO;
 import sap.ass01.layered.services.simulation.RideSimulation;
 
+import java.awt.*;
+import java.io.File;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ServiceImpl implements AdminService, LoginService, UserService {
+public class ServiceImpl implements AdminService, LoginService, UserService, PluginService {
+    private final PluginManager pluginManager = new PluginManager();
+
     private final ConcurrentHashMap<String, EBike> bikes = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, RideEntry> rideEntries = new ConcurrentHashMap<>();
@@ -67,6 +76,25 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
         emitAllBikes();
         emitAvailableBikes();
         emitAllUsers();
+    }
+
+    // ------------------- PluginService Implementation -------------------
+
+
+    @Override
+    public void registerPlugin(String pluginID, File libFile) {
+        pluginManager.registerPlugin(pluginID, libFile, ColorStatePlugin.class);
+        emitAllBikes();
+    }
+
+    @Override
+    public EBikeDTOExt applyPluginEffect(String pluginID, EBikeDTO bike) {
+        ColorStatePlugin plugin = pluginManager.getPlugin(pluginID, ColorStatePlugin.class);
+        Color color = Color.BLACK;
+        if (plugin != null) {
+            color = plugin.colorState(bike);
+        }
+        return new EBikeDTOExt(bike.id(), bike.x(), bike.y(), bike.batteryLevel(), bike.state(), color);
     }
 
     // ------------------- AdminService Implementation -------------------
