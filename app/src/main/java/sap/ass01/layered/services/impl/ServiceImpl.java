@@ -118,6 +118,12 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
         }).subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
     }
 
+    @Override
+    public void refreshAllBikes() {
+        emitAllBikes();
+        emitAvailableBikes();
+    }
+
     // ------------------- LoginService Implementation -------------------
 
     @Override

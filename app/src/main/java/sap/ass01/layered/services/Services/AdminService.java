@@ -38,5 +38,10 @@ public interface AdminService {
      */
     Single<EBikeDTO> rechargeEBike(String bikeId);
 
+    /**
+     * Refreshes all bikes.
+     * Admins can manually trigger a refresh of all bikes.
+     */
+    void refreshAllBikes();
 
 }
