@@ -216,8 +216,8 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
                 return;
             }
 
-            if (!ride.get().getId().equals(userId) ||
-                    !ride.get().getId().equals(bikeId)) {
+            if (!ride.get().getUser().getId().equals(userId) ||
+                    !ride.get().getEbike().getId().equals(bikeId)) {
                 emitter.onError(new IllegalArgumentException("Ride does not match user and bike."));
                 return;
             }
