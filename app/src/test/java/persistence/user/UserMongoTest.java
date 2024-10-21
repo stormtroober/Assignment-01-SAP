@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import sap.ass01.layered.config.DatabaseConfiguration;
 import sap.ass01.layered.config.DatabaseType;
-import sap.ass01.layered.persistence.UserRepositoryImpl;
+import sap.ass01.layered.persistence.repository.UserRepositoryImpl;
 import sap.ass01.layered.persistence.repository.UserRepository;
 
 public class UserMongoTest extends AbstractUserRepositoryTest {

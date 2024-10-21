@@ -1,9 +1,10 @@
-package sap.ass01.layered.persistence;
+package sap.ass01.layered.persistence.repository;
 
 import sap.ass01.layered.database.Database;
 import sap.ass01.layered.database.RideDatabaseFactory;
+import sap.ass01.layered.persistence.mapper.DatabaseToPersistenceMapper;
+import sap.ass01.layered.persistence.mapper.PersistenceToDatabaseMapper;
 import sap.ass01.layered.persistence.dto.RideDTO;
-import sap.ass01.layered.persistence.repository.RideRepository;
 
 import java.util.List;
 import java.util.Optional;

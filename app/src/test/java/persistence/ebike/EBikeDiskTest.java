@@ -6,12 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import sap.ass01.layered.config.DatabaseConfiguration;
 import sap.ass01.layered.config.DatabaseType;
 import sap.ass01.layered.persistence.repository.EBikeRepository;
-import sap.ass01.layered.persistence.EBikeRepositoryImpl;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Properties;
+import sap.ass01.layered.persistence.repository.EBikeRepositoryImpl;
 
 public class EBikeDiskTest extends AbstractEBikeRepositoryTest {
 

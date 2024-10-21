@@ -1,9 +1,10 @@
-package sap.ass01.layered.persistence;
+package sap.ass01.layered.persistence.repository;
 
 import sap.ass01.layered.database.Database;
 import sap.ass01.layered.database.EBikeDatabaseFactory;
+import sap.ass01.layered.persistence.mapper.DatabaseToPersistenceMapper;
+import sap.ass01.layered.persistence.mapper.PersistenceToDatabaseMapper;
 import sap.ass01.layered.persistence.dto.EBikeDTO;
-import sap.ass01.layered.persistence.repository.EBikeRepository;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package sap.ass01.layered.persistence.ride;
+package sap.ass01.layered.persistence.old_mysql_tmp;
 
 import sap.ass01.layered.persistence.dto.RideDTO;
 import sap.ass01.layered.persistence.dto.UserDTO;

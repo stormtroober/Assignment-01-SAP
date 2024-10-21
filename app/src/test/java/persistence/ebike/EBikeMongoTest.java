@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import sap.ass01.layered.config.DatabaseConfiguration;
 import sap.ass01.layered.config.DatabaseType;
 import sap.ass01.layered.persistence.repository.EBikeRepository;
-import sap.ass01.layered.persistence.EBikeRepositoryImpl;
+import sap.ass01.layered.persistence.repository.EBikeRepositoryImpl;
 
 public class EBikeMongoTest extends AbstractEBikeRepositoryTest {
 

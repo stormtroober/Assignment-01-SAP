@@ -1,4 +1,4 @@
-package sap.ass01.layered.persistence.user;
+package sap.ass01.layered.persistence.old_mysql_tmp;
 
 import sap.ass01.layered.persistence.dto.UserDTO;
 import sap.ass01.layered.persistence.repository.UserRepository;

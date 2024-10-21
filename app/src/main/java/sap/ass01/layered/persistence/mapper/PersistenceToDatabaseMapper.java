@@ -1,4 +1,4 @@
-package sap.ass01.layered.persistence;
+package sap.ass01.layered.persistence.mapper;
 
 
 import sap.ass01.layered.database.dto.EBikeDTO;

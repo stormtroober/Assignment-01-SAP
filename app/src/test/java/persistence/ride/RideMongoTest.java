@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import sap.ass01.layered.config.DatabaseConfiguration;
 import sap.ass01.layered.config.DatabaseType;
-import sap.ass01.layered.persistence.RideRepositoryImpl;
+import sap.ass01.layered.persistence.repository.RideRepositoryImpl;
 import sap.ass01.layered.persistence.repository.RideRepository;
 
 public class RideMongoTest extends AbstractRideRepositoryTest {
