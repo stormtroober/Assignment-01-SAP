@@ -4,13 +4,12 @@ import sap.ass01.layered.domain.mapper.Mapper;
 import sap.ass01.layered.domain.model.EBike;
 import sap.ass01.layered.domain.model.Ride;
 import sap.ass01.layered.domain.model.User;
-import sap.ass01.layered.persistence.repository.DatabaseType;
+import sap.ass01.layered.persistence.EBikeRepositoryImpl;
+import sap.ass01.layered.persistence.RideRepositoryImpl;
+import sap.ass01.layered.persistence.UserRepositoryImpl;
 import sap.ass01.layered.persistence.repository.EBikeRepository;
 import sap.ass01.layered.persistence.repository.RideRepository;
 import sap.ass01.layered.persistence.repository.UserRepository;
-import sap.ass01.layered.persistence.repository.factory.EBikeRepositoryFactory;
-import sap.ass01.layered.persistence.repository.factory.RideRepositoryFactory;
-import sap.ass01.layered.persistence.repository.factory.UserRepositoryFactory;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -27,9 +26,9 @@ public class DomainControllerImpl implements DomainController{
     private final RideRepository rideRepository;
 
     public DomainControllerImpl() {
-        eBikeRepository = EBikeRepositoryFactory.createRepository(DatabaseType.IN_MEMORY);
-        userRepository = UserRepositoryFactory.createRepository(DatabaseType.IN_MEMORY);
-        rideRepository = RideRepositoryFactory.createRepository(DatabaseType.IN_MEMORY);
+        eBikeRepository = new EBikeRepositoryImpl();
+        userRepository = new UserRepositoryImpl();
+        rideRepository = new RideRepositoryImpl();
 
         // Load data from repositories
         eBikeRepository.findAllEBikes().forEach(eBike -> {

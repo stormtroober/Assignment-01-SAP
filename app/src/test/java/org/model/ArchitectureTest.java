@@ -18,7 +18,8 @@ public class ArchitectureTest {
             .layer("Business").definedBy( "sap.ass01.layered.services..")
             .layer("Domain").definedBy("sap.ass01.layered.domain..")
             .layer("Persistence").definedBy("sap.ass01.layered.persistence..")
-            //.layer("Plugin").definedBy("sap.ass01.layered.plugin..")  // Plugin layer
+            .layer("Database").definedBy("sap.ass01.layered.database..")
+            .layer("Config").definedBy("sap.ass01.layered.config..")
 
             // Ensuring that no layer accesses the Presentation layer
             .whereLayer("Presentation").mayNotBeAccessedByAnyLayer()
@@ -28,7 +29,12 @@ public class ArchitectureTest {
             .whereLayer("Domain").mayOnlyBeAccessedByLayers("Business")
 
             // Persistence layer can only be accessed by Business and Plugin layers
-            .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Domain");
+            .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Domain")
+            // Infrastructure layer can only be accessed by the Persistence layer
+            .whereLayer("Database").mayOnlyBeAccessedByLayers("Persistence")
+
+            // Config layer can only be accessed by the Database layer
+            .whereLayer("Config").mayOnlyBeAccessedByLayers("Database");
 
     @ArchTest
     public static final ArchRule no_cycles = slices()

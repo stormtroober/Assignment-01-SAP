@@ -1,4 +1,4 @@
-package sap.ass01.layered.persistence.ride;
+package sap.ass01.layered.database.disk;
 
 import com.google.gson.*;
 
