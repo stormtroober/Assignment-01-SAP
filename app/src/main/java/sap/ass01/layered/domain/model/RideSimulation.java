@@ -1,19 +1,14 @@
-package sap.ass01.layered.services.simulation;
+package sap.ass01.layered.domain.model;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
-import sap.ass01.layered.domain.model.EBike;
-import sap.ass01.layered.domain.model.Ride;
-import sap.ass01.layered.domain.model.User;
-import sap.ass01.layered.domain.model.V2d;
-import sap.ass01.layered.services.dto.RideDTO;
 
 import java.util.concurrent.TimeUnit;
 
 public class RideSimulation {
     private final Ride ride;
     private final User user;
-    private final PublishSubject<RideDTO> rideUpdates = PublishSubject.create();
+    private final PublishSubject<Ride> rideUpdates = PublishSubject.create();
     private volatile boolean stopped = false;
     private long lastTimeChangedDir = System.currentTimeMillis();
 
@@ -22,7 +17,7 @@ public class RideSimulation {
         this.user = user;
     }
 
-    public Observable<RideDTO> getRideObservable() {
+    public Observable<Ride> getRideObservable() {
         return rideUpdates.hide();
     }
 
@@ -87,14 +82,8 @@ public class RideSimulation {
 
 
             // Emit updated ride information
-            RideDTO rideDTO = new RideDTO(
-                    ride.getId(),
-                    bike.getLocation().x(),
-                    bike.getLocation().y(),
-                    user.getCredit(),
-                    bike.getBatteryLevel()
-            );
-            rideUpdates.onNext(rideDTO);
+
+            rideUpdates.onNext(ride);
         }
     }
 

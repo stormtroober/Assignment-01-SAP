@@ -14,7 +14,7 @@ import sap.ass01.layered.services.Services.UserService;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.dto.RideDTO;
 import sap.ass01.layered.services.dto.UserDTO;
-import sap.ass01.layered.services.simulation.RideSimulation;
+import sap.ass01.layered.domain.model.RideSimulation;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -258,8 +258,10 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
         if (!ride.get().getUser().getId().equals(userId)) {
             return Observable.error(new IllegalArgumentException("Ride does not belong to the user."));
         }
-        return rideSimulations.get(rideId).getRideObservable().hide().observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
-
+        return rideSimulations.get(rideId).getRideObservable()
+                .map(this::mapToDTO)
+                .hide()
+                .observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
     }
 
     @Override
@@ -331,6 +333,16 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
                     bike.getState().name()
             );
         }
+    }
+
+    private RideDTO mapToDTO(Ride ride) {
+        return new RideDTO(
+                ride.getEbike().getId(),
+                ride.getEbike().getLocation().x(),
+                ride.getEbike().getLocation().y(),
+                ride.getUser().getCredit(),
+                ride.getEbike().getBatteryLevel()
+        );
     }
 
     private UserDTO mapToDTO(User user) {

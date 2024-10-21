@@ -3,11 +3,9 @@ package sap.ass01.layered.domain.controller;
 import sap.ass01.layered.domain.model.EBike;
 import sap.ass01.layered.domain.model.Ride;
 import sap.ass01.layered.domain.model.User;
-import sap.ass01.layered.services.simulation.RideSimulation;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 
 public interface DomainController {
     Collection<EBike> getBikes();
