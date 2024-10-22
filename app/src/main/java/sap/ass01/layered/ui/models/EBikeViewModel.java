@@ -1,5 +1,5 @@
 // File: EBikeViewModel.java
-package sap.ass01.layered.ui.models;
+/*package sap.ass01.layered.ui.models;
 
 import java.awt.*;
 
@@ -27,4 +27,4 @@ public record EBikeViewModel(String id, double x, double y, int batteryLevel, EB
     public EBikeViewModel updateLocation(double newX, double newY) {
         return new EBikeViewModel(id, newX, newY, batteryLevel, state, color);
     }
-}
+}*/

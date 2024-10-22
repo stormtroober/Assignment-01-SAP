@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.views;
+/*package sap.ass01.layered.ui.views;
 
 import sap.ass01.layered.ui.dialogs.user.RechargeCreditDialog;
 import sap.ass01.layered.ui.dialogs.user.StartRideDialog;
@@ -45,7 +45,7 @@ public class UserView extends AbstractView {
                 RechargeCreditDialog rechargeCreditDialog = new RechargeCreditDialog(UserView.this, userService, actualUser);
                 rechargeCreditDialog.setVisible(true);
             }
-        });*/
+        });
         rideButton = new JButton("Start Ride");
         rideButton.addActionListener(e -> toggleRide());
         buttonPanel.add(rideButton);
@@ -165,4 +165,4 @@ public class UserView extends AbstractView {
         actualUser = actualUser.updateCredit(credit);
         updateVisualizerPanel();
     }
-}
+}*/

@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.views;
+/*package sap.ass01.layered.ui.views;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,4 +62,4 @@ public class MainView extends JFrame implements ActionListener {
         MainView mainView = new MainView();
         mainView.display();
     }
-}
+}*/

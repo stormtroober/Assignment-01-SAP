@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.dialogs.admin;
+/*package sap.ass01.layered.ui.dialogs.admin;
 
 import sap.ass01.layered.ui.dialogs.AbstractDialog;
 import sap.ass01.layered.services.Services.AdminService;
@@ -42,4 +42,4 @@ public class RechargeBikeDialog extends AbstractDialog {
                     );
         }
     }
-}
+}*/

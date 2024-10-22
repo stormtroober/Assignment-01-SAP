@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.dialogs.access;
+/*package sap.ass01.layered.ui.dialogs.access;
 
 import sap.ass01.layered.ui.dialogs.AbstractDialog;
 import sap.ass01.layered.services.Services.LoginService;
@@ -56,4 +56,4 @@ public class RegisterDialog extends AbstractDialog {
     public boolean isAdmin() {
         return adminCheckBox.isSelected();
     }
-}
+}*/

@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.views;
+/*package sap.ass01.layered.ui.views;
 
 import javax.swing.*;
 import java.awt.*;
@@ -117,4 +117,4 @@ public abstract class AbstractView extends JFrame {
     public void display() {
         SwingUtilities.invokeLater(() -> this.setVisible(true));
     }
-}
+}*/

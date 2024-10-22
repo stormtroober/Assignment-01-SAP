@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.dialogs.user;
+/*package sap.ass01.layered.ui.dialogs.user;
 
 import sap.ass01.layered.ui.dialogs.AbstractDialog;
 import sap.ass01.layered.ui.models.EBikeViewModel;
@@ -91,4 +91,4 @@ public class StartRideDialog extends AbstractDialog {
     private void log(String msg){
         System.out.println("[StartRideDialog] "+msg);
     }
-}
+}*/

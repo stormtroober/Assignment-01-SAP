@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.dialogs.user;
+/*package sap.ass01.layered.ui.dialogs.user;
 
 import sap.ass01.layered.ui.dialogs.AbstractDialog;
 import sap.ass01.layered.ui.models.UserViewModel;
@@ -47,4 +47,4 @@ public class RechargeCreditDialog extends AbstractDialog {
                     );
         }
     }
-}
+}*/

@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.mapper;
+/*package sap.ass01.layered.ui.mapper;
 
 import sap.ass01.layered.ui.plugin.EBikeDTOExt;
 import sap.ass01.layered.services.dto.UserDTO;
@@ -62,4 +62,4 @@ public class Mapper {
                 rideViewModel.bike().batteryLevel()
         );
     }
-}
+}*/

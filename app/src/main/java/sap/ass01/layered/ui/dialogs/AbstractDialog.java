@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.dialogs;
+/*package sap.ass01.layered.ui.dialogs;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,4 +50,4 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
             dispose();
         }
     }
-}
+}*/

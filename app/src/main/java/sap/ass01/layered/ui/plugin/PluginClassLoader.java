@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.plugin;
+/*package sap.ass01.layered.ui.plugin;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,4 +32,4 @@ public class PluginClassLoader extends ClassLoader {
             throw new ClassNotFoundException(className, e);
         }
     }
-}
+}*/

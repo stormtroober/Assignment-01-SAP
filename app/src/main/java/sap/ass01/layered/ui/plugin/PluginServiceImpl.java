@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.plugin;
+/*package sap.ass01.layered.ui.plugin;
 
 import sap.ass01.layered.services.dto.EBikeDTO;
 
@@ -23,4 +23,4 @@ public class PluginServiceImpl implements PluginService{
         }
         return new EBikeDTOExt(bike.id(), bike.x(), bike.y(), bike.batteryLevel(), bike.state(), color);
     }
-}
+}*/

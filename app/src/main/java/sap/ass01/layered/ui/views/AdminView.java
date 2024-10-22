@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.views;
+/*package sap.ass01.layered.ui.views;
 
 import sap.ass01.layered.ui.plugin.PluginService;
 import sap.ass01.layered.ui.plugin.EBikeDTOExt;
@@ -142,4 +142,4 @@ public class AdminView extends AbstractView {
     private void log(String msg) {
         System.out.println("[AdminView] " + msg);
     }
-}
+}*/

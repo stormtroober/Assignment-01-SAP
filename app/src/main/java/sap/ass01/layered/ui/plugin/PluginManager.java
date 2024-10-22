@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.plugin;
+/*package sap.ass01.layered.ui.plugin;
 
 import java.io.File;
 import java.util.HashMap;
@@ -25,4 +25,4 @@ public class PluginManager {
     public <T> T getPlugin(String pluginID, Class<T> pluginClass) {
         return (T) plugins.get(pluginID);
     }
-}
+}*/

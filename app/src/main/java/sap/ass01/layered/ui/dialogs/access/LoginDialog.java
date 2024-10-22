@@ -1,4 +1,4 @@
-package sap.ass01.layered.ui.dialogs.access;
+/*package sap.ass01.layered.ui.dialogs.access;
 
 import sap.ass01.layered.ui.dialogs.AbstractDialog;
 import sap.ass01.layered.ui.mapper.Mapper;
@@ -65,4 +65,4 @@ public class LoginDialog extends AbstractDialog {
     public Optional<String> getUserName() {
         return userName;
     }
-}
+}*/
