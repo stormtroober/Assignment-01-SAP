@@ -16,7 +16,8 @@ public class MySqlEBikeDatabase extends MySqlDatabaseImpl<EBikeDTO> {
             "password",
             "ebikes",
             EBikeDTO::id,
-            MySqlEBikeDatabase::resultSetToEBikeDTO
+            MySqlEBikeDatabase::resultSetToEBikeDTO,
+            EBikeDTO.class
         );
     }
 

@@ -13,7 +13,7 @@ public class RideDatabaseFactory {
             case DISK:
                 return new DiskRideDatabase();
 //            case MYSQL:
-//                return new MySqlEBikeRepository();
+//                return new MySqlRideDatabase();
             case MONGODB:
                 return new MongoRideDatabase();
             default:
