@@ -1,4 +1,4 @@
-package persistence.ebike;
+package layered.persistence.ebike;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

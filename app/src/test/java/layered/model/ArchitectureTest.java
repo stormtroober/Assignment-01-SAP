@@ -1,4 +1,4 @@
-package org.model;
+package layered.model;
 
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;

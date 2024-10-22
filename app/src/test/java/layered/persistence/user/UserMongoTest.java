@@ -1,4 +1,4 @@
-package persistence.user;
+package layered.persistence.user;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -8,11 +8,11 @@ import sap.ass01.layered.config.DatabaseType;
 import sap.ass01.layered.persistence.repository.UserRepositoryImpl;
 import sap.ass01.layered.persistence.repository.UserRepository;
 
-public class UserDiskTest extends AbstractUserRepositoryTest {
+public class UserMongoTest extends AbstractUserRepositoryTest {
 
     @BeforeAll
     public static void setUpOnce() {
-        DatabaseConfiguration.setDatabaseType(DatabaseType.DISK);
+        DatabaseConfiguration.setDatabaseType(DatabaseType.MONGODB);
     }
 
     @BeforeEach

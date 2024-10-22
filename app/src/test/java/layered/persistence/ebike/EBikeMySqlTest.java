@@ -1,5 +1,4 @@
-// EBikeMongoTest.java
-package persistence.ebike;
+package layered.persistence.ebike;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,12 +8,11 @@ import sap.ass01.layered.config.DatabaseType;
 import sap.ass01.layered.persistence.repository.EBikeRepository;
 import sap.ass01.layered.persistence.repository.EBikeRepositoryImpl;
 
-public class EBikeMongoTest extends AbstractEBikeRepositoryTest {
+public class EBikeMySqlTest extends AbstractEBikeRepositoryTest {
 
     @BeforeAll
     public static void setUpOnce() {
-        // Set the database type directly for testing
-        DatabaseConfiguration.setDatabaseType(DatabaseType.MONGODB);
+        DatabaseConfiguration.setDatabaseType(DatabaseType.MYSQL);
     }
 
     @BeforeEach

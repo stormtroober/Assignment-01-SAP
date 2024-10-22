@@ -1,5 +1,5 @@
 // File: app/src/test/java/persistence/AbstractUserRepositoryTest.java
-package persistence.user;
+package layered.persistence.user;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

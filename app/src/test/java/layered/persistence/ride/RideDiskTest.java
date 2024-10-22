@@ -1,14 +1,14 @@
-package persistence.ebike;
+package layered.persistence.ride;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import sap.ass01.layered.config.DatabaseConfiguration;
 import sap.ass01.layered.config.DatabaseType;
-import sap.ass01.layered.persistence.repository.EBikeRepository;
-import sap.ass01.layered.persistence.repository.EBikeRepositoryImpl;
+import sap.ass01.layered.persistence.repository.RideRepositoryImpl;
+import sap.ass01.layered.persistence.repository.RideRepository;
 
-public class EBikeDiskTest extends AbstractEBikeRepositoryTest {
+public class RideDiskTest extends AbstractRideRepositoryTest {
 
     @BeforeAll
     public static void setUpOnce() {
@@ -18,16 +18,16 @@ public class EBikeDiskTest extends AbstractEBikeRepositoryTest {
     @BeforeEach
     public void setUp() {
         // Initialize the repository
-        ebikeRepository = createRepository();
+        rideRepository = createRepository();
     }
 
     @Override
-    protected EBikeRepository createRepository() {
-        return new EBikeRepositoryImpl();
+    protected RideRepository createRepository() {
+        return new RideRepositoryImpl();
     }
 
     @AfterEach
     public void cleanDatabase() {
-        ebikeRepository.cleanDatabase();
+        rideRepository.cleanDatabase();
     }
 }
