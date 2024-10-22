@@ -14,7 +14,7 @@ import java.util.Optional;
 public class DiskRideDatabase extends DiskDatabaseImpl<RideDTO> {
 
     public DiskRideDatabase() {
-        super("persistence/in_memory/rides.json", RideDTO::id, new TypeToken<List<RideDTO>>() {}.getType());
+        super("layered/persistence/disk/rides.json", RideDTO::id, new TypeToken<List<RideDTO>>() {}.getType());
     }
 
     @Override

@@ -9,6 +9,6 @@ import java.util.List;
 public class DiskEBikeDatabase extends DiskDatabaseImpl<EBikeDTO> {
 
     public DiskEBikeDatabase() {
-        super("persistence/in_memory/ebikes.json", EBikeDTO::id, new TypeToken<List<EBikeDTO>>() {}.getType());
+        super("layered/persistence/disk/ebikes.json", EBikeDTO::id, new TypeToken<List<EBikeDTO>>() {}.getType());
     }
 }

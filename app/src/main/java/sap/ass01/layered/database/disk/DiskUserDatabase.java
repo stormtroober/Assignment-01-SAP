@@ -9,6 +9,6 @@ import java.util.List;
 public class DiskUserDatabase extends DiskDatabaseImpl<UserDTO> {
 
     public DiskUserDatabase() {
-        super("persistence/in_memory/users.json", UserDTO::id, new TypeToken<List<UserDTO>>() {}.getType());
+        super("layered/persistence/disk/users.json", UserDTO::id, new TypeToken<List<UserDTO>>() {}.getType());
     }
 }
