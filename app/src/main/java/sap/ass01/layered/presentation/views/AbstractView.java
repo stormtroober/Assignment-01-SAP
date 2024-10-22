@@ -1,8 +1,8 @@
 package sap.ass01.layered.presentation.views;
 
-import sap.ass01.frontend.models.EBikeViewModel;
-import sap.ass01.frontend.models.UserViewModel;
-import sap.ass01.frontend.plugin.PluginManager;
+import sap.ass01.layered.presentation.models.EBikeViewModel;
+import sap.ass01.layered.presentation.models.UserViewModel;
+import sap.ass01.layered.presentation.plugin.PluginManager;
 
 import javax.swing.*;
 import java.awt.*;

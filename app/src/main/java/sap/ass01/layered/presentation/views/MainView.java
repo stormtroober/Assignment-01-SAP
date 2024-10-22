@@ -1,7 +1,7 @@
 package sap.ass01.layered.presentation.views;
 
-import sap.ass01.frontend.dialogs.access.LoginDialog;
-import sap.ass01.frontend.dialogs.access.RegisterDialog;
+import sap.ass01.layered.presentation.dialogs.access.LoginDialog;
+import sap.ass01.layered.presentation.dialogs.access.RegisterDialog;
 
 import javax.swing.*;
 import java.awt.*;

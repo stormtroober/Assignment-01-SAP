@@ -1,8 +1,8 @@
 package sap.ass01.layered.presentation.dialogs.access;
 
-import sap.ass01.frontend.models.UserViewModel;
-import sap.ass01.frontend.views.AdminView;
-import sap.ass01.frontend.views.UserView;
+import sap.ass01.layered.presentation.models.UserViewModel;
+import sap.ass01.layered.presentation.views.AdminView;
+import sap.ass01.layered.presentation.views.UserView;
 import sap.ass01.layered.presentation.PresentationController;
 import sap.ass01.layered.presentation.dialogs.AbstractDialog;
 

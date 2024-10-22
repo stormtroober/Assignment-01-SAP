@@ -1,14 +1,14 @@
 package sap.ass01.layered.presentation;
 
-import sap.ass01.frontend.models.EBikeViewModel;
-import sap.ass01.frontend.models.RideViewModel;
+import sap.ass01.layered.presentation.models.EBikeViewModel;
+import sap.ass01.layered.presentation.models.RideViewModel;
 import sap.ass01.layered.services.Services.LoginService;
 import sap.ass01.layered.services.Services.AdminService;
 import sap.ass01.layered.services.Services.UserService;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.impl.ServiceFactory;
 import sap.ass01.layered.presentation.mapper.Mapper;
-import sap.ass01.frontend.models.UserViewModel;
+import sap.ass01.layered.presentation.models.UserViewModel;
 
 import java.util.Collection;
 import java.util.List;

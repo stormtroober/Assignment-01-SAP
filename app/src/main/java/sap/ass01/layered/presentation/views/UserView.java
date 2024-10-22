@@ -1,10 +1,10 @@
 package sap.ass01.layered.presentation.views;
 
-import sap.ass01.frontend.dialogs.user.RechargeCreditDialog;
-import sap.ass01.frontend.dialogs.user.StartRideDialog;
-import sap.ass01.frontend.models.EBikeViewModel;
-import sap.ass01.frontend.models.RideViewModel;
-import sap.ass01.frontend.models.UserViewModel;
+import sap.ass01.layered.presentation.dialogs.user.RechargeCreditDialog;
+import sap.ass01.layered.presentation.dialogs.user.StartRideDialog;
+import sap.ass01.layered.presentation.models.EBikeViewModel;
+import sap.ass01.layered.presentation.models.RideViewModel;
+import sap.ass01.layered.presentation.models.UserViewModel;
 import sap.ass01.layered.presentation.PresentationController;
 
 import javax.swing.*;

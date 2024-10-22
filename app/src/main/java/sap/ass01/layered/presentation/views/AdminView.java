@@ -1,11 +1,11 @@
 package sap.ass01.layered.presentation.views;
 
-import sap.ass01.frontend.dialogs.admin.AddEBikeDialog;
-import sap.ass01.frontend.dialogs.admin.RechargeBikeDialog;
-import sap.ass01.frontend.models.EBikeViewModel;
-import sap.ass01.frontend.models.UserViewModel;
-import sap.ass01.frontend.plugin.PluginService;
-import sap.ass01.frontend.plugin.PluginServiceImpl;
+import sap.ass01.layered.presentation.dialogs.admin.AddEBikeDialog;
+import sap.ass01.layered.presentation.dialogs.admin.RechargeBikeDialog;
+import sap.ass01.layered.presentation.models.EBikeViewModel;
+import sap.ass01.layered.presentation.models.UserViewModel;
+import sap.ass01.layered.presentation.plugin.PluginService;
+import sap.ass01.layered.presentation.plugin.PluginServiceImpl;
 import sap.ass01.layered.presentation.PresentationController;
 
 import javax.swing.*;

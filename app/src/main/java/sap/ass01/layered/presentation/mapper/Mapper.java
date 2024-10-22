@@ -3,10 +3,10 @@ package sap.ass01.layered.presentation.mapper;
 import sap.ass01.layered.services.dto.EBikeDTO;
 import sap.ass01.layered.services.dto.RideDTO;
 import sap.ass01.layered.services.dto.UserDTO;
-import sap.ass01.frontend.models.EBikeViewModel;
-import sap.ass01.frontend.models.RideViewModel;
-import sap.ass01.frontend.models.UserViewModel;
-import sap.ass01.frontend.plugin.EBikeDTOExt;
+import sap.ass01.layered.presentation.models.EBikeViewModel;
+import sap.ass01.layered.presentation.models.RideViewModel;
+import sap.ass01.layered.presentation.models.UserViewModel;
+import sap.ass01.layered.presentation.plugin.EBikeDTOExt;
 
 public class Mapper {
 
