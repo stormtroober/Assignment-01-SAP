@@ -15,6 +15,7 @@ public class EBikeUseCasesImpl implements EBikeUseCases {
         this.ebikeRepository = ebikeRepository;
     }
 
+    //Maybe here it would take the domain EBike and not the DTO
     @Override
     public void registerEBike(EBikeDTO ebikeDTO) {
         ebikeRepository.saveEBike(ebikeDTO);
