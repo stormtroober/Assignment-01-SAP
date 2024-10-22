@@ -3,17 +3,17 @@ package sap.ass01.hexagonal.infrastructure.adapters.infrastructure.persistence;
 
 import sap.ass01.hexagonal.application.entities.EBikeDTO;
 import sap.ass01.hexagonal.application.ports.EBikeRepository;
-import sap.ass01.hexagonal.infrastructure.adapters.infrastructure.db.disk.DiskEBikeDatabase;
+import sap.ass01.hexagonal.infrastructure.adapters.infrastructure.db.disk.DiskEBikeDBAdapter;
 
 import java.util.List;
 import java.util.Optional;
 
 public class DiskEBikeRepositoryImpl implements EBikeRepository {
 
-    private final DiskEBikeDatabase diskEBikeDatabase;
+    private final DiskEBikeDBAdapter diskEBikeDatabase;
 
     public DiskEBikeRepositoryImpl() {
-        this.diskEBikeDatabase = new DiskEBikeDatabase();
+        this.diskEBikeDatabase = new DiskEBikeDBAdapter();
     }
 
     @Override
@@ -36,8 +36,8 @@ public class DiskEBikeRepositoryImpl implements EBikeRepository {
         diskEBikeDatabase.update(eBike);
     }
 
-//    @Override
-//    public void cleanDatabase() {
-//        diskEBikeDatabase.clean();
-//    }
+    @Override
+    public void clean() {
+        diskEBikeDatabase.clean();
+    }
 }

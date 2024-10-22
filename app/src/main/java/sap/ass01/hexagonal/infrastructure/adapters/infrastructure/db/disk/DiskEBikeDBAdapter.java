@@ -6,9 +6,9 @@ import sap.ass01.layered.database.implementation.DiskDatabaseImpl;
 
 import java.util.List;
 
-public class DiskEBikeDatabase extends DiskDatabaseImpl<EBikeDTO> {
+public class DiskEBikeDBAdapter extends DiskDatabaseImpl<EBikeDTO> {
 
-    public DiskEBikeDatabase() {
+    public DiskEBikeDBAdapter() {
         super("hexagonal/persistence/disk/ebikes.json", EBikeDTO::id, new TypeToken<List<EBikeDTO>>() {}.getType());
     }
 }

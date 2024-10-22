@@ -11,4 +11,5 @@ public interface EBikeRepository {
     List<EBikeDTO> findAllEBikes();
     void saveEBike(EBikeDTO eBike);
     void updateEBike(EBikeDTO eBike);
+    void clean();
 }
