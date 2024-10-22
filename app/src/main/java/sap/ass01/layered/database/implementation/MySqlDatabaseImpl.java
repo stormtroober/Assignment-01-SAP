@@ -66,41 +66,52 @@ public class MySqlDatabaseImpl<T> implements Database<T> {
         }
     }
 
-    @Override
-    public void save(T entity) {
-        StringBuilder insertSQL = new StringBuilder("INSERT INTO " + tableName + " (");
-        Field[] fields = type.getDeclaredFields();
-        for (Field field : fields) {
-            insertSQL.append(field.getName()).append(", ");
+@Override
+public void save(T entity) {
+    String selectSQL = "SELECT COUNT(*) FROM " + tableName + " WHERE id = ?";
+    try (PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
+        pstmt.setString(1, getId.apply(entity));
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next() && rs.getInt(1) > 0) {
+            return;
         }
-        insertSQL.setLength(insertSQL.length() - 2); // Remove the last comma and space
-        insertSQL.append(") VALUES (");
-        for (int i = 0; i < fields.length; i++) {
-            insertSQL.append("?, ");
-        }
-        insertSQL.setLength(insertSQL.length() - 2); // Remove the last comma and space
-        insertSQL.append(")");
-
-        try (PreparedStatement pstmt = connection.prepareStatement(insertSQL.toString())) {
-            for (int i = 0; i < fields.length; i++) {
-                fields[i].setAccessible(true);
-                Object value = fields[i].get(entity);
-                if (value instanceof Optional) {
-                    value = ((Optional<?>) value).orElse(null);
-                }
-                if (value instanceof UserDTO || value instanceof EBikeDTO) {
-                    pstmt.setString(i + 1, toJson(value));
-                } else {
-                    pstmt.setObject(i + 1, value);
-                }
-            }
-            pstmt.executeUpdate();
-        } catch (SQLIntegrityConstraintViolationException e) {
-            System.out.println("Trying to put a duplicate entity in the database");
-        } catch (SQLException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+
+    StringBuilder insertSQL = new StringBuilder("INSERT INTO " + tableName + " (");
+    Field[] fields = type.getDeclaredFields();
+    for (Field field : fields) {
+        insertSQL.append(field.getName()).append(", ");
+    }
+    insertSQL.setLength(insertSQL.length() - 2); // Remove the last comma and space
+    insertSQL.append(") VALUES (");
+    for (int i = 0; i < fields.length; i++) {
+        insertSQL.append("?, ");
+    }
+    insertSQL.setLength(insertSQL.length() - 2); // Remove the last comma and space
+    insertSQL.append(")");
+
+    try (PreparedStatement pstmt = connection.prepareStatement(insertSQL.toString())) {
+        for (int i = 0; i < fields.length; i++) {
+            fields[i].setAccessible(true);
+            Object value = fields[i].get(entity);
+            if (value instanceof Optional) {
+                value = ((Optional<?>) value).orElse(null);
+            }
+            if (value instanceof UserDTO || value instanceof EBikeDTO) {
+                pstmt.setString(i + 1, toJson(value));
+            } else {
+                pstmt.setObject(i + 1, value);
+            }
+        }
+        pstmt.executeUpdate();
+    } catch (SQLIntegrityConstraintViolationException e) {
+        System.out.println("Trying to put a duplicate entity in the database");
+    } catch (SQLException | IllegalAccessException e) {
+        e.printStackTrace();
+    }
+}
 
     private String toJson(Object obj) {
         // Convert the object to JSON string

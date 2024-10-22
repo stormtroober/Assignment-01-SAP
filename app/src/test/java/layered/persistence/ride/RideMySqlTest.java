@@ -1,24 +1,33 @@
-//package persistence.ride;
-//
-//import org.junit.jupiter.api.AfterEach;
-//import sap.ass01.layered.persistence.repository.RideRepository;
-//import sap.ass01.layered.persistence.repository.factory.RideRepositoryFactory;
-//
-//import static sap.ass01.layered.persistence.repository.DatabaseType.IN_MEMORY;
-//import static sap.ass01.layered.persistence.repository.DatabaseType.MYSQL;
-//
-//public class RideMySqlTest extends AbstractRideRepositoryTest{
-//
-//    private RideRepository repository;
-//
-//    @Override
-//    protected RideRepository createRepository() {
-//        repository = RideRepositoryFactory.createRepository(MYSQL);
-//        return repository;
-//    }
-//
-//    @AfterEach
-//    public void cleanDatabase() {
-//        repository.cleanDatabase();
-//    }
-//}
+package layered.persistence.ride;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import sap.ass01.layered.config.DatabaseConfiguration;
+import sap.ass01.layered.config.DatabaseType;
+import sap.ass01.layered.persistence.repository.RideRepositoryImpl;
+import sap.ass01.layered.persistence.repository.RideRepository;
+
+public class RideMySqlTest extends AbstractRideRepositoryTest {
+
+    @BeforeAll
+    public static void setUpOnce() {
+        DatabaseConfiguration.setDatabaseType(DatabaseType.MYSQL);
+    }
+
+    @BeforeEach
+    public void setUp() {
+        // Initialize the repository
+        rideRepository = createRepository();
+    }
+
+    @Override
+    protected RideRepository createRepository() {
+        return new RideRepositoryImpl();
+    }
+
+    @AfterEach
+    public void cleanDatabase() {
+        rideRepository.cleanDatabase();
+    }
+}

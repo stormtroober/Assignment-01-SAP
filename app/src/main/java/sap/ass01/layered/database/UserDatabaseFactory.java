@@ -5,6 +5,7 @@ import sap.ass01.layered.config.DatabaseType;
 import sap.ass01.layered.database.disk.DiskUserDatabase;
 import sap.ass01.layered.database.mongo.MongoUserDatabase;
 import sap.ass01.layered.database.dto.UserDTO;
+import sap.ass01.layered.database.mysql.MySqlUserDatabase;
 
 public class UserDatabaseFactory {
     public static Database<UserDTO> createDatabase() {
@@ -12,8 +13,8 @@ public class UserDatabaseFactory {
         switch (dbType) {
             case DISK:
                 return new DiskUserDatabase();
-//            case MYSQL:
-//                return new MySqlUserDatabase();
+            case MYSQL:
+                return new MySqlUserDatabase();
             case MONGODB:
                 return new MongoUserDatabase();
             default:
