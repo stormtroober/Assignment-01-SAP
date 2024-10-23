@@ -1,7 +1,7 @@
 // DiskUserRepositoryImpl.java
 package sap.ass01.hexagonal.infrastructure.adapters.persistence;
 
-import sap.ass01.hexagonal.application.entities.UserDTO;
+import sap.ass01.hexagonal.application.ports.entities.UserDTO;
 import sap.ass01.hexagonal.application.ports.UserRepository;
 import sap.ass01.hexagonal.infrastructure.diskdb.DiskUserDBAdapter;
 

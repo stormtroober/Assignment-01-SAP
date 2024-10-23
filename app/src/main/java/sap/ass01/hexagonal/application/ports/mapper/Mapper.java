@@ -1,16 +1,17 @@
-package sap.ass01.hexagonal.domain.mapper;
+package sap.ass01.hexagonal.application.ports.mapper;
 
 
-import sap.ass01.hexagonal.application.entities.EBikeDTO;
-import sap.ass01.hexagonal.application.entities.RideDTO;
-import sap.ass01.hexagonal.application.entities.UserDTO;
+import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;
+import sap.ass01.hexagonal.application.ports.entities.RideDTO;
+import sap.ass01.hexagonal.application.ports.entities.UserDTO;
 import sap.ass01.hexagonal.domain.model.EBike;
+import sap.ass01.hexagonal.domain.model.EBikeState;
 import sap.ass01.hexagonal.domain.model.Ride;
 import sap.ass01.hexagonal.domain.model.User;
 
 public class Mapper {
     public static EBikeDTO toDTO(final EBike ebike){
-        return new EBikeDTO(ebike.getId(), ebike.getLocation().x(), ebike.getLocation().y(), ebike.getState(), ebike.getBatteryLevel());
+        return new EBikeDTO(ebike.getId(), ebike.getLocation().x(), ebike.getLocation().y(), ebike.getState().name(), ebike.getBatteryLevel());
     }
 
     public static UserDTO toDTO(final User user){
@@ -30,6 +31,6 @@ public class Mapper {
     }
 
     public static EBike toModel(final EBikeDTO ebikeDTO){
-        return new EBike(ebikeDTO.id(), ebikeDTO.x(), ebikeDTO.y(), ebikeDTO.state(), ebikeDTO.battery());
+        return new EBike(ebikeDTO.id(), ebikeDTO.x(), ebikeDTO.y(), EBikeState.valueOf(ebikeDTO.state()), ebikeDTO.battery());
     }
 }

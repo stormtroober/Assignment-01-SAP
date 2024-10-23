@@ -1,7 +1,5 @@
 package sap.ass01.hexagonal.domain.model;
 
-import sap.ass01.hexagonal.application.entities.EBikeState;
-
 public class EBike {
 
 

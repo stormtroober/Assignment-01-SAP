@@ -4,12 +4,11 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
-import sap.ass01.bbom.User;
-import sap.ass01.hexagonal.application.EBikeApplication;
-import sap.ass01.hexagonal.application.entities.EBikeDTO;
-import sap.ass01.hexagonal.application.entities.EBikeState;
-import sap.ass01.hexagonal.application.entities.RideDTO;
-import sap.ass01.hexagonal.application.entities.UserDTO;
+import sap.ass01.hexagonal.application.ports.EBikeApplication;
+import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;
+import sap.ass01.hexagonal.domain.model.EBikeState;
+import sap.ass01.hexagonal.application.ports.entities.RideDTO;
+import sap.ass01.hexagonal.application.ports.entities.UserDTO;
 import sap.ass01.hexagonal.application.ports.AdminViewPort;
 import sap.ass01.hexagonal.application.ports.LoginViewPort;
 import sap.ass01.hexagonal.application.ports.UserViewPort;
@@ -28,6 +27,12 @@ public class ViewAdapter implements LoginViewPort, AdminViewPort, UserViewPort {
 
     public ViewAdapter(EBikeApplication application) {
         this.application = application;
+    }
+
+    public void init() {
+        emitAllBikes();
+        emitAllUsers();
+        emitAvailableBikes();
     }
 
     @Override
@@ -176,7 +181,7 @@ public class ViewAdapter implements LoginViewPort, AdminViewPort, UserViewPort {
     private void emitAvailableBikes() {
         Collection<EBikeDTO> availableDTOs = new ArrayList<>();
         application.getBikes().stream()
-                .filter(bike -> bike.state() == EBikeState.AVAILABLE)
+                .filter(bike -> bike.state().equals("AVAILABLE"))
                 .forEach(availableDTOs::add);
         availableBikesSubject.onNext(availableDTOs);
     }

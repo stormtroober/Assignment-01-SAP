@@ -3,7 +3,7 @@ package hexagonal.persistence;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sap.ass01.hexagonal.application.entities.UserDTO;
+import sap.ass01.hexagonal.application.ports.entities.UserDTO;
 import sap.ass01.hexagonal.application.ports.UserRepository;
 
 import java.util.List;

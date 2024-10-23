@@ -1,7 +1,7 @@
 // DiskEBikeRepositoryImpl.java
 package sap.ass01.hexagonal.infrastructure.adapters.persistence;
 
-import sap.ass01.hexagonal.application.entities.EBikeDTO;
+import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;
 import sap.ass01.hexagonal.application.ports.EBikeRepository;
 import sap.ass01.hexagonal.infrastructure.diskdb.DiskEBikeDBAdapter;
 

@@ -1,7 +1,7 @@
 package sap.ass01.hexagonal.infrastructure.diskdb;
 
 import com.google.gson.reflect.TypeToken;
-import sap.ass01.hexagonal.application.entities.RideDTO;
+import sap.ass01.hexagonal.application.ports.entities.RideDTO;
 
 import java.util.List;
 

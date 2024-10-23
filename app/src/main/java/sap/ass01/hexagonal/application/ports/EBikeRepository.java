@@ -1,7 +1,7 @@
 package sap.ass01.hexagonal.application.ports;
 
 
-import sap.ass01.hexagonal.application.entities.EBikeDTO;
+import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;
 
 import java.util.List;
 import java.util.Optional;
