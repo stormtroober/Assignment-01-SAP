@@ -39,10 +39,12 @@ public class RideSimulation {
     }
 
     private void updateRide() {
+
         EBike bike = ride.getEbike();
 
         synchronized (bike) {
             if(bike.getBatteryLevel() == 0) {
+                System.out.println("Bike has no battery");
                 ride.end();
                 stopSimulation();
                 completeSimulation();
@@ -90,12 +92,12 @@ public class RideSimulation {
 
     private void completeSimulation() {
         // Emit the completion of the simulation
-
-        System.out.println("Ride completed");
+        System.out.println("Ride completed---------------");
         rideUpdates.onComplete();
     }
 
     public void stopSimulation() {
+        System.out.println("Stopping simulation " + stopped);
         stopped = true;
     }
 }

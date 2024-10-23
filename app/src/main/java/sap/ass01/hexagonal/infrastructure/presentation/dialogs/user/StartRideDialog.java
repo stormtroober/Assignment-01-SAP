@@ -43,7 +43,6 @@ public class StartRideDialog extends AbstractDialog {
             Optional<EBikeViewModel> bike = ((UserView) getParent()).findBike(bikeId);
             // Handle success
             if(bike.isPresent()) {
-                log("*******************************************************");
                 presentationController.startRide(rideId, user, bike.get(),
                         startedRide -> {
                             ((UserView) getParent()).initRide(startedRide);
@@ -51,7 +50,6 @@ public class StartRideDialog extends AbstractDialog {
                             dispose(); // Close the dialog after starting the ride
                         },
                         throwable -> {
-                            log("Error starting ride: " + throwable.getMessage());
                             JOptionPane.showMessageDialog(this, "Error starting ride: " + throwable.getMessage());
                         }
                 );
@@ -84,7 +82,6 @@ public class StartRideDialog extends AbstractDialog {
         presentationController.observeRide(rideId, user, bike,
                 rideViewModel -> {
                     // Update the view with the new ride ViewModel
-                    log("Ride update: " + rideViewModel);
                     ((UserView) getParent()).updateRide(rideViewModel);
                 },
                 throwable -> {

@@ -112,23 +112,22 @@ public class ViewAdapter implements LoginViewPort, AdminViewPort, UserViewPort {
 
     @Override
     public Observable<RideDTO> startRide(String userId, String rideId, String bikeId) {
-        return application.startRide(rideId, userId, bikeId)
+        Observable<RideDTO> observable = application.startRide(rideId, userId, bikeId)
                 .doOnNext(rideDTO -> {
                     emitAllBikes();
                     emitAvailableBikes();
-                    emitAllUsers();
                 })
                 .doOnError(throwable -> {
                     // Emit error if something goes wrong
                     System.out.println("Error starting ride: " + throwable.getMessage());
                 })
                 .doOnComplete(() -> {
-                    // Complete the observable once the ride is done
-                    emitAllBikes();
-                    emitAvailableBikes();
-                    emitAllUsers();
-                })
-                .subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
+
+                });
+        emitAvailableBikes();
+        emitAllUsers();
+        return observable;
+
 
     }
 
@@ -145,9 +144,6 @@ public class ViewAdapter implements LoginViewPort, AdminViewPort, UserViewPort {
                 emitter.onError(new IllegalArgumentException("Ride does not belong to the bike."));
             else {
                 application.endRide(ride.get());
-                emitAllBikes();
-                emitAvailableBikes();
-                emitAllUsers();
                 emitter.onComplete();
             }
         }).subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
@@ -155,16 +151,29 @@ public class ViewAdapter implements LoginViewPort, AdminViewPort, UserViewPort {
 
     @Override
     public Observable<RideDTO> observeRide(String userId, String rideId) {
-
         Optional<RideDTO> ride = application.getRide(rideId);
         if (ride.isEmpty()) {
+            System.out.println("Ride not found.");
             return Observable.error(new IllegalArgumentException("Ride not found."));
         }
 
         if (!ride.get().user().id().equals(userId)) {
             return Observable.error(new IllegalArgumentException("Ride does not belong to the user."));
         }
-        return application.getRideSimulationObservable(rideId).hide().observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
+        return application.getRideSimulationObservable(rideId)
+                .doOnNext(rideDTO -> {
+                    emitAllBikes();
+                    emitAvailableBikes();
+                })
+                .doOnError(throwable -> {
+                    // Handle error
+                })
+                .doOnTerminate(() -> {
+                    System.out.println("Ride completed.ààààààààààààààààààààà");
+                    emitAllBikes();
+                    emitAvailableBikes();
+                    emitAllUsers();
+                });
 
     }
 
@@ -186,10 +195,12 @@ public class ViewAdapter implements LoginViewPort, AdminViewPort, UserViewPort {
     }
 
     private void emitAvailableBikes() {
+        System.out.println("Emitting available bikes");
         Collection<EBikeDTO> availableDTOs = new ArrayList<>();
         application.getBikes().stream()
                 .filter(bike -> bike.state().equals("AVAILABLE"))
                 .forEach(availableDTOs::add);
+        System.out.println("Available bikes: " + availableDTOs);
         availableBikesSubject.onNext(availableDTOs);
     }
 

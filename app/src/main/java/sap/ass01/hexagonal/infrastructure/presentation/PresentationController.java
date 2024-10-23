@@ -73,7 +73,6 @@ public class PresentationController {
     public void observeAvailableBikes(Consumer<List<EBikeViewModel>> onSuccess, Consumer<Throwable> onError) {
         viewAdapter.observeAvailableBikes().subscribe(
                 bikeDTOs -> {
-                    System.out.println("************************************* ->" + bikeDTOs);
                     // Convert DTOs to ViewModels before passing to the view
                     List<EBikeViewModel> bikeViewModels = bikeDTOs.stream()
                             .map(Mapper::toDomain) // Assuming Mapper.toDomain converts EBikeDTO to EBikeViewModel
@@ -99,7 +98,7 @@ public class PresentationController {
         );
     }
 
-    public void observeRide(String rideId, UserViewModel user, EBikeViewModel bike , Consumer<RideViewModel> onUpdate, Consumer<Throwable> onError, Runnable onComplete) {
+    public void observeRide(String rideId, UserViewModel user, EBikeViewModel bike, Consumer<RideViewModel> onUpdate, Consumer<Throwable> onError, Runnable onComplete) {
         viewAdapter.observeRide(user.id(), rideId).subscribe(
                 rideDTO -> {
                     RideViewModel rideViewModel = Mapper.toDomain(rideDTO, new RideViewModel(rideId, user, bike));

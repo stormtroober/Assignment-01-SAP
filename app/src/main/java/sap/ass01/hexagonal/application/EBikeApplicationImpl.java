@@ -28,7 +28,8 @@ public class EBikeApplicationImpl implements EBikeApplication {
 
     private final ConcurrentHashMap<String, EBike> bikes = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<Ride, RideSimulation> rides = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, RideSimulation> rideSim = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Ride> rides = new ConcurrentHashMap<>();
 
     public EBikeApplicationImpl(EBikeRepository eBikeRepository, UserRepository userRepository, RideRepository rideRepository) {
         this.eBikeRepository = eBikeRepository;
@@ -105,7 +106,20 @@ public class EBikeApplicationImpl implements EBikeApplication {
 
     @Override
     public Optional<RideDTO> getRide(String rideId) {
-        return rides.keySet().stream().filter(r -> r.getId().equals(rideId)).findFirst().map(Mapper::toDTO);
+        Optional<Ride> ride = Optional.ofNullable(rides.get(rideId));
+        if(ride.isEmpty()){
+            ride = rideRepository.findRideById(rideId).map(rideDTO -> {
+                UserDTO user = getUser(rideDTO.user().id()).orElse(null);
+                EBikeDTO bike = getEbike(rideDTO.ebike().id()).orElse(null);
+                if (user != null && bike != null) {
+                    Ride rideTmp = Mapper.toModel(rideDTO);
+                    rides.put(rideTmp.getId(), rideTmp);
+                    return rideTmp;
+                }
+                return null;
+            });
+        }
+        return ride.map(Mapper::toDTO);
     }
 
     @Override
@@ -123,10 +137,15 @@ public class EBikeApplicationImpl implements EBikeApplication {
     @Override
     public Observable<RideDTO> startRide(String rideId, String userId, String bikeId) {
         return Observable.<RideDTO>create(emitter -> {
+            if(rides.keySet().stream().anyMatch(r -> r.equals(rideId))){
+                emitter.onError(new IllegalArgumentException("Ride already exists"));
+                return;
+            }
             Optional<User> userOptional = Optional.ofNullable(users.get(userId));
             Optional<EBike> bikeOptional = Optional.ofNullable(bikes.get(bikeId));
             if (userOptional.isEmpty()) {
                 emitter.onError(new IllegalArgumentException("User not found"));
+
             } else if (bikeOptional.isEmpty()) {
                 emitter.onError(new IllegalArgumentException("Bike not found"));
             } else {
@@ -139,31 +158,15 @@ public class EBikeApplicationImpl implements EBikeApplication {
                 } else if (!bike.isAvailable()){
                     emitter.onError(new IllegalArgumentException("Bike is not available"));
                 } else {
+                    bike.setState(EBikeState.IN_USE);
                     Ride ride = new Ride(rideId, user, bike);
                     RideSimulation rideSimulation = new RideSimulation(ride, user);
-                    ride.start();
-                    rides.put(ride, rideSimulation);
+                    rideSim.put(rideId, rideSimulation);
+                    rides.put(rideId, ride);
                     rideRepository.saveRide(Mapper.toDTO(ride));
-                    rideSimulation.getRideObservable()
-                            .observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io())
-                            .subscribe(
-                                    rideVal -> {
-                                        updateBike(rideVal.getEbike());
-                                        updateRide(rideVal);
-                                        updateUser(rideVal.getUser());
-                                        emitter.onNext(Mapper.toDTO(rideVal));
-                                    },
-                                    throwable -> {
-                                        // Emit error if something goes wrong
-                                        emitter.onError(throwable);
-                                    },
-                                    () -> {
-                                        // Complete the observable once the ride is done
-                                        handleRideCompletion(rideId);
-                                        emitter.onComplete();
-                                    }
-                            );
 
+
+                    ride.start();
                     // Start the ride simulation process
                     rideSimulation.startSimulation();
 
@@ -174,36 +177,28 @@ public class EBikeApplicationImpl implements EBikeApplication {
                 }
             }
 
-        }).subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io());
+        });
     }
 
-    private void handleRideCompletion(String rideId) {
-        Ride ride = rides.keySet().stream().filter(r -> r.getId().equals(rideId)).findFirst().orElse(null);
-        if (ride != null) {
-            rides.remove(ride);
 
-        }
-    }
 
     @Override
     public boolean endRide(RideDTO rideDTO) {
-        Ride ride = rides.keySet().stream()
-                .filter(r -> r.getId().equals(rideDTO.id()))
-                .findFirst()
-                .orElse(null);
+        Ride ride = rides.get(rideDTO.id());
 
         if (ride != null) {
-            RideSimulation simulation = rides.get(ride);
+            RideSimulation simulation = rideSim.get(ride.getId());
             if (simulation != null) {
+                System.out.println("Stopping simulation from end");
                 simulation.stopSimulation();
             }
-            ride.getEbike().setState(EBikeState.AVAILABLE);
+            if(ride.getEbike().getState().equals(EBikeState.IN_USE)){
+                ride.getEbike().setState(EBikeState.AVAILABLE);
+            }
             ride.end();
 
-            updateRide(ride);
-            updateBike(ride.getEbike());
-            updateUser(ride.getUser());
-            rides.remove(ride);
+            rides.remove(ride.getId());
+            rideSim.remove(ride.getId());
             return true;
         }
         return false;
@@ -211,21 +206,49 @@ public class EBikeApplicationImpl implements EBikeApplication {
 
     @Override
     public Observable<RideDTO> getRideSimulationObservable(String id) {
-        return rides.keySet().stream().filter(r -> r.getId().equals(id)).findFirst().map(r -> rides.get(r).getRideObservable().map(Mapper::toDTO).hide().observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io())).orElse(null);
+        return rides.keySet().stream()
+                .filter(r -> r.equals(id))
+                .findFirst()
+                .map(r -> {
+                    RideSimulation rideSimulation = rideSim.get(r);
+                    return rideSimulation.getRideObservable()
+                            .doOnNext(rideDTO -> {
+                                Optional<RideDTO> ride = getRide(r);
+                                ride.ifPresent(r1 -> {
+                                    rideRepository.updateRide(r1);
+                                    userRepository.updateUser(r1.user());
+                                    eBikeRepository.updateEBike(r1.ebike());
+                                });
+
+                            })
+                            .doOnError(throwable -> {
+                                // Handle error
+                            })
+                            .doOnComplete(() -> {
+                                System.out.println("Savingggg");
+
+                                Optional<RideDTO> ride = getRide(r);
+                                ride.ifPresent(r1 -> {
+                                    rideRepository.updateRide(r1);
+                                    userRepository.updateUser(r1.user());
+                                    if(r1.ebike().state().equals(EBikeState.IN_USE.name())){
+                                        EBikeDTO bike = new EBikeDTO(r1.ebike().id(), r1.ebike().x(), r1.ebike().y(), EBikeState.AVAILABLE.name(), r1.ebike().battery());
+                                        eBikeRepository.updateEBike(bike);
+                                    }else{
+                                        eBikeRepository.updateEBike(r1.ebike());
+                                    }
+
+                                });
+                            })
+                            .map(Mapper::toDTO)
+                            .hide();
+                })
+                .orElse(null);
     }
 
-    private void updateRide(Ride ride){
-        rideRepository.updateRide(Mapper.toDTO(ride));
-        rides.keySet().stream().filter(r -> r.getId().equals(ride.getId())).findFirst().ifPresent(r -> rides.put(r, rides.get(r)));
-    }
 
-    private void updateBike(EBike bike){
-        eBikeRepository.updateEBike(Mapper.toDTO(bike));
-        bikes.keySet().stream().filter(b -> b.equals(bike.getId())).findFirst().ifPresent(b -> bikes.put(b, bike));
-    }
 
-    private void updateUser(User user){
-        userRepository.updateUser(Mapper.toDTO(user));
-        users.keySet().stream().filter(u -> u.equals(user.getId())).findFirst().ifPresent(u -> users.put(u, user));
-    }
+
+
+
 }

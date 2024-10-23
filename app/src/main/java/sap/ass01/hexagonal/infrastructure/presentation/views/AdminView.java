@@ -108,7 +108,7 @@ public class AdminView extends AbstractView {
     private void updateAllUsers(List<UserViewModel> userModels) {
         userList.clear();
         userList.addAll(userModels);
-        log("All users updated");
+
         refreshView();
     }
 
@@ -122,7 +122,6 @@ public class AdminView extends AbstractView {
                 })
                 .toList();
 
-        log("All bikes updated: " + allBikes);
         // Call a method to refresh the visual representation
         refreshView();
     }

@@ -109,7 +109,7 @@ public class UserView extends AbstractView {
 
     private void updateAvailableBikes(List<EBikeViewModel> availableBikes) {
         try {
-            log("Updating available bikes: " + availableBikes);
+
             Optional<EBikeViewModel> ongoingBike = ongoingRide.map(RideViewModel::bike);
 
             // Create the updated bike list
@@ -118,7 +118,6 @@ public class UserView extends AbstractView {
             // Add the ongoing bike if present
             ongoingBike.ifPresent(eBikes::add);
 
-            log("Available bikes updated: " + eBikes);
             updateVisualizerPanel();
             /*log("Updating available bikes: " + availableBikes);
             Optional<EBikeViewModel> ongoingBike = ongoingRide.map(RideViewModel::bike);
@@ -146,19 +145,17 @@ public class UserView extends AbstractView {
         updateRideButtonState();
     }
     public void updateRide(RideViewModel ride) {
-        log("My ride prev ->" + eBikes.toString());
         if(ongoingRide.isPresent()){
             log("On going is present");
             ongoingRide = Optional.of(ride);
             //ongoingRide = Optional.of(Mapper.toDomain(rideDTO, ongoingRide.get()));
-            log("Value of ongoing ride ->"+ongoingRide.get().toString());
+
             eBikes = eBikes.stream()
                     .map(bike -> bike.id().equals(ongoingRide.get().bike().id()) ? ongoingRide.get().bike() : bike)
                     .toList();
 
         }
-        log("Ride updated: " + ride);
-        log("My ride ->" + eBikes.toString());
+
         // Call a method to refresh the visual representation
         updateVisualizerPanel();
         updateRideButtonState();
