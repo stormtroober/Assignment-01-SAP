@@ -39,13 +39,11 @@ public class PresentationController {
     }
 
     /*---------------------Admin------------------------*/
-    public void observeAllBikes(Consumer<List<EBikeViewModel>> onSuccess, Consumer<Throwable> onError) {
-        adminService.observeAllBikes().subscribe(bikes -> {
-            List<EBikeViewModel> bikeViewModels = bikes.stream()
-                    .map(Mapper::toDomain)
-                    .collect(Collectors.toList());
-            onSuccess.accept(bikeViewModels);
-        }, onError::accept);
+    public void observeAllBikes(Consumer<Collection<EBikeDTO>> onSuccess, Consumer<Throwable> onError) {
+        adminService.observeAllBikes().subscribe(
+                onSuccess::accept,
+                onError::accept
+        );
     }
 
     public void observeAllUsers(Consumer<List<UserViewModel>> onSuccess, Consumer<Throwable> onError) {

@@ -2,16 +2,20 @@ package sap.ass01.layered.presentation.views;
 
 import sap.ass01.layered.presentation.dialogs.admin.AddEBikeDialog;
 import sap.ass01.layered.presentation.dialogs.admin.RechargeBikeDialog;
+import sap.ass01.layered.presentation.mapper.Mapper;
 import sap.ass01.layered.presentation.models.EBikeViewModel;
 import sap.ass01.layered.presentation.models.UserViewModel;
+import sap.ass01.layered.presentation.plugin.EBikeDTOExt;
 import sap.ass01.layered.presentation.plugin.PluginService;
 import sap.ass01.layered.presentation.plugin.PluginServiceImpl;
 import sap.ass01.layered.presentation.PresentationController;
+import sap.ass01.layered.services.dto.EBikeDTO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class AdminView extends AbstractView {
@@ -135,10 +139,19 @@ public class AdminView extends AbstractView {
         refreshView();
     }
 
-    private void updateAllBikes(List<EBikeViewModel> bikeModels) {
-        eBikes = bikeModels; // Update the list of bikes
-        log("All bikes updated");
-        refreshView(); // Refresh the visual representation
+    private void updateAllBikes(Collection<EBikeDTO> allBikes) {
+        eBikes = allBikes.stream()
+                .map(bike -> {
+                    // Convert EBikeDTO to EBikeDTOExt using the plugin
+                    EBikeDTOExt bikeExt = pluginService.applyPluginEffect("ColorStateEffect", bike);
+                    // Map EBikeDTOExt to EBikeViewModel
+                    return Mapper.toDomain(bikeExt);
+                })
+                .toList();
+
+        log("All bikes updated: " + allBikes);
+        // Call a method to refresh the visual representation
+        refreshView();
     }
 
     @Override
