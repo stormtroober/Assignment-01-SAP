@@ -3,11 +3,11 @@ package hexagonal.persistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sap.ass01.hexagonal.application.entities.EBikeDTO;
+import sap.ass01.hexagonal.application.entities.EBikeState;
 import sap.ass01.hexagonal.application.entities.RideDTO;
 import sap.ass01.hexagonal.application.entities.UserDTO;
 import sap.ass01.hexagonal.application.ports.RideRepository;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +28,7 @@ public abstract class AbstractRideRepositoryTest {
     @Test
     public void testSaveRide() {
         UserDTO user = new UserDTO("1", 100, false);
-        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, "ACTIVE", 80);
+        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, EBikeState.AVAILABLE, 80);
         RideDTO ride = new RideDTO("1", ebike, user);
         rideRepository.saveRide(ride);
         Optional<RideDTO> retrievedRideOptional = rideRepository.findRideById("1");
@@ -42,7 +42,7 @@ public abstract class AbstractRideRepositoryTest {
     @Test
     public void testSaveDuplicateRide() {
         UserDTO user = new UserDTO("1", 100, false);
-        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, "ACTIVE", 80);
+        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, EBikeState.AVAILABLE, 80);
         RideDTO ride1 = new RideDTO("1", ebike, user);
         rideRepository.saveRide(ride1);
         RideDTO ride2 = new RideDTO("1", ebike, user);
@@ -56,7 +56,7 @@ public abstract class AbstractRideRepositoryTest {
     @Test
     public void testFindRideById() {
         UserDTO user = new UserDTO("1", 100, false);
-        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, "ACTIVE", 80);
+        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, EBikeState.AVAILABLE, 80);
         RideDTO ride = new RideDTO("1", ebike, user);
         rideRepository.saveRide(ride);
         Optional<RideDTO> retrievedRideOptional = rideRepository.findRideById("1");
@@ -71,8 +71,8 @@ public abstract class AbstractRideRepositoryTest {
     public void testFindAllRides() {
         UserDTO user1 = new UserDTO("1", 100, false);
         UserDTO user2 = new UserDTO("2", 200, true);
-        EBikeDTO ebike1 = new EBikeDTO("1", 10.0, 20.0, "ACTIVE", 80);
-        EBikeDTO ebike2 = new EBikeDTO("2", 15.0, 25.0, "INACTIVE", 90);
+        EBikeDTO ebike1 = new EBikeDTO("1", 10.0, 20.0, EBikeState.AVAILABLE, 80);
+        EBikeDTO ebike2 = new EBikeDTO("2", 15.0, 25.0, EBikeState.MAINTENANCE, 90);
         RideDTO ride1 = new RideDTO("1", ebike1, user1);
         RideDTO ride2 = new RideDTO("2", ebike2, user2);
         rideRepository.saveRide(ride1);
@@ -87,7 +87,7 @@ public abstract class AbstractRideRepositoryTest {
     @Test
     public void testUpdateRide() {
         UserDTO user = new UserDTO("1", 100, false);
-        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, "ACTIVE", 80);
+        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, EBikeState.AVAILABLE, 80);
         RideDTO ride = new RideDTO("1", ebike, user);
         rideRepository.saveRide(ride);
 
