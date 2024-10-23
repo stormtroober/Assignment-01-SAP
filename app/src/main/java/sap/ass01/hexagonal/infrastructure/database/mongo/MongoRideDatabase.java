@@ -6,6 +6,9 @@ import sap.ass01.hexagonal.application.ports.entities.RideDTO;
 import sap.ass01.hexagonal.application.ports.entities.UserDTO;
 import sap.ass01.hexagonal.infrastructure.database.Database;
 
+import java.util.Date;
+import java.util.Optional;
+
 public class MongoRideDatabase extends MongoDatabaseImpl<RideDTO> implements Database<RideDTO> {
 
     public MongoRideDatabase() {
@@ -13,7 +16,7 @@ public class MongoRideDatabase extends MongoDatabaseImpl<RideDTO> implements Dat
     }
 
     private static Document rideToDocument(RideDTO ride) {
-        return new Document("id", ride.id())
+        Document doc = new Document("id", ride.id())
                 .append("userId", ride.user().id())
                 .append("userCredit", ride.user().credit())
                 .append("userAdmin", ride.user().admin())
@@ -21,7 +24,12 @@ public class MongoRideDatabase extends MongoDatabaseImpl<RideDTO> implements Dat
                 .append("ebikeState", ride.ebike().state())
                 .append("ebikeX", ride.ebike().x())
                 .append("ebikeY", ride.ebike().y())
-                .append("ebikeBattery", ride.ebike().battery());
+                .append("ebikeBattery", ride.ebike().battery())
+                .append("startedDate", ride.startedDate());
+
+        ride.endDate().ifPresent(endDate -> doc.append("endDate", endDate));
+
+        return doc;
     }
 
     private static RideDTO documentToRideDTO(Document doc) {
@@ -38,7 +46,9 @@ public class MongoRideDatabase extends MongoDatabaseImpl<RideDTO> implements Dat
                         doc.getString("userId"),
                         doc.getInteger("userCredit"),
                         doc.getBoolean("userAdmin")
-                )
+                ),
+                doc.getDate("startedDate"),
+                Optional.ofNullable(doc.getDate("endDate"))
         );
     }
 }
