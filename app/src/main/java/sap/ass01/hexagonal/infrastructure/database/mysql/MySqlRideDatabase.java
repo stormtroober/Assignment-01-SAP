@@ -46,27 +46,31 @@ public class MySqlRideDatabase implements Database<RideDTO> {
     }
 
     @Override
-    public void save(RideDTO ride) {
-        String insertSQL = "INSERT INTO rides (id, userId, userCredit, userAdmin, ebikeId, ebikeState, ebikeX, ebikeY, ebikeBatteryLevel, startedDate, endDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
-            pstmt.setString(1, ride.id());
-            pstmt.setString(2, ride.user().id());
-            pstmt.setInt(3, ride.user().credit());
-            pstmt.setBoolean(4, ride.user().admin());
-            pstmt.setString(5, ride.ebike().id());
-            pstmt.setString(6, ride.ebike().state());
-            pstmt.setDouble(7, ride.ebike().x());
-            pstmt.setDouble(8, ride.ebike().y());
-            pstmt.setInt(9, ride.ebike().battery());
+public void save(RideDTO ride) {
+    String insertSQL = "INSERT INTO rides (id, userId, userCredit, userAdmin, ebikeId, ebikeState, ebikeX, ebikeY, ebikeBatteryLevel, startedDate, endDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    try (PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
+        pstmt.setString(1, ride.id());
+        pstmt.setString(2, ride.user().id());
+        pstmt.setInt(3, ride.user().credit());
+        pstmt.setBoolean(4, ride.user().admin());
+        pstmt.setString(5, ride.ebike().id());
+        pstmt.setString(6, ride.ebike().state());
+        pstmt.setDouble(7, ride.ebike().x());
+        pstmt.setDouble(8, ride.ebike().y());
+        pstmt.setInt(9, ride.ebike().battery());
+        if (ride.startedDate() != null) {
             pstmt.setTimestamp(10, new Timestamp(ride.startedDate().getTime()));
-            pstmt.setTimestamp(11, ride.endDate().map(date -> new Timestamp(date.getTime())).orElse(null));
-            pstmt.executeUpdate();
-        } catch (SQLIntegrityConstraintViolationException e) {
-            System.out.println("Trying to put a duplicate ride in the database");
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } else {
+            pstmt.setTimestamp(10, null);
         }
+        pstmt.setTimestamp(11, ride.endDate().map(date -> new Timestamp(date.getTime())).orElse(null));
+        pstmt.executeUpdate();
+    } catch (SQLIntegrityConstraintViolationException e) {
+        System.out.println("Trying to put a duplicate ride in the database");
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
 
     @Override
     public Optional<RideDTO> findById(String id) {

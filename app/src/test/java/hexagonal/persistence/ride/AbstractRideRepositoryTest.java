@@ -7,6 +7,7 @@ import sap.ass01.hexagonal.application.ports.entities.RideDTO;
 import sap.ass01.hexagonal.application.ports.entities.UserDTO;
 import sap.ass01.hexagonal.application.ports.RideRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ public abstract class AbstractRideRepositoryTest {
     public void testSaveRide() {
         UserDTO user = new UserDTO("1", 100, false);
         EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, "AVAILABLE", 80);
-        RideDTO ride = new RideDTO("1", ebike, user, null, Optional.empty());
+        RideDTO ride = new RideDTO("1", ebike, user, new Date(), Optional.empty());
         rideRepository.saveRide(ride);
         Optional<RideDTO> retrievedRideOptional = rideRepository.findRideById("1");
         assertTrue(retrievedRideOptional.isPresent(), "Ride should be found by ID");
@@ -87,10 +88,10 @@ public abstract class AbstractRideRepositoryTest {
     public void testUpdateRide() {
         UserDTO user = new UserDTO("1", 100, false);
         EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, "AVAILABLE", 80);
-        RideDTO ride = new RideDTO("1", ebike, user, null, Optional.empty());
+        RideDTO ride = new RideDTO("1", ebike, user, new Date(), Optional.empty());
         rideRepository.saveRide(ride);
 
-        RideDTO updatedRide = new RideDTO("1", ebike, user, null, Optional.empty());
+        RideDTO updatedRide = new RideDTO("1", ebike, user, new Date(), Optional.empty());
         rideRepository.updateRide(updatedRide);
 
         Optional<RideDTO> retrievedRideOptional = rideRepository.findRideById("1");

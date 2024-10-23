@@ -1,0 +1,14 @@
+= Report
+:toc:
+:toclevels: 2
+:sectnums:
+:doctype: book
+
+== Descrizione dell'architettura di sistema
+include::architecture_structure.adoc[]
+
+== Core set degli attributi di qualità
+include::quality_attributes.adoc[]
+
+== Funzioni fitness e validazione
+include::fitness_functions.adoc[]
