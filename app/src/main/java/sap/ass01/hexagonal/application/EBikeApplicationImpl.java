@@ -1,10 +1,11 @@
 package sap.ass01.hexagonal.application;
 
 import io.reactivex.rxjava3.core.Observable;
-import sap.ass01.hexagonal.application.entities.EBikeDTO;
-import sap.ass01.hexagonal.application.entities.EBikeState;
-import sap.ass01.hexagonal.application.entities.RideDTO;
-import sap.ass01.hexagonal.application.entities.UserDTO;
+import sap.ass01.hexagonal.application.ports.EBikeApplication;
+import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;
+import sap.ass01.hexagonal.domain.model.EBikeState;
+import sap.ass01.hexagonal.application.ports.entities.RideDTO;
+import sap.ass01.hexagonal.application.ports.entities.UserDTO;
 import sap.ass01.hexagonal.application.ports.EBikeRepository;
 import sap.ass01.hexagonal.application.ports.RideRepository;
 import sap.ass01.hexagonal.application.ports.UserRepository;
@@ -12,7 +13,7 @@ import sap.ass01.hexagonal.domain.model.EBike;
 import sap.ass01.hexagonal.domain.model.Ride;
 import sap.ass01.hexagonal.domain.model.RideSimulation;
 import sap.ass01.hexagonal.domain.model.User;
-import sap.ass01.hexagonal.domain.mapper.Mapper;
+import sap.ass01.hexagonal.application.ports.mapper.Mapper;
 
 
 import java.util.Collection;

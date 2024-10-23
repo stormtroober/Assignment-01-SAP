@@ -2,8 +2,8 @@ package sap.ass01.hexagonal.application.ports;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
-import sap.ass01.hexagonal.application.entities.EBikeDTO;
-import sap.ass01.hexagonal.application.entities.UserDTO;
+import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;
+import sap.ass01.hexagonal.application.ports.entities.UserDTO;
 
 
 import java.util.Collection;

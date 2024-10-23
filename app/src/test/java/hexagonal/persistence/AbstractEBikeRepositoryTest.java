@@ -2,8 +2,8 @@ package hexagonal.persistence;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sap.ass01.hexagonal.application.entities.EBikeDTO;
-import sap.ass01.hexagonal.application.entities.EBikeState;
+import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;
+import sap.ass01.hexagonal.domain.model.EBikeState;
 import sap.ass01.hexagonal.application.ports.EBikeRepository;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public abstract class AbstractEBikeRepositoryTest {
 
     @Test
     public void testSaveEBike() {
-        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, EBikeState.AVAILABLE, 80);
+        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, "AVAILABLE", 80);
         ebikeRepository.saveEBike(ebike);
         Optional<EBikeDTO> retrievedEBikeOptional = ebikeRepository.findEBikeById("1");
         assertTrue(retrievedEBikeOptional.isPresent(), "EBike should be found by ID");
@@ -39,9 +39,9 @@ public abstract class AbstractEBikeRepositoryTest {
 
     @Test
     public void testSaveDuplicateEBike() {
-        EBikeDTO ebike1 = new EBikeDTO("1", 10.0, 20.0, EBikeState.AVAILABLE, 80);
+        EBikeDTO ebike1 = new EBikeDTO("1", 10.0, 20.0, "AVAILABLE", 80);
         ebikeRepository.saveEBike(ebike1);
-        EBikeDTO ebike2 = new EBikeDTO("1", 15.0, 25.0, EBikeState.MAINTENANCE, 90);
+        EBikeDTO ebike2 = new EBikeDTO("1", 15.0, 25.0, "MAINTENANCE", 90);
         ebikeRepository.saveEBike(ebike2);
 
         List<EBikeDTO> ebikes = ebikeRepository.findAllEBikes();
@@ -55,7 +55,7 @@ public abstract class AbstractEBikeRepositoryTest {
 
     @Test
     public void testFindEBikeById() {
-        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, EBikeState.AVAILABLE, 80);
+        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, "AVAILABLE", 80);
         ebikeRepository.saveEBike(ebike);
         Optional<EBikeDTO> retrievedEBikeOptional = ebikeRepository.findEBikeById("1");
         assertTrue(retrievedEBikeOptional.isPresent(), "EBike should be found by ID");
@@ -69,8 +69,8 @@ public abstract class AbstractEBikeRepositoryTest {
 
     @Test
     public void testFindAllEBikes() {
-        EBikeDTO ebike1 = new EBikeDTO("1", 10.0, 20.0, EBikeState.AVAILABLE, 80);
-        EBikeDTO ebike2 = new EBikeDTO("2", 15.0, 25.0, EBikeState.MAINTENANCE, 90);
+        EBikeDTO ebike1 = new EBikeDTO("1", 10.0, 20.0, "AVAILABLE", 80);
+        EBikeDTO ebike2 = new EBikeDTO("2", 15.0, 25.0, "MAINTENANCE", 90);
         ebikeRepository.saveEBike(ebike1);
         ebikeRepository.saveEBike(ebike2);
 
@@ -82,10 +82,10 @@ public abstract class AbstractEBikeRepositoryTest {
 
     @Test
     public void testUpdateEBike() {
-        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, EBikeState.AVAILABLE, 80);
+        EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, "AVAILABLE", 80);
         ebikeRepository.saveEBike(ebike);
 
-        EBikeDTO updatedEBike = new EBikeDTO("1", 15.0, 25.0, EBikeState.MAINTENANCE, 90);
+        EBikeDTO updatedEBike = new EBikeDTO("1", 15.0, 25.0, "MAINTENANCE", 90);
         ebikeRepository.updateEBike(updatedEBike);
 
         Optional<EBikeDTO> retrievedEBikeOptional = ebikeRepository.findEBikeById("1");
