@@ -1,4 +1,4 @@
-package hexagonal.persistence;
+package hexagonal.persistence.ebike;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

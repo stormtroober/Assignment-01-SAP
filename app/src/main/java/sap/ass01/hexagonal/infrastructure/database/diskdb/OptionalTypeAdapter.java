@@ -1,4 +1,4 @@
-package sap.ass01.hexagonal.infrastructure.diskdb;
+package sap.ass01.hexagonal.infrastructure.database.diskdb;
 
 import com.google.gson.*;
 
