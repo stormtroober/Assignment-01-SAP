@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import sap.ass01.bbom.User;
-import sap.ass01.hexagonal.application.EbikeApplication;
+import sap.ass01.hexagonal.application.EBikeApplication;
 import sap.ass01.hexagonal.application.entities.EBikeDTO;
 import sap.ass01.hexagonal.application.entities.EBikeState;
 import sap.ass01.hexagonal.application.entities.RideDTO;
@@ -19,14 +19,14 @@ import java.util.*;
 
 public class ViewAdapter implements LoginViewPort, AdminViewPort, UserViewPort {
 
-    EbikeApplication application;
+    EBikeApplication application;
 
     private final BehaviorSubject<Collection<EBikeDTO>> allBikesSubject = BehaviorSubject.createDefault(Collections.emptyList());
     private final BehaviorSubject<Collection<UserDTO>> allUsersSubject = BehaviorSubject.createDefault(Collections.emptyList());
     private final BehaviorSubject<Collection<EBikeDTO>> availableBikesSubject = BehaviorSubject.createDefault(Collections.emptyList());
 
 
-    public ViewAdapter(EbikeApplication application) {
+    public ViewAdapter(EBikeApplication application) {
         this.application = application;
     }
 

@@ -15,7 +15,6 @@ import sap.ass01.hexagonal.domain.model.User;
 import sap.ass01.hexagonal.domain.mapper.Mapper;
 
 
-import javax.swing.text.html.Option;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -101,7 +100,6 @@ public class EBikeApplicationImpl implements EBikeApplication {
         return user;
     }
 
-    //TODO: Implement database
     @Override
     public Optional<RideDTO> getRide(String rideId) {
         return rides.keySet().stream().filter(r -> r.getId().equals(rideId)).findFirst().map(Mapper::toDTO);
@@ -147,9 +145,9 @@ public class EBikeApplicationImpl implements EBikeApplication {
                             .observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io())
                             .subscribe(
                                     rideVal -> {
-                                        userRepository.updateUser(Mapper.toDTO(rideVal.getUser()));
-                                        eBikeRepository.updateEBike(Mapper.toDTO(rideVal.getEbike()));
-                                        rideRepository.updateRide(Mapper.toDTO(rideVal));
+                                        updateBike(rideVal.getEbike());
+                                        updateRide(rideVal);
+                                        updateUser(rideVal.getUser());
                                         emitter.onNext(Mapper.toDTO(rideVal));
                                     },
                                     throwable -> {
@@ -159,9 +157,9 @@ public class EBikeApplicationImpl implements EBikeApplication {
                                     () -> {
                                         // Complete the observable once the ride is done
                                         handleRideCompletion(rideId);
-                                        userRepository.updateUser(Mapper.toDTO(ride.getUser()));
-                                        eBikeRepository.updateEBike(Mapper.toDTO(ride.getEbike()));
-                                        rideRepository.updateRide(Mapper.toDTO(ride));
+                                        updateBike(bike);
+                                        updateRide(ride);
+                                        updateUser(user);
                                         emitter.onComplete();
                                     }
                             );
@@ -183,12 +181,12 @@ public class EBikeApplicationImpl implements EBikeApplication {
         Ride ride = rides.keySet().stream().filter(r -> r.getId().equals(rideId)).findFirst().orElse(null);
         if (ride != null) {
             rides.remove(ride);
-            //TODO: remove ride from database with delete method
+
         }
     }
 
     @Override
-    public void endRide(RideDTO rideDTO) {
+    public boolean endRide(RideDTO rideDTO) {
         Ride ride = rides.keySet().stream()
                 .filter(r -> r.getId().equals(rideDTO.id()))
                 .findFirst()
@@ -201,15 +199,33 @@ public class EBikeApplicationImpl implements EBikeApplication {
             }
             ride.getEbike().setState(EBikeState.AVAILABLE);
             ride.end();
-            userRepository.updateUser(Mapper.toDTO(ride.getUser()));
-            eBikeRepository.updateEBike(Mapper.toDTO(ride.getEbike()));
-            rideRepository.updateRide(Mapper.toDTO(ride));
+
+            updateRide(ride);
+            updateBike(ride.getEbike());
+            updateUser(ride.getUser());
             rides.remove(ride);
+            return true;
         }
+        return false;
     }
 
     @Override
     public Observable<RideDTO> getRideSimulationObservable(String id) {
         return rides.keySet().stream().filter(r -> r.getId().equals(id)).findFirst().map(r -> rides.get(r).getRideObservable().map(Mapper::toDTO).hide().observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io())).orElse(null);
+    }
+
+    private void updateRide(Ride ride){
+        rideRepository.updateRide(Mapper.toDTO(ride));
+        rides.keySet().stream().filter(r -> r.getId().equals(ride.getId())).findFirst().ifPresent(r -> rides.put(r, rides.get(r)));
+    }
+
+    private void updateBike(EBike bike){
+        eBikeRepository.updateEBike(Mapper.toDTO(bike));
+        bikes.keySet().stream().filter(b -> b.equals(bike.getId())).findFirst().ifPresent(b -> bikes.put(b, bike));
+    }
+
+    private void updateUser(User user){
+        userRepository.updateUser(Mapper.toDTO(user));
+        users.keySet().stream().filter(u -> u.equals(user.getId())).findFirst().ifPresent(u -> users.put(u, user));
     }
 }
