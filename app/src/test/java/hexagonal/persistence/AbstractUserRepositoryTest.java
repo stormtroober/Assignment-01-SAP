@@ -9,8 +9,7 @@ import sap.ass01.hexagonal.application.ports.UserRepository;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractUserRepositoryTest {
 
@@ -37,7 +36,7 @@ public abstract class AbstractUserRepositoryTest {
         UserDTO retrievedUser = retrievedUserOptional.get();
         assertEquals("1", retrievedUser.id(), "User ID should match");
         assertEquals(100, retrievedUser.credit(), "User credit should match");
-        assertEquals(false, retrievedUser.admin(), "User admin status should match");
+        assertFalse(retrievedUser.admin(), "User admin status should match");
     }
 
     @Test
@@ -49,9 +48,9 @@ public abstract class AbstractUserRepositoryTest {
 
         List<UserDTO> users = userRepository.findAllUsers();
         assertEquals(1, users.size(), "There should be only one user in the repository");
-        assertEquals("1", users.get(0).id(), "User ID should match");
-        assertEquals(100, users.get(0).credit(), "User credit should match the first user");
-        assertEquals(false, users.get(0).admin(), "User admin status should match the first user");
+        assertEquals("1", users.getFirst().id(), "User ID should match");
+        assertEquals(100, users.getFirst().credit(), "User credit should match the first user");
+        assertFalse(users.getFirst().admin(), "User admin status should match the first user");
     }
 
     @Test
@@ -63,7 +62,7 @@ public abstract class AbstractUserRepositoryTest {
         UserDTO retrievedUser = retrievedUserOptional.get();
         assertEquals("1", retrievedUser.id(), "User ID should match");
         assertEquals(100, retrievedUser.credit(), "User credit should match");
-        assertEquals(false, retrievedUser.admin(), "User admin status should match");
+        assertFalse(retrievedUser.admin(), "User admin status should match");
     }
 
     @Test
@@ -92,6 +91,6 @@ public abstract class AbstractUserRepositoryTest {
         UserDTO retrievedUser = retrievedUserOptional.get();
         assertEquals("1", retrievedUser.id(), "User ID should match");
         assertEquals(200, retrievedUser.credit(), "User credit should match updated value");
-        assertEquals(true, retrievedUser.admin(), "User admin status should match updated value");
+        assertTrue(retrievedUser.admin(), "User admin status should match updated value");
     }
 }
