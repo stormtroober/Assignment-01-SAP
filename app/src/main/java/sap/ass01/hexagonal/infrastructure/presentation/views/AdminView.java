@@ -9,7 +9,7 @@ import sap.ass01.hexagonal.infrastructure.presentation.models.UserViewModel;
 import sap.ass01.hexagonal.infrastructure.presentation.plugin.EBikeDTOExt;
 import sap.ass01.hexagonal.infrastructure.presentation.plugin.PluginService;
 import sap.ass01.hexagonal.infrastructure.presentation.plugin.PluginServiceImpl;
-import sap.ass01.hexagonal.application.entities.EBikeDTO;
+import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;
 
 import javax.swing.*;
 import java.awt.*;
