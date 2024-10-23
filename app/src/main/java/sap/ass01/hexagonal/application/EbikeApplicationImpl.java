@@ -149,8 +149,21 @@ public class EbikeApplicationImpl implements EbikeApplication{
     }
 
     @Override
-    public void endRide(RideDTO ride) {
+    public void endRide(RideDTO rideDTO) {
+        Ride ride = rides.keySet().stream()
+                .filter(r -> r.getId().equals(rideDTO.id()))
+                .findFirst()
+                .orElse(null);
 
+        if (ride != null) {
+            RideSimulation simulation = rides.get(ride);
+            if (simulation != null) {
+                simulation.stopSimulation();
+            }
+            ride.getEbike().setState(EBikeState.AVAILABLE);
+            ride.end();
+            rides.remove(ride);
+        }
     }
 
     @Override
