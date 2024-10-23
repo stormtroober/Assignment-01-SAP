@@ -2,6 +2,7 @@ package sap.ass01.hexagonal.application;
 
 import io.reactivex.rxjava3.core.Observable;
 import sap.ass01.hexagonal.application.entities.EBikeDTO;
+import sap.ass01.hexagonal.application.entities.EBikeState;
 import sap.ass01.hexagonal.application.entities.RideDTO;
 import sap.ass01.hexagonal.application.entities.UserDTO;
 import sap.ass01.hexagonal.domain.model.EBike;
@@ -27,9 +28,15 @@ public class EbikeApplicationImpl implements EbikeApplication{
     }
 
     @Override
-    public void addEbike(EBikeDTO ebikeDTO) {
-        bikes.put(ebikeDTO.id(), Mapper.toModel(ebikeDTO));
+    public Optional<EBikeDTO> addEbike(String id, double x, double y) {
+        if (bikes.containsKey(id)) {
+            return Optional.empty();
+        }
+        EBike bike = new EBike(id, x, y, EBikeState.AVAILABLE, 100);
+        bikes.put(id,bike);
+        return Optional.of(Mapper.toDTO(bike));
     }
+
 
     @Override
     public Optional<EBikeDTO> getEbike(String id) {
@@ -37,11 +44,13 @@ public class EbikeApplicationImpl implements EbikeApplication{
     }
 
     @Override
-    public void rechargeBike(String id) {
+    public Optional<EBikeDTO> rechargeBike(String id) {
         EBike existingBike = bikes.get(id);
         if (existingBike != null) {
             existingBike.rechargeBattery();
+            return Optional.of(Mapper.toDTO(existingBike));
         }
+        return Optional.empty();
     }
 
 
@@ -51,9 +60,15 @@ public class EbikeApplicationImpl implements EbikeApplication{
     }
 
     @Override
-    public void addUser(UserDTO user) {
-        users.put(user.id(), Mapper.toModel(user));
+    public boolean addUser(String userId, boolean isAdmin) {
+        if (users.containsKey(userId)) {
+            return false;
+        }
+        User user = new User(userId, isAdmin? User.UserType.ADMIN : User.UserType.USER, 100);
+        users.put(userId, user);
+        return true;
     }
+
 
     @Override
     public Optional<UserDTO> getUser(String userId) {
@@ -61,11 +76,13 @@ public class EbikeApplicationImpl implements EbikeApplication{
     }
 
     @Override
-    public void rechargeCredit(String id, int credit) {
+    public Optional<UserDTO> rechargeCredit(String id, int credit) {
         User existingUser = users.get(id);
         if (existingUser != null) {
             existingUser.increaseCredit(credit);
+            return Optional.of(Mapper.toDTO(existingUser));
         }
+        return Optional.empty();
     }
 
 
