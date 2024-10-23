@@ -29,6 +29,12 @@ public class ViewAdapter implements LoginViewPort, AdminViewPort, UserViewPort {
         this.application = application;
     }
 
+    public void init() {
+        emitAllBikes();
+        emitAllUsers();
+        emitAvailableBikes();
+    }
+
     @Override
     public Completable signUp(String userId, boolean isAdmin) {
         return Completable.fromAction(() -> {
