@@ -10,7 +10,7 @@ import sap.ass01.hexagonal.domain.model.User;
 
 public class Mapper {
     public static EBikeDTO toDTO(final EBike ebike){
-        return new EBikeDTO(ebike.getId(), ebike.getLocation().x(), ebike.getLocation().y(), ebike.getState().toString(), ebike.getBatteryLevel());
+        return new EBikeDTO(ebike.getId(), ebike.getLocation().x(), ebike.getLocation().y(), ebike.getState(), ebike.getBatteryLevel());
     }
 
     public static UserDTO toDTO(final User user){
@@ -30,6 +30,6 @@ public class Mapper {
     }
 
     public static EBike toModel(final EBikeDTO ebikeDTO){
-        return new EBike(ebikeDTO.id(), ebikeDTO.x(), ebikeDTO.y(), EBike.EBikeState.valueOf(ebikeDTO.state()), ebikeDTO.battery());
+        return new EBike(ebikeDTO.id(), ebikeDTO.x(), ebikeDTO.y(), ebikeDTO.state(), ebikeDTO.battery());
     }
 }

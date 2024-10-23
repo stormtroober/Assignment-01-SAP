@@ -1,7 +1,9 @@
 package sap.ass01.hexagonal.domain.model;
 
+import sap.ass01.hexagonal.application.entities.EBikeState;
+
 public class EBike {
-    public enum EBikeState { AVAILABLE, IN_USE, MAINTENANCE }
+
 
     private final String id;
     private volatile EBikeState state;
