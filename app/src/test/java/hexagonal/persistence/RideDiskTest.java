@@ -1,13 +1,9 @@
 package hexagonal.persistence;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import sap.ass01.hexagonal.application.ports.EBikeRepository;
 import sap.ass01.hexagonal.application.ports.RideRepository;
-import sap.ass01.hexagonal.infrastructure.adapters.infrastructure.db.disk.DiskRideDBAdapter;
-import sap.ass01.hexagonal.infrastructure.adapters.infrastructure.persistence.DiskEBikeRepositoryImpl;
-import sap.ass01.hexagonal.infrastructure.adapters.infrastructure.persistence.DiskRideRepositoryImpl;
+import sap.ass01.hexagonal.infrastructure.adapters.persistence.DiskRideRepositoryImpl;
 
 public class RideDiskTest extends AbstractRideRepositoryTest {
 

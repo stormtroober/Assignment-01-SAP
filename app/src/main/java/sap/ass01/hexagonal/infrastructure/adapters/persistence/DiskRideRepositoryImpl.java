@@ -1,9 +1,9 @@
 // DiskRideRepositoryImpl.java
-package sap.ass01.hexagonal.infrastructure.adapters.infrastructure.persistence;
+package sap.ass01.hexagonal.infrastructure.adapters.persistence;
 
 import sap.ass01.hexagonal.application.entities.RideDTO;
 import sap.ass01.hexagonal.application.ports.RideRepository;
-import sap.ass01.hexagonal.infrastructure.adapters.infrastructure.db.disk.DiskRideDBAdapter;
+import sap.ass01.hexagonal.infrastructure.diskdb.DiskRideDBAdapter;
 
 import java.util.List;
 import java.util.Optional;

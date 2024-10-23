@@ -1,4 +1,4 @@
-package sap.ass01.hexagonal.infrastructure.adapters.infrastructure.db.disk;
+package sap.ass01.hexagonal.infrastructure.diskdb;
 
 import java.util.List;
 import java.util.Optional;

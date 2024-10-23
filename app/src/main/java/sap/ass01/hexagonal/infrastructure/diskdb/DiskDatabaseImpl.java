@@ -1,5 +1,5 @@
 // DiskDatabaseImpl.java
-package sap.ass01.hexagonal.infrastructure.adapters.infrastructure.db.disk;
+package sap.ass01.hexagonal.infrastructure.diskdb;
 
 import com.google.gson.Gson;
 import sap.ass01.layered.database.Database;

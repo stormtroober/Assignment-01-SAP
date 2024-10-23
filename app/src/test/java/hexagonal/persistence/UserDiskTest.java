@@ -4,7 +4,7 @@ package hexagonal.persistence;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import sap.ass01.hexagonal.application.ports.UserRepository;
-import sap.ass01.hexagonal.infrastructure.adapters.infrastructure.persistence.DiskUserRepositoryImpl;
+import sap.ass01.hexagonal.infrastructure.adapters.persistence.DiskUserRepositoryImpl;
 
 public class UserDiskTest extends AbstractUserRepositoryTest {
 
