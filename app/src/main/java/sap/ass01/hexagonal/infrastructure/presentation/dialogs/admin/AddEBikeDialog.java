@@ -11,10 +11,11 @@ public class AddEBikeDialog extends AbstractDialog {
     private JTextField idField;
     private JTextField xCoordField;
     private JTextField yCoordField;
-    private final PresentationController presentationController = new PresentationController();
+    private final PresentationController presentationController;
 
-    public AddEBikeDialog(JFrame parent, PresentationController adminService) {
+    public AddEBikeDialog(JFrame parent, PresentationController presentationController) {
         super(parent, "Adding E-Bike");
+        this.presentationController = presentationController;
         setupDialog();
     }
 

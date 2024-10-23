@@ -3,8 +3,10 @@ package sap.ass01.hexagonal.infrastructure.presentation;
 import sap.ass01.hexagonal.infrastructure.adapters.view.ViewAdapter;
 import sap.ass01.hexagonal.infrastructure.presentation.mapper.Mapper;
 import sap.ass01.hexagonal.infrastructure.presentation.models.EBikeViewModel;
-import sap.ass01.hexagonal.infrastructure.presentation.models.UserViewModel;
 import sap.ass01.hexagonal.infrastructure.presentation.models.RideViewModel;
+import sap.ass01.hexagonal.infrastructure.presentation.models.UserViewModel;
+import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
@@ -30,15 +32,13 @@ public class PresentationController {
         viewAdapter.signUp(username, isAdmin).subscribe(onSuccess::run, onError::accept);
     }
 
-    // Admin
-    public void observeAllBikes(Consumer<List<EBikeViewModel>> onSuccess, Consumer<Throwable> onError) {
-        viewAdapter.observeAllBikes().subscribe(bikeDTOs -> {
-            List<EBikeViewModel> bikeViewModels = bikeDTOs.stream()
-                    .map(Mapper::toDomain) // Mapping from DTO to ViewModel
-                    .collect(Collectors.toList());
-            onSuccess.accept(bikeViewModels);
-        }, onError::accept);
-    }
+// Admin
+    public void observeAllBikes(Consumer<Collection<EBikeDTO>> onSuccess, Consumer<Throwable> onError) {
+        viewAdapter.observeAllBikes().subscribe(
+            onSuccess::accept,
+            onError::accept
+    );
+}
 
     public void observeAllUsers(Consumer<List<UserViewModel>> onSuccess, Consumer<Throwable> onError) {
         viewAdapter.observeAllUsers().subscribe(users -> {

@@ -1,6 +1,6 @@
 package sap.ass01.hexagonal.infrastructure.presentation.plugin;
 
-import sap.ass01.layered.services.dto.EBikeDTO;
+import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;
 
 import java.awt.*;
 import java.io.File;
@@ -21,6 +21,6 @@ public class PluginServiceImpl implements PluginService {
         if (plugin != null) {
             color = plugin.colorState(bike);
         }
-        return new EBikeDTOExt(bike.id(), bike.x(), bike.y(), bike.batteryLevel(), bike.state(), color);
+        return new EBikeDTOExt(bike.id(), bike.x(), bike.y(), bike.battery(), bike.state(), color);
     }
 }

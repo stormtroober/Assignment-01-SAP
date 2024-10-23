@@ -10,11 +10,11 @@ public class RechargeBikeDialog extends AbstractDialog {
 
     private JTextField idField;
     //private final AdminService adminService;
-    private final PresentationController presentationController = new PresentationController();
+    private final PresentationController presentationController;
 
     public RechargeBikeDialog(JFrame parent, PresentationController presentationController) {
         super(parent, "Recharge Bike");
-        //this.adminService = adminService;
+        this.presentationController = presentationController;
         setupDialog(); 
     }
 
