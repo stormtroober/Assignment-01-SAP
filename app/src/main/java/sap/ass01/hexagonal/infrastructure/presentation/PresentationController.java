@@ -3,9 +3,8 @@ package sap.ass01.hexagonal.infrastructure.presentation;
 import sap.ass01.hexagonal.infrastructure.adapters.view.ViewAdapter;
 import sap.ass01.hexagonal.infrastructure.presentation.mapper.Mapper;
 import sap.ass01.hexagonal.infrastructure.presentation.models.EBikeViewModel;
-import sap.ass01.hexagonal.infrastructure.presentation.models.RideViewModel;
 import sap.ass01.hexagonal.infrastructure.presentation.models.UserViewModel;
-
+import sap.ass01.hexagonal.infrastructure.presentation.models.RideViewModel;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
@@ -67,35 +66,41 @@ public class PresentationController {
 
     }
 
-    //User
-    public void observeAvailableBikes(Consumer<Collection<EBikeViewModel>> onSuccess, Consumer<Throwable> onError) {
-        viewAdapter.observeAvailableBikes().subscribe(bikeDTOs -> {
-            Collection<EBikeViewModel> bikeViewModels = bikeDTOs.stream()
-                    .map(Mapper::toDomain) // Mapping from DTO to ViewModel
-                    .collect(Collectors.toList());
-            onSuccess.accept(bikeViewModels);
-        }, onError::accept);
+    public void endRide(String userId, String rideId, String bikeId, Runnable onSuccess, Consumer<Throwable> onError) {
+        viewAdapter.endRide(userId, rideId, bikeId).subscribe(onSuccess::run, onError::accept);
     }
 
-    public void startRide(String bikeId, String userId, Consumer<RideViewModel> onSuccess, Consumer<Throwable> onError) {
-        viewAdapter.startRide(bikeId, userId).subscribe(rideDTO -> {
-            RideViewModel rideViewModel = Mapper.toDomain(rideDTO); // Convert from DTO to ViewModel
-            onSuccess.accept(rideViewModel);
-        }, onError::accept);
+    public void startRide(String rideId, UserViewModel user, EBikeViewModel bike, Consumer<RideViewModel> onSuccess, Consumer<Throwable> onError) {
+        //String rideId = UUID.randomUUID().toString(); // Generate a unique ride ID
+        viewAdapter.startRide(user.id(), rideId, bike.id()).subscribe(
+                rideDTO -> {
+                    RideViewModel rideViewModel = Mapper.toDomain(rideDTO, new RideViewModel(rideId, user, bike));
+                    onSuccess.accept(rideViewModel);
+                },
+                onError::accept
+        );
     }
 
-    public void endRide(String bikeId, String userId, Consumer<RideViewModel> onSuccess, Consumer<Throwable> onError) {
-        viewAdapter.endRide(bikeId, userId).subscribe(rideDTO -> {
-            RideViewModel rideViewModel = Mapper.toDomain(rideDTO); // Convert from DTO to ViewModel
-            onSuccess.accept(rideViewModel);
-        }, onError::accept);
+    public void observeRide(String rideId, UserViewModel user, EBikeViewModel bike , Consumer<RideViewModel> onUpdate, Consumer<Throwable> onError, Runnable onComplete) {
+        viewAdapter.observeRide(user.id(), rideId).subscribe(
+                rideDTO -> {
+                    RideViewModel rideViewModel = Mapper.toDomain(rideDTO, new RideViewModel(rideId, user, bike));
+                    onUpdate.accept(rideViewModel);
+                },
+                onError::accept,
+                onComplete::run
+        );
     }
 
-    public void observeRide(String rideId, Consumer<RideViewModel> onSuccess, Consumer<Throwable> onError) {
-        viewAdapter.observeRide(rideId).subscribe(rideDTO -> {
-            RideViewModel rideViewModel = Mapper.toDomain(rideDTO); // Convert from DTO to ViewModel
-            onSuccess.accept(rideViewModel);
-        }, onError::accept);
+    public void rechargeCredit(String userId, int creditAmount, Consumer<UserViewModel> onSuccess, Consumer<Throwable> onError) {
+        viewAdapter.rechargeCredit(userId, creditAmount)
+                .subscribe(
+                        userDTO -> {
+                            UserViewModel userViewModel = Mapper.toDomain(userDTO);
+                            onSuccess.accept(userViewModel);
+                        },
+                        onError::accept
+                );
     }
 
 
