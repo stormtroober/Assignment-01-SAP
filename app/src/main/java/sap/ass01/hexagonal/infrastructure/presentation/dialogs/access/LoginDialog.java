@@ -72,7 +72,7 @@ public class LoginDialog extends AbstractDialog {
             new AdminView(user, presentationController).display(); // Show Admin View
         } else {
             JOptionPane.showMessageDialog(this, "User login successful");
-            new UserView(user).display(); // Show User View
+            new UserView(user, presentationController).display(); // Show User View
         }
         dispose(); // Close the dialog after successful login
     }

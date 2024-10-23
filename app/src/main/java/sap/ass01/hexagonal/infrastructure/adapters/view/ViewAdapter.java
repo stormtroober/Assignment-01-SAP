@@ -12,6 +12,8 @@ import sap.ass01.hexagonal.application.ports.entities.UserDTO;
 import sap.ass01.hexagonal.application.ports.AdminViewPort;
 import sap.ass01.hexagonal.application.ports.LoginViewPort;
 import sap.ass01.hexagonal.application.ports.UserViewPort;
+import sap.ass01.hexagonal.infrastructure.presentation.PresentationController;
+import sap.ass01.hexagonal.infrastructure.presentation.views.MainView;
 
 
 import java.util.*;
@@ -27,9 +29,13 @@ public class ViewAdapter implements LoginViewPort, AdminViewPort, UserViewPort {
 
     public ViewAdapter(EBikeApplication application) {
         this.application = application;
+
     }
 
     public void init() {
+        PresentationController presentationController = new PresentationController(this);
+        MainView mainView = new MainView(presentationController);
+        mainView.display();
         emitAllBikes();
         emitAllUsers();
         emitAvailableBikes();
@@ -114,7 +120,7 @@ public class ViewAdapter implements LoginViewPort, AdminViewPort, UserViewPort {
                 })
                 .doOnError(throwable -> {
                     // Emit error if something goes wrong
-                    throw new IllegalArgumentException(throwable.getMessage());
+                    System.out.println("Error starting ride: " + throwable.getMessage());
                 })
                 .doOnComplete(() -> {
                     // Complete the observable once the ride is done
@@ -149,6 +155,7 @@ public class ViewAdapter implements LoginViewPort, AdminViewPort, UserViewPort {
 
     @Override
     public Observable<RideDTO> observeRide(String userId, String rideId) {
+
         Optional<RideDTO> ride = application.getRide(rideId);
         if (ride.isEmpty()) {
             return Observable.error(new IllegalArgumentException("Ride not found."));

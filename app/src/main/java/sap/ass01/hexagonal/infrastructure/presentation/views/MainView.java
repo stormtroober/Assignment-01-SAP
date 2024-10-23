@@ -1,5 +1,7 @@
 package sap.ass01.hexagonal.infrastructure.presentation.views;
 
+import sap.ass01.hexagonal.application.ports.EBikeApplication;
+import sap.ass01.hexagonal.infrastructure.adapters.view.ViewAdapter;
 import sap.ass01.hexagonal.infrastructure.presentation.PresentationController;
 import sap.ass01.hexagonal.infrastructure.presentation.dialogs.access.LoginDialog;
 import sap.ass01.hexagonal.infrastructure.presentation.dialogs.access.RegisterDialog;
@@ -57,11 +59,5 @@ public class MainView extends JFrame implements ActionListener {
                 registerDialog.setVisible(true);
             }).start();
         }
-    }
-
-    public static void main(String[] args) {
-        PresentationController presentationController = new PresentationController(new ViewAdapter(new EBikeApplication()));
-        MainView mainView = new MainView(presentationController);
-        mainView.display();
     }
 }
