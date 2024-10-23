@@ -1,13 +1,13 @@
 package sap.ass01.hexagonal.infrastructure.presentation.mapper;
 
-import sap.ass01.hexagonal.application.entities.EBikeState;
+import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;
+import sap.ass01.hexagonal.application.ports.entities.RideDTO;
+import sap.ass01.hexagonal.application.ports.entities.UserDTO;
 import sap.ass01.hexagonal.infrastructure.presentation.models.EBikeViewModel;
 import sap.ass01.hexagonal.infrastructure.presentation.models.RideViewModel;
 import sap.ass01.hexagonal.infrastructure.presentation.models.UserViewModel;
 import sap.ass01.hexagonal.infrastructure.presentation.plugin.EBikeDTOExt;
-import sap.ass01.hexagonal.application.entities.EBikeDTO;
-import sap.ass01.hexagonal.application.entities.UserDTO;
-import sap.ass01.hexagonal.application.entities.RideDTO;
+
 
 public class Mapper {
 
@@ -49,7 +49,7 @@ public class Mapper {
                 ebikeViewModel.id(),
                 ebikeViewModel.x(),
                 ebikeViewModel.y(),
-                EBikeState.valueOf(state),
+                ebikeViewModel.state().name(),
                 ebikeViewModel.batteryLevel()
 
         );

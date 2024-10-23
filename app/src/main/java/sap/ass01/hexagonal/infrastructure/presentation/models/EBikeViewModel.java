@@ -3,7 +3,7 @@ package sap.ass01.hexagonal.infrastructure.presentation.models;
 
 import java.awt.*;
 
-public record EBikeViewModel(String id, double x, double y, int batteryLevel, EBikeState state, Color color) {
+public record EBikeViewModel(String id, double x, double y, int batteryLevel,EBikeState  state, Color color) {
 
     public enum EBikeState { AVAILABLE, IN_USE, MAINTENANCE }
     private static final Color DEFAULT_COLOR = Color.BLACK; // Default color
