@@ -337,7 +337,7 @@ public class ServiceImpl implements AdminService, LoginService, UserService {
 
     private RideDTO mapToDTO(Ride ride) {
         return new RideDTO(
-                ride.getEbike().getId(),
+                ride.getId(),
                 ride.getEbike().getLocation().x(),
                 ride.getEbike().getLocation().y(),
                 ride.getUser().getCredit(),
