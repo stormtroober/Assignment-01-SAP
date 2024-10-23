@@ -8,7 +8,7 @@ import sap.ass01.hexagonal.application.entities.UserDTO;
 import java.util.Collection;
 import java.util.Optional;
 
-public interface EbikeApplication {
+public interface EBikeApplication {
     Collection<EBikeDTO> getBikes();
     Optional<EBikeDTO> addEbike(String id, double x, double y);
     Optional<EBikeDTO> getEbike(String id);

@@ -2,6 +2,7 @@ package sap.ass01.hexagonal.domain.model;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
+import sap.ass01.hexagonal.application.entities.EBikeState;
 
 import java.util.concurrent.TimeUnit;
 
@@ -50,7 +51,7 @@ public class RideSimulation {
             if(user.getCredit() == 0) {
                 ride.end();
                 stopSimulation();
-                bike.setState(EBike.EBikeState.AVAILABLE);
+                bike.setState(EBikeState.AVAILABLE);
                 completeSimulation();
             }
             // Simulate movement and battery usage
