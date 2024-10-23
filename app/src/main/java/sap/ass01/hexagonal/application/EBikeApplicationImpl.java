@@ -36,7 +36,6 @@ public class EBikeApplicationImpl implements EBikeApplication {
         this.rideRepository = rideRepository;
     }
 
-
     @Override
     public Optional<EBikeDTO> addEbike(String id, double x, double y) {
         if (bikes.containsKey(id)) {
