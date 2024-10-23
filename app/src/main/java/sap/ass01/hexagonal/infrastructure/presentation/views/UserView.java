@@ -16,10 +16,11 @@ public class UserView extends AbstractView {
     //private final UserService userService = ServiceFactory.getUserService();
     private Optional<RideViewModel> ongoingRide = Optional.empty();
     private JButton rideButton;
-    private final PresentationController presentationController = new PresentationController();
+    private final PresentationController presentationController;
 
-    public UserView(UserViewModel user) {
+    public UserView(UserViewModel user, PresentationController presentationController) {
         super("User View", user);
+        this.presentationController = presentationController;
         setupView();
         observeAvailableBikes();
         updateVisualizerPanel();

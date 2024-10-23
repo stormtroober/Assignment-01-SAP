@@ -34,6 +34,9 @@ public class EBikeApplicationImpl implements EBikeApplication {
         this.eBikeRepository = eBikeRepository;
         this.userRepository = userRepository;
         this.rideRepository = rideRepository;
+
+        eBikeRepository.findAllEBikes().forEach(eBikeDTO -> bikes.put(eBikeDTO.id(), Mapper.toModel(eBikeDTO)));
+        userRepository.findAllUsers().forEach(userDTO -> users.put(userDTO.id(), Mapper.toModel(userDTO)));
     }
 
     @Override
@@ -157,9 +160,6 @@ public class EBikeApplicationImpl implements EBikeApplication {
                                     () -> {
                                         // Complete the observable once the ride is done
                                         handleRideCompletion(rideId);
-                                        updateBike(bike);
-                                        updateRide(ride);
-                                        updateUser(user);
                                         emitter.onComplete();
                                     }
                             );

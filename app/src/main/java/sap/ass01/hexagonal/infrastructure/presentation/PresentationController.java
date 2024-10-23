@@ -1,5 +1,7 @@
 package sap.ass01.hexagonal.infrastructure.presentation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sap.ass01.hexagonal.infrastructure.adapters.view.ViewAdapter;
 import sap.ass01.hexagonal.infrastructure.presentation.mapper.Mapper;
 import sap.ass01.hexagonal.infrastructure.presentation.models.EBikeViewModel;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 
 public class PresentationController {
 
+    private static final Logger log = LoggerFactory.getLogger(PresentationController.class);
     private final ViewAdapter viewAdapter;
 
     public PresentationController(ViewAdapter viewAdapter) {
@@ -64,6 +67,21 @@ public class PresentationController {
             onSuccess.accept(ebikeViewModel);
         }, onError::accept);
 
+    }
+
+    // Method to observe available bikes
+    public void observeAvailableBikes(Consumer<List<EBikeViewModel>> onSuccess, Consumer<Throwable> onError) {
+        viewAdapter.observeAvailableBikes().subscribe(
+                bikeDTOs -> {
+                    System.out.println("************************************* ->" + bikeDTOs);
+                    // Convert DTOs to ViewModels before passing to the view
+                    List<EBikeViewModel> bikeViewModels = bikeDTOs.stream()
+                            .map(Mapper::toDomain) // Assuming Mapper.toDomain converts EBikeDTO to EBikeViewModel
+                            .collect(Collectors.toList());
+                    onSuccess.accept(bikeViewModels);
+                },
+                onError::accept
+        );
     }
 
     public void endRide(String userId, String rideId, String bikeId, Runnable onSuccess, Consumer<Throwable> onError) {

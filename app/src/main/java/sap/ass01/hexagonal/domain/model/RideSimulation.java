@@ -30,6 +30,7 @@ public class RideSimulation {
                             tick -> updateRide(),
                             throwable -> {
                                 // Handle error if necessary
+                                System.out.println("Error in simulation: " + throwable.getMessage());
                                 rideUpdates.onError(throwable);
                             },
                             this::completeSimulation  // Complete the simulation when done
@@ -89,6 +90,8 @@ public class RideSimulation {
 
     private void completeSimulation() {
         // Emit the completion of the simulation
+
+        System.out.println("Ride completed");
         rideUpdates.onComplete();
     }
 
