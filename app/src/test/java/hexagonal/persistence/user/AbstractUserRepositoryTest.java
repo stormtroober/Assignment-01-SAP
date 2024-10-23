@@ -1,4 +1,4 @@
-package hexagonal.persistence;
+package hexagonal.persistence.user;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

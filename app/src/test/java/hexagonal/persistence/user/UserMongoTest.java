@@ -1,12 +1,13 @@
 // UserDiskTest.java
-package hexagonal.persistence;
+package hexagonal.persistence.user;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import sap.ass01.hexagonal.application.ports.UserRepository;
-import sap.ass01.hexagonal.infrastructure.adapters.persistence.DiskUserRepositoryImpl;
+import sap.ass01.hexagonal.infrastructure.adapters.persistence.DatabaseType;
+import sap.ass01.hexagonal.infrastructure.adapters.persistence.UserRepositoryAdapter;
 
-public class UserDiskTest extends AbstractUserRepositoryTest {
+public class UserMongoTest extends AbstractUserRepositoryTest {
 
     @BeforeEach
     public void setUp() {
@@ -15,7 +16,7 @@ public class UserDiskTest extends AbstractUserRepositoryTest {
 
     @Override
     protected UserRepository createRepository() {
-        return new DiskUserRepositoryImpl();
+        return new UserRepositoryAdapter(DatabaseType.MONGODB);
     }
 
     @AfterEach

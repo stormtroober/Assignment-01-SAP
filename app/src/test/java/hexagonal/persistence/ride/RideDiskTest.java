@@ -1,9 +1,10 @@
-package hexagonal.persistence;
+package hexagonal.persistence.ride;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import sap.ass01.hexagonal.application.ports.RideRepository;
-import sap.ass01.hexagonal.infrastructure.adapters.persistence.DiskRideRepositoryImpl;
+import sap.ass01.hexagonal.infrastructure.adapters.persistence.DatabaseType;
+import sap.ass01.hexagonal.infrastructure.adapters.persistence.RideRepositoryAdapter;
 
 public class RideDiskTest extends AbstractRideRepositoryTest {
 
@@ -15,7 +16,7 @@ public class RideDiskTest extends AbstractRideRepositoryTest {
 
     @Override
     protected RideRepository createRepository() {
-        return new DiskRideRepositoryImpl();
+        return new RideRepositoryAdapter(DatabaseType.DISK);
     }
 
     @AfterEach

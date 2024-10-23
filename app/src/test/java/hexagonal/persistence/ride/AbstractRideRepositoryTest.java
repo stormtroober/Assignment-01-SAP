@@ -1,9 +1,8 @@
-package hexagonal.persistence;
+package hexagonal.persistence.ride;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;
-import sap.ass01.hexagonal.domain.model.EBikeState;
 import sap.ass01.hexagonal.application.ports.entities.RideDTO;
 import sap.ass01.hexagonal.application.ports.entities.UserDTO;
 import sap.ass01.hexagonal.application.ports.RideRepository;
