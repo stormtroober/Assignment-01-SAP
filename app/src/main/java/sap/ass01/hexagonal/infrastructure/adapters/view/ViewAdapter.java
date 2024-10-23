@@ -168,8 +168,8 @@ public class ViewAdapter implements LoginViewPort, AdminViewPort, UserViewPort {
                 .doOnError(throwable -> {
                     // Handle error
                 })
-                .doOnTerminate(() -> {
-                    System.out.println("Ride completed.ààààààààààààààààààààà");
+                .doFinally(() -> {
+                    System.out.println("Ride completed.");
                     emitAllBikes();
                     emitAvailableBikes();
                     emitAllUsers();
