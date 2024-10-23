@@ -19,11 +19,11 @@ public class Mapper {
     }
 
     public static RideDTO toDTO(final Ride ride){
-        return new RideDTO(ride.getId(), toDTO(ride.getEbike()), toDTO(ride.getUser()));
+        return new RideDTO(ride.getId(), toDTO(ride.getEbike()), toDTO(ride.getUser()), ride.getStartTime(), ride.getEndTime());
     }
 
     public static Ride toModel(final RideDTO rideDTO){
-        return new Ride(rideDTO.id(), toModel(rideDTO.user()), toModel(rideDTO.ebike()));
+        return new Ride(rideDTO.id(), toModel(rideDTO.user()), toModel(rideDTO.ebike()), rideDTO.startedDate(), rideDTO.endDate());
     }
 
     public static User toModel(final UserDTO userDTO){

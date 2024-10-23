@@ -1,7 +1,7 @@
-// DiskDatabaseImpl.java
 package sap.ass01.hexagonal.infrastructure.database.diskdb;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import sap.ass01.layered.database.Database;
 
 import java.io.File;
@@ -27,7 +27,9 @@ public class DiskDatabaseImpl<T> implements Database<T> {
     }
 
     protected Gson createGson() {
-        return new Gson();
+        return new GsonBuilder()
+                .registerTypeAdapter(Optional.class, new OptionalTypeAdapter<>())
+                .create();
     }
 
     @Override

@@ -20,6 +20,15 @@ public class Ride {
         this.ongoing = false;
     }
 
+    public Ride(String id, User user, EBike ebike, Date startTime, Optional<Date> endTime) {
+        this.id = id;
+        this.user = user;
+        this.ebike = ebike;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.ongoing = false;
+    }
+
     public String getId() { return id; }
     public User getUser() { return user; }
     public EBike getEbike() { return ebike; }

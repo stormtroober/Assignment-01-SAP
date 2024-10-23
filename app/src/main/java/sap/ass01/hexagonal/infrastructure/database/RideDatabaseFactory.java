@@ -4,6 +4,7 @@ import sap.ass01.hexagonal.application.ports.entities.RideDTO;
 import sap.ass01.hexagonal.infrastructure.adapters.persistence.DatabaseType;
 import sap.ass01.hexagonal.infrastructure.database.diskdb.DiskRideDatabase;
 import sap.ass01.hexagonal.infrastructure.database.mongo.MongoRideDatabase;
+import sap.ass01.hexagonal.infrastructure.database.mysql.MySqlRideDatabase;
 // import other database implementations as needed
 
 public class RideDatabaseFactory {
@@ -12,8 +13,8 @@ public class RideDatabaseFactory {
         switch (databaseType) {
             case DISK:
                 return new DiskRideDatabase();
-            // case MYSQL:
-            //     return new MySQLRideDatabase();
+             case MYSQL:
+                 return new MySqlRideDatabase();
              case MONGODB:
                  return new MongoRideDatabase();
             default:

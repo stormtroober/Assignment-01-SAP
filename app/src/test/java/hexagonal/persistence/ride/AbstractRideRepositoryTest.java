@@ -28,7 +28,7 @@ public abstract class AbstractRideRepositoryTest {
     public void testSaveRide() {
         UserDTO user = new UserDTO("1", 100, false);
         EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, "AVAILABLE", 80);
-        RideDTO ride = new RideDTO("1", ebike, user);
+        RideDTO ride = new RideDTO("1", ebike, user, null, Optional.empty());
         rideRepository.saveRide(ride);
         Optional<RideDTO> retrievedRideOptional = rideRepository.findRideById("1");
         assertTrue(retrievedRideOptional.isPresent(), "Ride should be found by ID");
@@ -42,9 +42,9 @@ public abstract class AbstractRideRepositoryTest {
     public void testSaveDuplicateRide() {
         UserDTO user = new UserDTO("1", 100, false);
         EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, "AVAILABLE", 80);
-        RideDTO ride1 = new RideDTO("1", ebike, user);
+        RideDTO ride1 = new RideDTO("1", ebike, user, null, Optional.empty());
         rideRepository.saveRide(ride1);
-        RideDTO ride2 = new RideDTO("1", ebike, user);
+        RideDTO ride2 = new RideDTO("1", ebike, user, null, Optional.empty());
         rideRepository.saveRide(ride2);
 
         List<RideDTO> rides = rideRepository.findAllRides();
@@ -56,7 +56,7 @@ public abstract class AbstractRideRepositoryTest {
     public void testFindRideById() {
         UserDTO user = new UserDTO("1", 100, false);
         EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, "AVAILABLE", 80);
-        RideDTO ride = new RideDTO("1", ebike, user);
+        RideDTO ride = new RideDTO("1", ebike, user, null, Optional.empty());
         rideRepository.saveRide(ride);
         Optional<RideDTO> retrievedRideOptional = rideRepository.findRideById("1");
         assertTrue(retrievedRideOptional.isPresent(), "Ride should be found by ID");
@@ -72,8 +72,8 @@ public abstract class AbstractRideRepositoryTest {
         UserDTO user2 = new UserDTO("2", 200, true);
         EBikeDTO ebike1 = new EBikeDTO("1", 10.0, 20.0, "AVAILABLE", 80);
         EBikeDTO ebike2 = new EBikeDTO("2", 15.0, 25.0, "MAINTENANCE", 90);
-        RideDTO ride1 = new RideDTO("1", ebike1, user1);
-        RideDTO ride2 = new RideDTO("2", ebike2, user2);
+        RideDTO ride1 = new RideDTO("1", ebike1, user1, null, Optional.empty());
+        RideDTO ride2 = new RideDTO("2", ebike2, user2, null, Optional.empty());
         rideRepository.saveRide(ride1);
         rideRepository.saveRide(ride2);
 
@@ -87,10 +87,10 @@ public abstract class AbstractRideRepositoryTest {
     public void testUpdateRide() {
         UserDTO user = new UserDTO("1", 100, false);
         EBikeDTO ebike = new EBikeDTO("1", 10.0, 20.0, "AVAILABLE", 80);
-        RideDTO ride = new RideDTO("1", ebike, user);
+        RideDTO ride = new RideDTO("1", ebike, user, null, Optional.empty());
         rideRepository.saveRide(ride);
 
-        RideDTO updatedRide = new RideDTO("1", ebike, user);
+        RideDTO updatedRide = new RideDTO("1", ebike, user, null, Optional.empty());
         rideRepository.updateRide(updatedRide);
 
         Optional<RideDTO> retrievedRideOptional = rideRepository.findRideById("1");

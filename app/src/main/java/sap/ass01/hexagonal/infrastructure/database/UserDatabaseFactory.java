@@ -4,6 +4,7 @@ import sap.ass01.hexagonal.application.ports.entities.UserDTO;
 import sap.ass01.hexagonal.infrastructure.adapters.persistence.DatabaseType;
 import sap.ass01.hexagonal.infrastructure.database.diskdb.DiskUserDatabase;
 import sap.ass01.hexagonal.infrastructure.database.mongo.MongoUserDatabase;
+import sap.ass01.hexagonal.infrastructure.database.mysql.MySqlUserDatabase;
 // import other database implementations as needed
 
 public class UserDatabaseFactory {
@@ -12,8 +13,8 @@ public class UserDatabaseFactory {
         switch (databaseType) {
             case DISK:
                 return new DiskUserDatabase();
-            // case MYSQL:
-            //     return new MySQLUserDatabase();
+             case MYSQL:
+                 return new MySqlUserDatabase();
              case MONGODB:
                  return new MongoUserDatabase();
             default:
