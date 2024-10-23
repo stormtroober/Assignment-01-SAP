@@ -20,7 +20,7 @@ public interface EBikeApplication {
     Optional<UserDTO> rechargeCredit(String id, int credit);
 
     Observable<RideDTO> startRide(String rideId, String userId, String bikeId);
-    void endRide(RideDTO ride);
+    boolean endRide(RideDTO ride);
     Optional<RideDTO> getRide(String rideId);
     Observable<RideDTO> getRideSimulationObservable(String id);
 
