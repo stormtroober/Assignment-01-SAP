@@ -10,14 +10,14 @@ import java.util.Optional;
 
 public interface EbikeApplication {
     Collection<EBikeDTO> getBikes();
-    void addEbike(EBikeDTO ebikeDTO);
+    Optional<EBikeDTO> addEbike(String id, double x, double y);
     Optional<EBikeDTO> getEbike(String id);
-    void rechargeBike(String id);
+    Optional<EBikeDTO> rechargeBike(String id);
 
     Collection<UserDTO> getUsers();
-    void addUser(UserDTO user);
+    boolean addUser(String userId, boolean isAdmin);
     Optional<UserDTO> getUser(String userId);
-    void rechargeCredit(String id, int credit);
+    Optional<UserDTO> rechargeCredit(String id, int credit);
 
     Observable<RideDTO> startRide(String rideId, String userId, String bikeId);
     void endRide(RideDTO ride);
