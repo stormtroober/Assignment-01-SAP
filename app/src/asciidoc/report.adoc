@@ -4,11 +4,11 @@
 :sectnums:
 :doctype: book
 
-== Description of Architecture Structure
+== Descrizione dell'architettura di sistema
 include::architecture_structure.adoc[]
 
-== Core Set of Quality Attributes and Scenarios
+== Core set degli attributi di qualità
 include::quality_attributes.adoc[]
 
-== Fitness Functions and Validation
+== Funzioni fitness e validazione
 include::fitness_functions.adoc[]
