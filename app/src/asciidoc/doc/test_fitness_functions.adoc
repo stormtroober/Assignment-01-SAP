@@ -1,18 +1,16 @@
-== Fitness Functions
-
 === Layered Architecture
 
 Per garantire che la architettura layered del progetto sia rispettata, è stata definita una serie di regole.
 Vengono fatte rispettare in particolare, le
 
-==== Regole delle dipendenze tra layer
+===== Regole delle dipendenze tra layer:
 
 - Presentation Layer: non è accessibile da nessun altro layer.
 - Business Layer: è accessibile solo dal Presentation Layer.
 - Persistence Layer: è accessibile solo dal Business Layer.
 - Database layer: è accessibile solo dal Persistence Layer.
 
-==== Regola delle dipendenze cicliche
+===== Regola delle dipendenze cicliche:
 
 Verifica che non ci siano dipendenze cicliche tra i layer.
 
@@ -21,14 +19,14 @@ Verifica che non ci siano dipendenze cicliche tra i layer.
 
 Per garantire che la architettura esagonale del progetto sia rispettata, è stata definita anche qui una serie di regole.
 
-==== Regole delle dipendenze tra layer
+===== Regole delle dipendenze tra layer:
 
 - Domain Layer: non deve dipendere dal Application Layer.
 - Application Layer: non deve dipendere dagli Adapters.
 - Adapters: devono dipendere solo dal Application Layer.
 - Application Layer: deve dipendere solo dal Domain Layer.
 
-==== Regola delle dipendenze cicliche
+===== Regola delle dipendenze cicliche:
 
 Verifica che non ci siano dipendenze cicliche tra i layer.
 

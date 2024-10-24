@@ -1,7 +1,7 @@
-== Quality Attributes
+=== Quality Attributes
 Sono stati identificati diversi attributi di qualità per eseguire una valutazione del sistema. Nello specifico, sono stati definiti:
 
-=== Layered Architecture
+==== Layered Architecture
 
 [cols="1,1,1,1,1,1,1", options="header"]
 |===
@@ -48,7 +48,7 @@ Sono stati identificati diversi attributi di qualità per eseguire una valutazio
 | Tutti i test passano con successo (e.g test sul layer persistence)
 |===
 
-=== Hexagonal Architecture
+==== Hexagonal Architecture
 
 [cols="1,1,1,1,1,1,1", options="header"]
 |===

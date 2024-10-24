@@ -7,7 +7,7 @@
 == Descrizione dell'architettura di sistema
 include::architecture_structure.adoc[]
 
-== Descrizione dell'architettura microkernel
+=== Descrizione dell'architettura microkernel
 include::microkernel_architecture.adoc[]
 
 == Core set degli attributi di qualità
