@@ -3,6 +3,7 @@
 :toclevels: 2
 :sectnums:
 :doctype: book
+:pdf-theme: theme.yml
 
 == Descrizione dell'architettura di sistema
 include::architecture_structure.adoc[]
@@ -16,4 +17,3 @@ include::quality_attributes.adoc[]
 == Funzioni fitness e validazione
 include::test_fitness_functions.adoc[]
 
-== Conclusioni
