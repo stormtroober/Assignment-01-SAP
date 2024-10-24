@@ -16,4 +16,8 @@ public interface ColorStatePlugin {
 }
 ----
 
-Esso offre la possibilità di ottenere un colore in base al modello della bicicletta, colorando per l'admin le biciclette in base al loro stato.
+Esso offre la possibilità di ottenere un colore in base allo stato di ogni bicicletta. Colorandola nella view dell' admin:
+
+- Verde per le biciclette disponibili
+- Giallo per le biciclette in uso
+- Rosso per le biciclette in manutenzione
