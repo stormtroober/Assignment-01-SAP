@@ -17,4 +17,3 @@ include::quality_attributes.adoc[]
 == Funzioni fitness e validazione
 include::test_fitness_functions.adoc[]
 
-== Conclusioni
