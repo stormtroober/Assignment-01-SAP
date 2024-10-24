@@ -5,17 +5,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class DatabaseConfiguration {
+public class DatabaseConfiguration implements Configuration{
 
     private static final String PROPERTIES_FILE = "/database.properties";
     private static final String DB_TYPE_KEY = "db.type";
     private static DatabaseType databaseType = DatabaseType.DISK;  // Default to DISK
 
     static {
-        loadConfiguration();
+        new DatabaseConfiguration().loadConfiguration();
     }
 
-    private static void loadConfiguration() {
+    public void loadConfiguration() {
         try (InputStream input = DatabaseConfiguration.class.getResourceAsStream(PROPERTIES_FILE)) {
             Properties prop = new Properties();
             if (input != null) {
