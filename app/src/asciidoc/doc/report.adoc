@@ -4,6 +4,26 @@
 :sectnums:
 :doctype: book
 :pdf-theme: theme.yml
+:source-highlighter: rouge
+:rouge-style: github
+:xrefstyle: short
+:toc: macro
+
+Università di Bologna · Campus di Cesena
+
+Corso di Laurea Magistrale in Ingegneria e Scienze Informatiche
+
+
+'''
+
+|=======
+|[.normalize]#Alessandro Becci# |[.normalize]#0001125114#
+|[.normalize]#Luca Tonelli# |[.normalize]#0001126379#
+|[.normalize]#Ludovico Nollino# |[.normalize]#0000000000#
+|=======
+
+toc::[]
+
 
 == Descrizione dell'architettura di sistema
 include::architecture_structure.adoc[]
