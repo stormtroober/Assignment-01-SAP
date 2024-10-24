@@ -19,7 +19,7 @@ Verifica che non ci siano dipendenze cicliche tra i layer.
 
 Per garantire che la architettura esagonale del progetto sia rispettata, è stata definita anche qui una serie di regole.
 
-===== Regole delle dipendenze tra layer:
+==== Regole delle dipendenze tra layer:
 
 - Domain Layer: non deve dipendere dal Application Layer.
 - Application Layer: non deve dipendere dagli Adapters.

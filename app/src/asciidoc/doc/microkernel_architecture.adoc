@@ -1,2 +1,21 @@
-test
+=== Architettura del microkernel
 
+Si è implementata una architettura a microkernel per rendere possibile l'estensione di alcune parti del sistema a runtime.
+In particolare, è data all'utente di tipo Admin la possibilità di usufruire di plugin che modifichino l'estetica delle biciclette.
+
+==== Plugin realizzato
+Il plugin si presenta così:
+[source,java]
+----
+package sap.ass01.layered.presentation.plugin;
+
+import sap.ass01.layered.services.dto.EBikeDTO;
+
+import java.awt.Color;
+
+public interface ColorStatePlugin {
+    Color colorState(EBikeDTO bike);
+}
+----
+
+Offre quindi la possibilità di ottenere un colore in base al modello della bicicletta, colorando per l'admin le biciclette in base al loro stato.
