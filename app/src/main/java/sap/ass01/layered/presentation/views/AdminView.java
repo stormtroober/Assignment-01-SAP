@@ -28,9 +28,7 @@ public class AdminView extends AbstractView {
         super("Admin View", user);
         setupView();
         observeAllBikes();
-        //updateAllBikes();
         observeAllUsers();
-        //updateAllUsers();
         refreshView();
     }
 
@@ -75,63 +73,19 @@ public class AdminView extends AbstractView {
         presentationController.observeAllBikes(
                 this::updateAllBikes,
                 throwable -> {
-                    // Handle error
                     System.err.println("Error observing available bikes: " + throwable.getMessage());
                 });
-                /*.subscribe(
-                        this::updateAllBikes,
-                        throwable -> {
-                            // Handle error
-                            System.err.println("Error observing available bikes: " + throwable.getMessage());
-                        }
-                );*/
     }
 
     private void observeAllUsers() {
         presentationController.observeAllUsers(
                 this::updateAllUsers,
                 throwable -> {
-                    // Handle error
                     System.err.println("Error observing available users: " + throwable.getMessage());
                 }
         );
-                /*.subscribe(
-                        this::updateAllUsers,
-                        throwable -> {
-                            // Handle error
-                            System.err.println("Error observing available users: " + throwable.getMessage());
-                        }
-                );*/
     }
 
-    /*private void updateAllUsers(Collection<UserDTO> userDTOS) {
-        // Update the UI components with the new available users data
-        List<UserViewModel> usersModel = userDTOS.stream()
-                .map(Mapper::toDomain)
-                .toList();
-        userList.clear();
-        userList.addAll(usersModel);
-        log("All users updated: " + userDTOS);
-        refreshView();
-    }*/
-
-
-
-    /*private void updateAllBikes(Collection<EBikeDTO> allBikes) {
-    // Update the UI components with the new available bikes data
-    eBikes = allBikes.stream()
-            .map(bike -> {
-                // Convert EBikeDTO to EBikeDTOExt using the plugin
-                EBikeDTOExt bikeExt = pluginService.applyPluginEffect("ColorStateEffect", bike);
-                // Map EBikeDTOExt to EBikeViewModel
-                return Mapper.toDomain(bikeExt);
-            })
-            .toList();
-
-    log("All bikes updated: " + allBikes);
-    // Call a method to refresh the visual representation
-    refreshView();
-}*/
     private void updateAllUsers(List<UserViewModel> userModels) {
         userList.clear();
         userList.addAll(userModels);
@@ -142,15 +96,11 @@ public class AdminView extends AbstractView {
     private void updateAllBikes(Collection<EBikeDTO> allBikes) {
         eBikes = allBikes.stream()
                 .map(bike -> {
-                    // Convert EBikeDTO to EBikeDTOExt using the plugin
                     EBikeDTOExt bikeExt = pluginService.applyPluginEffect("ColorStateEffect", bike);
-                    // Map EBikeDTOExt to EBikeViewModel
                     return Mapper.toDomain(bikeExt);
                 })
                 .toList();
-
         log("All bikes updated: " + allBikes);
-        // Call a method to refresh the visual representation
         refreshView();
     }
 

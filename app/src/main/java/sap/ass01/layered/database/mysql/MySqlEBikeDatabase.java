@@ -1,4 +1,3 @@
-// MySqlEBikeDatabase.java
 package sap.ass01.layered.database.mysql;
 
 import sap.ass01.layered.database.implementation.MySqlDatabaseImpl;

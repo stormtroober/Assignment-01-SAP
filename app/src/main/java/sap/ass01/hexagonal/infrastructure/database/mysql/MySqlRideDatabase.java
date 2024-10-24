@@ -1,4 +1,3 @@
-// MySqlRideDatabase.java
 package sap.ass01.hexagonal.infrastructure.database.mysql;
 
 import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;
@@ -17,9 +16,7 @@ public class MySqlRideDatabase implements Database<RideDTO> {
 
     public MySqlRideDatabase() {
         try {
-            // Establish a connection to the MySQL database
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/ebikeDB-H", "ebikeUser", "password");
-            // Create the rides table if it does not exist
             createTableIfNotExists();
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);

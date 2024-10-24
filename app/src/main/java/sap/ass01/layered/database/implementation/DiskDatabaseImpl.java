@@ -1,4 +1,3 @@
-// DiskDatabaseImpl.java
 package sap.ass01.layered.database.implementation;
 
 import com.google.gson.Gson;

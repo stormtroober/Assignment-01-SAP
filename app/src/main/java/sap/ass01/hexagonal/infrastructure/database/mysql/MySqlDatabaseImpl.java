@@ -40,7 +40,7 @@ public class MySqlDatabaseImpl<T> implements Database<T> {
         for (Field field : fields) {
             createTableSQL.append(field.getName()).append(" ").append(getSQLType(field.getType())).append(", ");
         }
-        createTableSQL.setLength(createTableSQL.length() - 2); // Remove the last comma and space
+        createTableSQL.setLength(createTableSQL.length() - 2);
         createTableSQL.append(")");
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(createTableSQL.toString());
@@ -85,12 +85,12 @@ public void save(T entity) {
     for (Field field : fields) {
         insertSQL.append(field.getName()).append(", ");
     }
-    insertSQL.setLength(insertSQL.length() - 2); // Remove the last comma and space
+    insertSQL.setLength(insertSQL.length() - 2);
     insertSQL.append(") VALUES (");
     for (int i = 0; i < fields.length; i++) {
         insertSQL.append("?, ");
     }
-    insertSQL.setLength(insertSQL.length() - 2); // Remove the last comma and space
+    insertSQL.setLength(insertSQL.length() - 2);
     insertSQL.append(")");
 
     try (PreparedStatement pstmt = connection.prepareStatement(insertSQL.toString())) {
@@ -115,8 +115,6 @@ public void save(T entity) {
 }
 
     private String toJson(Object obj) {
-        // Convert the object to JSON string
-        // You can use any JSON library like Jackson or Gson
         return new Gson().toJson(obj);
     }
 
@@ -157,7 +155,7 @@ public void save(T entity) {
         for (Field field : fields) {
             updateSQL.append(field.getName()).append(" = ?, ");
         }
-        updateSQL.setLength(updateSQL.length() - 2); // Remove the last comma and space
+        updateSQL.setLength(updateSQL.length() - 2);
         updateSQL.append(" WHERE id = ?");
 
         try (PreparedStatement pstmt = connection.prepareStatement(updateSQL.toString())) {

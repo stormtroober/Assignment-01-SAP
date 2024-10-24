@@ -85,9 +85,9 @@ public abstract class AbstractView extends JFrame {
         for (EBikeViewModel bike : eBikes) {
             int x = centerX + (int) bike.x();
             int y = centerY - (int) bike.y();
-            g2.setColor(bike.color()); // Set the color of the bike
-            g2.fillOval(x, y, 20, 20); // Draw filled oval with the bike's color
-            g2.setColor(Color.BLACK); // Reset color to black for text
+            g2.setColor(bike.color());
+            g2.fillOval(x, y, 20, 20);
+            g2.setColor(Color.BLACK);
             g2.drawString("E-Bike: " + bike.id() + " - battery: " + bike.batteryLevel(), x, y + 35);
             g2.drawString("(x: " + bike.x() + ", y: " + bike.y() + ")", x, y + 50);
             g2.drawString("STATUS: " + bike.state(), x, y + 65);
@@ -101,9 +101,9 @@ public abstract class AbstractView extends JFrame {
         for (EBikeViewModel bike : eBikes) {
             int x = centerX + (int) bike.x();
             int y = centerY - (int) bike.y();
-            g2.setColor(bike.color()); // Set the color of the bike
-            g2.fillOval(x, y, 20, 20); // Draw filled oval with the bike's color
-            g2.setColor(Color.BLACK); // Reset color to black for text
+            g2.setColor(bike.color());
+            g2.fillOval(x, y, 20, 20);
+            g2.setColor(Color.BLACK);
             g2.drawString("E-Bike: " + bike.id() + " - battery: " + bike.batteryLevel(), x, y + 35);
             g2.drawString("E-Bike: " + bike.id() + " - battery: " + bike.batteryLevel(), 10, dy + 35);
             g2.drawString("(x: " + bike.x() + ", y: " + bike.y() + ")", x, y + 50);
