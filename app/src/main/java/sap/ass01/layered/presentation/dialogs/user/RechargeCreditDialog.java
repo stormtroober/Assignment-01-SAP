@@ -41,16 +41,6 @@ public class RechargeCreditDialog extends AbstractDialog {
                     }, throwable -> {
                         JOptionPane.showMessageDialog(this, "Error recharging credit: " + throwable.getMessage());
                     });
-                    /*.subscribe(
-                            updatedUser -> {
-                                ((UserView) getParent()).updateCredit(updatedUser.credit());
-                                dispose();
-                            },
-                            throwable -> {
-                                // Handle error
-                                JOptionPane.showMessageDialog(this, "Error recharging credit: " + throwable.getMessage());
-                            }
-                    );*/
         }
     }
 }

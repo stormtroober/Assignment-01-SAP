@@ -13,7 +13,6 @@ import java.util.Optional;
 
 public class UserView extends AbstractView {
 
-    //private final UserService userService = ServiceFactory.getUserService();
     private Optional<RideViewModel> ongoingRide = Optional.empty();
     private JButton rideButton;
     private final PresentationController presentationController = new PresentationController();
@@ -26,21 +25,7 @@ public class UserView extends AbstractView {
     }
 
     private void setupView() {
-        /*addTopPanelButton("Start Ride", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                StartRideDialog startRideDialog = new StartRideDialog(UserView.this, userService, actualUser);
-                startRideDialog.setVisible(true);
-            }
-        });
 
-        addTopPanelButton("Recharge Credit", new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                RechargeCreditDialog rechargeCreditDialog = new RechargeCreditDialog(UserView.this, userService, actualUser);
-                rechargeCreditDialog.setVisible(true);
-            }
-        });*/
         rideButton = new JButton("Start Ride");
         rideButton.addActionListener(e -> toggleRide());
         buttonPanel.add(rideButton);
@@ -73,13 +58,6 @@ public class UserView extends AbstractView {
                         log("Error ending ride: " + throwable.getMessage());
                         throwable.printStackTrace();
                     });
-                    /*.subscribe(
-                            this::endRide,
-                            throwable -> {
-                                log("Error ending ride: " + throwable.getMessage());
-                                throwable.printStackTrace();
-                            }
-                    );*/
         });
     }
 
@@ -95,48 +73,19 @@ public class UserView extends AbstractView {
                     throwable.printStackTrace();
                 }
         );
-        /*userService.observeAvailableBikes()
-                .subscribe(
-                        this::updateAvailableBikes,
-                        throwable -> {
-                            // Handle error
-                            log("Error observing available bikes: " + throwable.getMessage());
-                            throwable.printStackTrace(); // Print stack trace for detailed debugging
-                        }
-                );*/
     }
 
     private void updateAvailableBikes(List<EBikeViewModel> availableBikes) {
         try {
             log("Updating available bikes: " + availableBikes);
             Optional<EBikeViewModel> ongoingBike = ongoingRide.map(RideViewModel::bike);
-
-            // Create the updated bike list
             eBikes = availableBikes;
-
-            // Add the ongoing bike if present
             ongoingBike.ifPresent(eBikes::add);
-
             log("Available bikes updated: " + eBikes);
             updateVisualizerPanel();
-            /*log("Updating available bikes: " + availableBikes);
-            Optional<EBikeViewModel> ongoingBike = ongoingRide.map(RideViewModel::bike);
-
-            // Create a mutable list from the stream
-            List<EBikeViewModel> updatedBikes = availableBikes.stream()
-                    .map(Mapper::toDomain)
-                    .collect(Collectors.toList());
-
-            // Add the ongoing bike if present
-            ongoingBike.ifPresent(updatedBikes::add);
-
-            eBikes = updatedBikes;
-            log("Available bikes updated: " + eBikes);
-            // Call a method to refresh the visual representation
-            updateVisualizerPanel();*/
         } catch (Exception e) {
             log("Exception while updating available bikes: " + e.getMessage());
-            e.printStackTrace(); // Print stack trace for detailed debugging
+            e.printStackTrace();
         }
     }
 
@@ -149,16 +98,13 @@ public class UserView extends AbstractView {
         if(ongoingRide.isPresent()){
             log("On going is present");
             ongoingRide = Optional.of(ride);
-            //ongoingRide = Optional.of(Mapper.toDomain(rideDTO, ongoingRide.get()));
             log("Value of ongoing ride ->"+ongoingRide.get().toString());
             eBikes = eBikes.stream()
                     .map(bike -> bike.id().equals(ongoingRide.get().bike().id()) ? ongoingRide.get().bike() : bike)
                     .toList();
-
         }
         log("Ride updated: " + ride);
         log("My ride ->" + eBikes.toString());
-        // Call a method to refresh the visual representation
         updateVisualizerPanel();
         updateRideButtonState();
         updateCredit(ride.user().credit());

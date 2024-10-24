@@ -118,7 +118,6 @@ public class ViewAdapter implements LoginViewPort, AdminViewPort, UserViewPort {
                     emitAvailableBikes();
                 })
                 .doOnError(throwable -> {
-                    // Emit error if something goes wrong
                     System.out.println("Error starting ride: " + throwable.getMessage());
                 })
                 .doOnComplete(() -> {

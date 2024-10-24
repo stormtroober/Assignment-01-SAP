@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 public class RechargeBikeDialog extends AbstractDialog {
 
     private JTextField idField;
-    //private final AdminService adminService;
     private final PresentationController presentationController;
 
     public RechargeBikeDialog(JFrame parent, PresentationController presentationController) {
@@ -34,18 +33,6 @@ public class RechargeBikeDialog extends AbstractDialog {
             }, throwable -> {
                 JOptionPane.showMessageDialog(this, "Error recharging E-Bike: " + throwable.getMessage());
             });
-            /*adminService.rechargeEBike(id)
-                    .subscribe(
-                            ebikeDTO -> {
-                                // Handle success
-                                JOptionPane.showMessageDialog(this, "E-Bike recharged successfully: " + ebikeDTO);
-                                dispose();
-                            },
-                            throwable -> {
-                                // Handle error
-                                JOptionPane.showMessageDialog(this, "Error recharging E-Bike: " + throwable.getMessage());
-                            }
-                    );*/
         }
     }
 }

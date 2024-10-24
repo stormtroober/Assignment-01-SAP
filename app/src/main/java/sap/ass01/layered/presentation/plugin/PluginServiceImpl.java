@@ -11,7 +11,6 @@ public class PluginServiceImpl implements PluginService {
     @Override
     public void registerPlugin(String pluginID, File libFile) {
         pluginManager.registerPlugin(pluginID, libFile, ColorStatePlugin.class);
-        //emitAllBikes();
     }
 
     @Override

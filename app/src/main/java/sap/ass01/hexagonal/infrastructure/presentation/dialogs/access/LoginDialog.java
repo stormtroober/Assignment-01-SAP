@@ -36,30 +36,6 @@ public class LoginDialog extends AbstractDialog {
                 presentationController.logIn(userName.get(),
                         this::handleLoginSuccess,
                         this::handleLoginFailure);
-//                loginService.logIn(userName.get()).thenAccept(user -> {
-//                    if (user.admin()) {
-//                        JOptionPane.showMessageDialog(this, "Admin login successful");
-//                        new AdminView().display();
-//                    } else {
-//                        JOptionPane.showMessageDialog(this, "User login successful");
-//                        new UserView().display();
-//                    }
-//                    dispose();
-//                });
-                /*loginService.logIn(userName.get()).subscribe(user -> {
-                    if (user.admin()) {
-                        JOptionPane.showMessageDialog(this, "Admin login successful");
-                        new AdminView(Mapper.toDomain(user)).display();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "User login successful");
-                        new UserView(Mapper.toDomain(user)).display();
-                    }
-                    dispose();
-                }, error -> {
-                    JOptionPane.showMessageDialog(this, "Login failed: " + error.getMessage());
-                });*/
-
-
             } else {
                 JOptionPane.showMessageDialog(this, "Please enter a valid username");
             }
@@ -69,12 +45,12 @@ public class LoginDialog extends AbstractDialog {
     private void handleLoginSuccess(UserViewModel user) {
         if (user.admin()) {
             JOptionPane.showMessageDialog(this, "Admin login successful");
-            new AdminView(user, presentationController).display(); // Show Admin View
+            new AdminView(user, presentationController).display();
         } else {
             JOptionPane.showMessageDialog(this, "User login successful");
-            new UserView(user, presentationController).display(); // Show User View
+            new UserView(user, presentationController).display();
         }
-        dispose(); // Close the dialog after successful login
+        dispose();
     }
 
     private void handleLoginFailure(Throwable error) {

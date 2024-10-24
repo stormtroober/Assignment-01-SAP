@@ -30,7 +30,6 @@ public class DomainControllerImpl implements DomainController{
         userRepository = new UserRepositoryImpl();
         rideRepository = new RideRepositoryImpl();
 
-        // Load data from repositories
         eBikeRepository.findAllEBikes().forEach(eBike -> {
             bikes.put(eBike.id(), Mapper.toDomain(eBike));
         });

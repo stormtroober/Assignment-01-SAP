@@ -36,24 +36,14 @@ public class RegisterDialog extends AbstractDialog {
                 presentationController.signUp(
                         name,
                         isAdmin,
-                        () -> { // On success callback
+                        () -> {
                             JOptionPane.showMessageDialog(this, "Registration successful");
                             dispose();
                         },
-                        error -> { // On error callback
+                        error -> {
                             JOptionPane.showMessageDialog(this, "Registration failed: " + error.getMessage());
                         }
                 );
-//                loginService.signIn(name, isAdmin).thenRun(() -> {
-//                    JOptionPane.showMessageDialog(this, "Registration successful");
-//                    dispose();
-//                });
-                /*loginService.signUp(name, isAdmin).subscribe(() -> {
-                    JOptionPane.showMessageDialog(this, "Registration successful");
-                    dispose();
-                }, error -> {
-                    JOptionPane.showMessageDialog(this, "Registration failed: " + error.getMessage());
-                });*/
             } else {
                 JOptionPane.showMessageDialog(this, "Please enter a valid name");
             }

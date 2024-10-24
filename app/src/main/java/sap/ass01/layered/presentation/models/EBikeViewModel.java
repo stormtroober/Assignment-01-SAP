@@ -1,4 +1,3 @@
-// File: EBikeViewModel.java
 package sap.ass01.layered.presentation.models;
 
 import java.awt.*;
@@ -6,7 +5,7 @@ import java.awt.*;
 public record EBikeViewModel(String id, double x, double y, int batteryLevel, EBikeState state, Color color) {
 
     public enum EBikeState { AVAILABLE, IN_USE, MAINTENANCE }
-    private static final Color DEFAULT_COLOR = Color.BLACK; // Default color
+    private static final Color DEFAULT_COLOR = Color.BLACK;
 
     public EBikeViewModel(String id, double x, double y, int batteryLevel, EBikeState state) {
         this(id, x, y, batteryLevel, state, DEFAULT_COLOR);

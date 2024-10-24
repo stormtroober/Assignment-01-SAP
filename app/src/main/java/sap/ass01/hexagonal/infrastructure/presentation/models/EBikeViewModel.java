@@ -1,4 +1,3 @@
-// File: EBikeViewModel.java
 package sap.ass01.hexagonal.infrastructure.presentation.models;
 
 import java.awt.*;

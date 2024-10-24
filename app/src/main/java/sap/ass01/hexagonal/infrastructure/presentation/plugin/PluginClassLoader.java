@@ -15,7 +15,6 @@ public class PluginClassLoader extends ClassLoader {
 
     @Override
     protected Class<?> findClass(String className) throws ClassNotFoundException {
-        // Convert the class name to the expected path in the JAR
         String classFile = className.replace('.', '/') + ".class";
         JarEntry entry = jarFile.getJarEntry(classFile);
 
@@ -24,9 +23,7 @@ public class PluginClassLoader extends ClassLoader {
         }
 
         try (InputStream input = jarFile.getInputStream(entry)) {
-            // Read the class bytes
             byte[] classData = input.readAllBytes();
-            // Define the class using the byte array
             return defineClass(className, classData, 0, classData.length);
         } catch (IOException e) {
             throw new ClassNotFoundException(className, e);

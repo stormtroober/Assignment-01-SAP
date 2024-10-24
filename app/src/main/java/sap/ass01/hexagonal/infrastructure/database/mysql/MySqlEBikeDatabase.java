@@ -1,4 +1,3 @@
-// MySqlEBikeDatabase.java
 package sap.ass01.hexagonal.infrastructure.database.mysql;
 
 import sap.ass01.hexagonal.application.ports.entities.EBikeDTO;

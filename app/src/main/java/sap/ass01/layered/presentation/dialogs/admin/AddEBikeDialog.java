@@ -35,25 +35,12 @@ public class AddEBikeDialog extends AbstractDialog {
             String id = idField.getText();
             double xCoord = Double.parseDouble(xCoordField.getText());
             double yCoord = Double.parseDouble(yCoordField.getText());
-            // Handle the addition of the e-bike here
             presentationController.createEBike(id, xCoord, yCoord, ebikeViewModel -> {
                 JOptionPane.showMessageDialog(this, "E-Bike added successfully: " + ebikeViewModel);
                 dispose();
             }, throwable -> {
                 JOptionPane.showMessageDialog(this, "Error adding E-Bike: " + throwable.getMessage());
             });
-            /*adminService.createEBike(id, xCoord, yCoord)
-                    .subscribe(
-                            ebikeDTO -> {
-                                // Handle success
-                                JOptionPane.showMessageDialog(this, "E-Bike added successfully: " + ebikeDTO);
-                                dispose();
-                            },
-                            throwable -> {
-                                // Handle error
-                                JOptionPane.showMessageDialog(this, "Error adding E-Bike: " + throwable.getMessage());
-                            }
-                    );*/
             dispose();
         }
     }

@@ -1,7 +1,5 @@
 package sap.ass01.hexagonal.infrastructure.presentation.views;
 
-import sap.ass01.hexagonal.application.ports.EBikeApplication;
-import sap.ass01.hexagonal.infrastructure.adapters.view.ViewAdapter;
 import sap.ass01.hexagonal.infrastructure.presentation.PresentationController;
 import sap.ass01.hexagonal.infrastructure.presentation.dialogs.access.LoginDialog;
 import sap.ass01.hexagonal.infrastructure.presentation.dialogs.access.RegisterDialog;

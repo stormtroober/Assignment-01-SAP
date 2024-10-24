@@ -1,4 +1,3 @@
-// DatabaseConfiguration.java
 package sap.ass01.layered.config;
 
 import java.io.IOException;
@@ -9,7 +8,7 @@ public class DatabaseConfiguration implements Configuration{
 
     private static final String PROPERTIES_FILE = "/database.properties";
     private static final String DB_TYPE_KEY = "db.type";
-    private static DatabaseType databaseType = DatabaseType.DISK;  // Default to DISK
+    private static DatabaseType databaseType = DatabaseType.DISK;
 
     static {
         new DatabaseConfiguration().loadConfiguration();
@@ -24,17 +23,14 @@ public class DatabaseConfiguration implements Configuration{
                 databaseType = DatabaseType.valueOf(dbType.toUpperCase());
             }
         } catch (IOException | IllegalArgumentException e) {
-            // Default to DISK if any exception occurs
             databaseType = DatabaseType.DISK;
         }
     }
 
-    // Setter for the database type (for testing purposes)
     public static void setDatabaseType(DatabaseType dbType) {
         databaseType = dbType;
     }
 
-    // Getter for the database type
     public static DatabaseType getDatabaseType() {
         return databaseType;
     }

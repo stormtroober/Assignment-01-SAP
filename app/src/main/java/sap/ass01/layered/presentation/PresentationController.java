@@ -12,7 +12,6 @@ import sap.ass01.layered.presentation.models.UserViewModel;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -25,10 +24,10 @@ public class PresentationController {
     // Login
     public void logIn(String username, Consumer<UserViewModel> onSuccess, Consumer<Throwable> onError) {
         loginService.logIn(username).subscribe(user -> {
-            UserViewModel userViewModel = Mapper.toDomain(user); // Map the UserDTO to UserViewModel
-            onSuccess.accept(userViewModel); // Call the success callback with the user view model
+            UserViewModel userViewModel = Mapper.toDomain(user);
+            onSuccess.accept(userViewModel);
         }, error -> {
-            onError.accept(error); // Call the error callback if the login fails
+            onError.accept(error);
         });
     }
 
@@ -71,13 +70,11 @@ public class PresentationController {
         }, onError::accept);
     }
 
-    // Method to observe available bikes
     public void observeAvailableBikes(Consumer<List<EBikeViewModel>> onSuccess, Consumer<Throwable> onError) {
         userService.observeAvailableBikes().subscribe(
                 bikeDTOs -> {
-                    // Convert DTOs to ViewModels before passing to the view
                     List<EBikeViewModel> bikeViewModels = bikeDTOs.stream()
-                            .map(Mapper::toDomain) // Assuming Mapper.toDomain converts EBikeDTO to EBikeViewModel
+                            .map(Mapper::toDomain)
                             .collect(Collectors.toList());
                     onSuccess.accept(bikeViewModels);
                 },
@@ -90,7 +87,6 @@ public class PresentationController {
     }
 
     public void startRide(String rideId, UserViewModel user, EBikeViewModel bike, Consumer<RideViewModel> onSuccess, Consumer<Throwable> onError) {
-        //String rideId = UUID.randomUUID().toString(); // Generate a unique ride ID
         userService.startRide(user.id(), rideId, bike.id()).subscribe(
                 rideDTO -> {
                     RideViewModel rideViewModel = Mapper.toDomain(rideDTO, new RideViewModel(rideId, user, bike));

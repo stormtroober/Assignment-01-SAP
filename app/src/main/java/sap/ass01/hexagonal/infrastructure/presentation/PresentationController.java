@@ -25,7 +25,7 @@ public class PresentationController {
 
     public void logIn(String username, Consumer<UserViewModel> onSuccess, Consumer<Throwable> onError) {
         viewAdapter.logIn(username).subscribe(userDTO -> {
-            UserViewModel userViewModel = Mapper.toDomain(userDTO); // Convert from DTO to ViewModel
+            UserViewModel userViewModel = Mapper.toDomain(userDTO);
             onSuccess.accept(userViewModel);
         }, onError::accept);
     }
@@ -46,7 +46,7 @@ public class PresentationController {
     public void observeAllUsers(Consumer<List<UserViewModel>> onSuccess, Consumer<Throwable> onError) {
         viewAdapter.observeAllUsers().subscribe(users -> {
             List<UserViewModel> userViewModels = users.stream()
-                    .map(Mapper::toDomain) // Convert from DTO to ViewModel
+                    .map(Mapper::toDomain)
                     .collect(Collectors.toList());
             onSuccess.accept(userViewModels);
         }, onError::accept);
@@ -56,26 +56,24 @@ public class PresentationController {
 
     public void createEBike(String id, double xCoord, double yCoord, Consumer<EBikeViewModel> onSuccess, Consumer<Throwable> onError) {
         viewAdapter.createEBike(id, xCoord, yCoord).subscribe(ebikeDTO -> {
-            EBikeViewModel ebikeViewModel = Mapper.toDomain(ebikeDTO); // Convert from DTO to ViewModel
+            EBikeViewModel ebikeViewModel = Mapper.toDomain(ebikeDTO);
             onSuccess.accept(ebikeViewModel);
         }, onError::accept);
     }
 
     public void rechargeEBike(String id, Consumer<EBikeViewModel> onSuccess, Consumer<Throwable> onError) {
         viewAdapter.rechargeEBike(id).subscribe(ebikeDTO -> {
-            EBikeViewModel ebikeViewModel = Mapper.toDomain(ebikeDTO); // Convert from DTO to ViewModel
+            EBikeViewModel ebikeViewModel = Mapper.toDomain(ebikeDTO);
             onSuccess.accept(ebikeViewModel);
         }, onError::accept);
 
     }
 
-    // Method to observe available bikes
     public void observeAvailableBikes(Consumer<List<EBikeViewModel>> onSuccess, Consumer<Throwable> onError) {
         viewAdapter.observeAvailableBikes().subscribe(
                 bikeDTOs -> {
-                    // Convert DTOs to ViewModels before passing to the view
                     List<EBikeViewModel> bikeViewModels = bikeDTOs.stream()
-                            .map(Mapper::toDomain) // Assuming Mapper.toDomain converts EBikeDTO to EBikeViewModel
+                            .map(Mapper::toDomain)
                             .collect(Collectors.toList());
                     onSuccess.accept(bikeViewModels);
                 },
@@ -88,7 +86,6 @@ public class PresentationController {
     }
 
     public void startRide(String rideId, UserViewModel user, EBikeViewModel bike, Consumer<RideViewModel> onSuccess, Consumer<Throwable> onError) {
-        //String rideId = UUID.randomUUID().toString(); // Generate a unique ride ID
         viewAdapter.startRide(user.id(), rideId, bike.id()).subscribe(
                 rideDTO -> {
                     RideViewModel rideViewModel = Mapper.toDomain(rideDTO, new RideViewModel(rideId, user, bike));

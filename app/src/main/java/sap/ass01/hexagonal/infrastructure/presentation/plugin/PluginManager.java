@@ -10,7 +10,6 @@ public class PluginManager {
     public <T> void registerPlugin(String pluginID, File libFile, Class<T> pluginClass) {
         try {
             var loader = new PluginClassLoader(libFile.getAbsolutePath());
-            // Construct the fully qualified class name
             String expectedClassName = "sap.ass01.hexagonal.effects." + pluginID;
             Class<?> loadedClass = loader.loadClass(expectedClassName);
             T plugin = pluginClass.cast(loadedClass.getDeclaredConstructor().newInstance());
