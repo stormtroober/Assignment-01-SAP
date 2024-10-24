@@ -1,0 +1,50 @@
+@startuml
+skinparam packageStyle rect
+skinparam shadowing false
+
+package "Infrastructure" {
+
+}
+
+package "Application" {
+  package "Domain" {
+    class Domain
+
+    class AdminPort <<Port>>
+    class UserPort <<Port>>
+    class LoginPort <<Port>>
+
+    class EBikeRepository <<Port>>
+    class UserRepository <<Port>>
+    class RideRepository <<Port>>
+
+    AdminPort --> Domain
+    UserPort --> Domain
+    LoginPort --> Domain
+
+    EBikeRepository --> Domain
+    UserRepository --> Domain
+    RideRepository --> Domain
+  }
+}
+
+package "Infrastructure" {
+  class ViewAdapter <<Adapter>>
+  class EBikeRepositoryAdapter <<Adapter>>
+  class RideRepositoryAdapter <<Adapter>>
+  class UserRepositoryAdapter <<Adapter>>
+  class Database <<Database>>
+}
+
+ViewAdapter --> AdminPort
+ViewAdapter --> UserPort
+ViewAdapter --> LoginPort
+
+EBikeRepositoryAdapter --> EBikeRepository
+RideRepositoryAdapter --> RideRepository
+UserRepositoryAdapter --> UserRepository
+
+UserRepositoryAdapter --> Database
+
+PresentationController --> ViewAdapter
+@enduml

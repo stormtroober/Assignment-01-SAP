@@ -1,9 +1,7 @@
-=== Architettura del microkernel
-
 Si è implementata una architettura a microkernel per rendere possibile l'estensione di alcune parti del sistema a runtime.
 In particolare, è data all'utente di tipo Admin la possibilità di usufruire di plugin che modifichino l'estetica delle biciclette.
 
-==== Plugin realizzato
+===== Plugin realizzato
 Il plugin si presenta così:
 [source,java]
 ----
