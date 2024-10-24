@@ -1,0 +1,17 @@
+@startuml
+package "<<Presentation Layer>>" {
+  package "<<View>>" {
+    class AdminView
+    class UserView
+  }
+
+  package "<<Controller>>" {
+    class PresentationController
+  }
+
+  AdminView --> PresentationController
+  UserView --> PresentationController
+}
+
+PresentationController --> ServiceFactory : ServiceFactory
+@enduml

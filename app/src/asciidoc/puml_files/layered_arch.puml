@@ -1,0 +1,37 @@
+@startuml
+package "<<Presentation Layer>>" {
+  class PresentationController
+}
+
+package "<<Business Layer>>" {
+  package "<<Services>>" {
+    class ServiceImpl
+  }
+
+  package "<<Domain>>" {
+    class DomainControllerImpl
+  }
+
+  ServiceImpl <--> DomainControllerImpl : DomainController
+}
+
+package "<<Persistence Layer>>" {
+  class EbikeRepositoryImpl
+    class UserRepositoryImpl
+    class RideRepositoryImpl
+}
+
+package "<<Database Layer>>" {
+  class DatabaseImpl
+}
+
+
+PresentationController --> ServiceImpl : ServiceFactory
+DomainControllerImpl--> EbikeRepositoryImpl : EbikeRepository
+DomainControllerImpl--> RideRepositoryImpl : RideRepository
+DomainControllerImpl--> UserRepositoryImpl : UserRepository
+EbikeRepositoryImpl --> DatabaseImpl : Database
+RideRepositoryImpl --> DatabaseImpl : Database
+UserRepositoryImpl --> DatabaseImpl : Database
+
+@enduml

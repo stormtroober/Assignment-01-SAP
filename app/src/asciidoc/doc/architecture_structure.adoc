@@ -1,0 +1,7 @@
+=== Architettura Layered
+image::{docfile}/../../img/layered_arch.png[]
+
+
+
+
+=== Architettura Hexagonal
