@@ -10,9 +10,33 @@ Vengono fatte rispettare in particolare, le
 - Persistence Layer: è accessibile solo dal Business Layer.
 - Database layer: è accessibile solo dal Persistence Layer.
 
+[source,java]
+----
+@ArchTest
+public static final ArchRule layer_dependencies_are_respected = layeredArchitecture()
+            .consideringAllDependencies()
+            .layer("Presentation").definedBy("sap.ass01.layered.presentation..")
+            .layer("Business").definedBy( "sap.ass01.layered.services..", "sap.ass01.layered.domain..")
+            .layer("Persistence").definedBy("sap.ass01.layered.persistence..")
+            .layer("Database").definedBy("sap.ass01.layered.database..", "sap.ass01.layered.config..")
+            .whereLayer("Presentation").mayNotBeAccessedByAnyLayer()
+            .whereLayer("Business").mayOnlyBeAccessedByLayers("Presentation")
+            .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Business")
+            .whereLayer("Database").mayOnlyBeAccessedByLayers("Persistence");
+
+----
+
 ===== Regola delle dipendenze cicliche:
 
 Verifica che non ci siano dipendenze cicliche tra i layer.
+
+[source,java]
+----
+@ArchTest
+    public static final ArchRule no_cycles = slices()
+            .matching("sap.ass01.layered.(*)..")
+            .should().beFreeOfCycles();
+----
 
 
 === Hexagonal Architecture
@@ -21,14 +45,74 @@ Per garantire che la architettura esagonale del progetto sia rispettata, è stat
 
 ==== Regole delle dipendenze tra layer:
 
+[source,java]
+----
+    private final JavaClasses importedClasses = new ClassFileImporter().importPackages("sap.ass01.hexagonal");
+----
+
 - Domain Layer: non deve dipendere dal Application Layer.
+
+[source,java]
+----
+    @Test
+    void domainLayerShouldNotDependOnApplicationLayer() {
+        ArchRule rule = ArchRuleDefinition.noClasses()
+                .that().resideInAPackage("..domain..")
+                .should().dependOnClassesThat().resideInAPackage("..application..");
+        rule.check(importedClasses);
+    }
+----
+
 - Application Layer: non deve dipendere dagli Adapters.
+
+[source,java]
+----
+    @Test
+    void applicationLayerShouldNotDependOnAdapters() {
+        ArchRule rule = ArchRuleDefinition.noClasses()
+                .that().resideInAPackage("..application..")
+                .should().dependOnClassesThat().resideInAPackage("..adapters..");
+        rule.check(importedClasses);
+    }
+----
+
 - Adapters: devono dipendere solo dal Application Layer.
+
+[source,java]
+----
+    @Test
+    void adaptersShouldOnlyDependOnApplicationLayer() {
+        ArchRule rule = ArchRuleDefinition.classes()
+                .that().resideInAPackage("..adapters..")
+                .should().onlyDependOnClassesThat().resideInAnyPackage("..application..", "java..", "..io..", "..infrastructure..", "..ports..");
+        rule.check(importedClasses);
+    }
+----
+
 - Application Layer: deve dipendere solo dal Domain Layer.
+
+[source,java]
+----
+    @Test
+    void applicationLayerShouldOnlyDependOnDomainLayer() {
+        ArchRule rule = ArchRuleDefinition.classes()
+                .that().resideInAPackage("..application..")
+                .should().onlyDependOnClassesThat().resideInAnyPackage("..domain..", "java..","..io..", "..ports..");
+        rule.check(importedClasses);
+    }
+----
 
 ===== Regola delle dipendenze cicliche:
 
 Verifica che non ci siano dipendenze cicliche tra i layer.
+
+[source,java]
+----
+    @ArchTest
+    public static final ArchRule no_cycles = slices()
+            .matching("sap.ass01.hexagonal.(*)..")
+            .should().beFreeOfCycles();
+----
 
 
 
