@@ -23,13 +23,28 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-      mysql:
+      mysql1:
         image: mysql:8.0
         ports:
           - 3306:3306
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
           MYSQL_DATABASE: ebikeDB
+          MYSQL_USER: ebikeUser
+          MYSQL_PASSWORD: password
+        options: >-
+          --health-cmd "mysqladmin ping --silent"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      mysql2:
+        image: mysql:8.0
+        ports:
+          - 3307:3306
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+          MYSQL_DATABASE: ebikeDB-H
           MYSQL_USER: ebikeUser
           MYSQL_PASSWORD: password
         options: >-
@@ -60,6 +75,7 @@ jobs:
         run: ./gradlew test
         env:
           MONGODB_URI: mongodb://localhost:27017
-          MYSQL_URL: jdbc:mysql://localhost:3306/ebikeDB
+          MYSQL_URL1: jdbc:mysql://localhost:3306/ebikeDB
+          MYSQL_URL2: jdbc:mysql://localhost:3307/ebikeDB-H
           MYSQL_USER: ebikeUser
           MYSQL_PASSWORD: password

@@ -10,7 +10,7 @@ public class MySqlUserDatabase extends MySqlDatabaseImpl<UserDTO> implements Dat
 
     public MySqlUserDatabase() {
         super(
-            "jdbc:mysql://localhost:3306/ebikeDB-H",
+            "jdbc:mysql://localhost:3307/ebikeDB-H",
             "ebikeUser",
             "password",
             "users",

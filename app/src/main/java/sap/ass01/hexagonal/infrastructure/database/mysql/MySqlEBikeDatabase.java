@@ -11,7 +11,7 @@ public class MySqlEBikeDatabase extends MySqlDatabaseImpl<EBikeDTO> implements D
 
     public MySqlEBikeDatabase() {
         super(
-            "jdbc:mysql://localhost:3306/ebikeDB-H",
+            "jdbc:mysql://localhost:3307/ebikeDB-H",
             "ebikeUser",
             "password",
             "ebikes",
