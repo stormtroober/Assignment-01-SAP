@@ -3,6 +3,7 @@
 :toclevels: 2
 :sectnums:
 :doctype: book
+:pdf-theme: theme.yml
 
 == Descrizione dell'architettura di sistema
 include::architecture_structure.adoc[]

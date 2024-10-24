@@ -1,0 +1,34 @@
+# Minimal theme.yml to reduce font size without changing the font family
+extends: default
+
+# Base font size (default is usually 12, here reduced to 10)
+base:
+  font_size: 8
+
+# Heading font sizes (optional, decrease proportionally if needed)
+heading:
+  h1:
+    font_size: 16
+  h2:
+    font_size: 14
+  h3:
+    font_size: 12
+  h4:
+    font_size: 10.5
+  h5:
+    font_size: 10
+  h6:
+    font_size: 10
+
+# Table font size (optional, reduced slightly)
+table:
+  header:
+    font_size: 9.5
+  body:
+    font_size: 9.5
+
+# Sidebar and block settings (optional, reduced slightly)
+sidebar:
+  font_size: 9
+code:
+  font_size: 9.5
