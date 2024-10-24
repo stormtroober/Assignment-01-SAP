@@ -1,5 +1,5 @@
 === Architettura Layered
-image::../svg/layered.svg[alt:Architettura Layered]
+image::../svg/layered.svg[]
 
 Grafico che rappresenta l'architettura a layer del progetto, si può notare come il progetto sia diviso in quattro layer principali:
 
@@ -9,7 +9,7 @@ Grafico che rappresenta l'architettura a layer del progetto, si può notare come
 - Database: Contiene le classi che si occupano di gestire la connessione con il database, per ottenere la tecnologia da utilizzare viene utilizzato un file di configurazione. La classe DatabaseConfiguration consente di recuperare il contenuto del file.
 
 === Architettura Hexagonal
-image::../svg/exagonal.svg[alt:Architettura Hexagonal]
+image::../svg/exagonal.svg[]
 
 Grafico che rappresenta l'architettura esagonale del progetto, si può notare come il progetto sia diviso in tre parti principali:
 
@@ -19,6 +19,6 @@ Grafico che rappresenta l'architettura esagonale del progetto, si può notare co
 Sono state definite le porte per la comunicazione tra le varie parti dell'applicazione, in particolare sono state definite le porte per la comunicazione tra il frontend e l' application (AdminViewPort, UserViewPort e LoginViewPort), tra l' application e il database (EBikeRepositoryAdapter, RideRepositoryAdapter e UserRepositoryAdapter) e tra l' application e il dominio (non presente nel grafico EBikeApplication).
 
 === Frontend
-image::../svg/frontend.svg[alt:Frontend]
+image::../svg/frontend.svg[]
 
 Grafico che rappresenta l'architettura del frontend del progetto, si possono notare 3 view principali che interagiscono con il PresentationController, ovvero il controller che viene utilizzato per l' allacciamento dell frontend con le due differenti architetture.
