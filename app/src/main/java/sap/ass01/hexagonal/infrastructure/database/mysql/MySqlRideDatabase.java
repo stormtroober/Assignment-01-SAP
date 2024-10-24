@@ -18,7 +18,7 @@ public class MySqlRideDatabase implements Database<RideDTO> {
     public MySqlRideDatabase() {
         try {
             // Establish a connection to the MySQL database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebikeDB-H", "ebikeUser", "password");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/ebikeDB-H", "ebikeUser", "password");
             // Create the rides table if it does not exist
             createTableIfNotExists();
         } catch (SQLException e) {
