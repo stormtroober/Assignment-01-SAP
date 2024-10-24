@@ -1,0 +1,96 @@
+== Quality Attributes
+Sono stati identificati diversi attributi di qualità per eseguire una valutazione del sistema. Nello specifico, sono stati definiti:
+
+=== Layered Architecture
+
+[cols="1,1,1,1,1,1,1", options="header"]
+|===
+| Quality Attribute | Source | Stimulus | Artifact | Environment | Response | Response Measure
+
+| Modificabilità
+| Developer
+| Cambiare il layout della pagina
+| Interfaccia utente
+| Durante lo sviluppo
+| Il layout viene aggiornato senza errori
+| Il tempo per aggiornare il layout è limitato
+
+| Modificabilità
+| Provider DB
+| Cambio dei requisiti di sistema
+| Codebase
+| Utilizzo standard
+| Gli sviluppatori sostituiscono il DB con un altro
+| Il codice viene cambiato solo nel layer database
+
+| Estendibilità
+| Admin
+| Aggiungere una funzionalità a runtime
+| View dell'admin
+| Utilizzo standard
+| Viene reso disponibile il plugin che implementa la nuova funzionalità
+| La funzionalità viene integrata a runtime
+
+| Estendibilità
+| Stakeholder
+| Richiesta di supporto per un nuovo client
+| Codebase
+| Situazione normale
+| Gli sviluppatori creano un nuovo client che utilizzi la tecnologia (RXJava) esistente
+| Il codice esistente rimane invariato
+
+| Testabilità
+| Developer
+| Esecuzione di test unitari
+| Diversi layer dell'applicazione
+| Ambiente di test
+| Ogni layer è testabile singolarmente
+| Tutti i test passano con successo (e.g test sul layer persistence)
+|===
+
+=== Hexagonal Architecture
+
+[cols="1,1,1,1,1,1,1", options="header"]
+|===
+| Quality Attribute | Source | Stimulus | Artifact | Environment | Response | Response Measure
+
+| Estendibilità
+| Admin
+| Aggiungere una funzionalità a runtime
+| View dell'admin
+| Utilizzo standard
+| Viene reso disponibile il plugin che implementa la nuova funzionalità
+| La funzionalità viene integrata a runtime
+
+| Estendibilità
+| Stakeholder
+| Richiesta di supporto per un nuovo client
+| Codebase
+| Situazione normale
+| Gli sviluppatori creano un nuovo ViewAdapter per il nuovo client
+| Il codice esistente rimane invariato
+
+| Modificabilità
+| Provider DB
+| Cambio dei requisiti di sistema
+| Codebase
+| Utilizzo standard
+| Gli sviluppatori sostituiscono il DB con un altro
+| Il codice viene cambiato solo nell'infrastruttura database senza modificare l'adapter
+
+| Testabilità
+| Tester
+| Esecuzione di test unitari
+| Diversi componenti dell'architettura esagonale
+| Ambiente di test
+| Ogni componente è testabile singolarmente
+| Tutti i test passano con successo (e.g test sulla componente persistence)
+
+| Interoperabilità
+| System Integrator
+| Integrazione con un nuovo sistema esterno
+| Ports
+| Ambiente di produzione
+| Il sistema comunica correttamente con il nuovo sistema
+| Tempo di integrazione accettabile
+|===

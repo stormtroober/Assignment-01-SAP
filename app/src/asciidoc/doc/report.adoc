@@ -7,10 +7,13 @@
 == Descrizione dell'architettura di sistema
 include::architecture_structure.adoc[]
 
+== Descrizione dell'architettura microkernel
+include::microkernel_architecture.adoc[]
+
 == Core set degli attributi di qualità
 include::quality_attributes.adoc[]
 
 == Funzioni fitness e validazione
-include::fitness_functions.adoc[]
+include::test_fitness_functions.adoc[]
 
 == Conclusioni

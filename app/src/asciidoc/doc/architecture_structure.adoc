@@ -1,3 +1,6 @@
+== Architettura del sistema
+
+
 === Architettura Layered
 image::{docfile}/../../img/layered_arch.png[]
 
